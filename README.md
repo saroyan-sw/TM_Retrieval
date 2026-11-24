@@ -20,11 +20,16 @@ See [dataset inventory](docs/dataset_inventory.md) for acquisition limitations a
 ## Fit prVAMP on the fixed public subset
 
 ```powershell
-.\.venv\Scripts\python.exe -m tmbench fit-prvamp
+.\.venv\Scripts\python.exe -m tmbench fit-prvamp --config configs/public/prvamp_i02_damped.json --output runs/prvamp_i02_repeat
 ```
 
 This uses only training measurements, one common SVD, and the settings in
-configs/public/prvamp_i02.json. Each detector writes an estimate, iteration
-history and status into runs/prvamp_i02. Existing outputs are protected; use
+configs/public/prvamp_i02_damped.json. Each detector writes an estimate, iteration
+history and status into the selected output folder. Existing outputs are protected; use
 --output with a fresh directory for a new run. See
 [source audit](docs/prvamp_source_audit.md) for assumptions and variance conventions.
+
+I01 and I02 checkpoints are complete. Both real-data configurations and all
+32 attempted rows are recorded in [results](docs/results/i02_summary.json).
+The stronger-damping run produced finite estimates for every row, but all
+reached the 300-iteration limit. Held-out prediction evaluation remains I03.
