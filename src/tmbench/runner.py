@@ -1,0 +1,64 @@
+"""Reproducible public-data fitting and artifact-only held-out report regeneration."""
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path
+import time
+
+from tmbench.fit import run as fit_prvamp, write_json
+from tmbench.adapters.rice_phase import load
+from tmbench.evaluation.metrics import evaluate
+import numpy as np
+
+
+def report(output, data_dir):
+    provenance = json.loads((output / 'provenance.json').read_text())
+    status = json.loads((output / 'status.json').read_text())
+    dataset = load(data_dir, provenance['manifest'], provenance['policy'])
+    if [r['detector_id'] for r in status['rows']] != dataset.train.detector_ids.tolist():
+        raise ValueError('Saved detector ordering does not match dataset')
+    estimates, hashes = [], {}
+    for row in status['rows']:
+        if 'estimate_file' in row:
+            path = output / row['estimate_file']
+            hashes[path.name] = hashlib.sha256(path.read_bytes()).hexdigest()
+            saved = np.load(path, allow_pickle=False)
+            if int(saved['detector_id']) != row['detector_id']:
+                raise ValueError('Artifact detector ID mismatch')
+            a = saved['A_row']
+            if a.shape != (dataset.train.X.shape[1],):
+                raise ValueError('Artifact input dimension mismatch')
+            estimates.append(a)
+        else:
+            estimates.append(None)
+    statuses = [r['status'] for r in status['rows']]
+    metrics = {name: evaluate(getattr(dataset, name), estimates, statuses)
+               for name in ('validation', 'test')}
+    result = dict(method=provenance.get('method', 'prvamp'), estimate_sha256=hashes,
+                  metrics=metrics, note='No reference TM; no coefficient-error or published ranking claim')
+    write_json(output / 'evaluation.json', result)
+    return result
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('action', choices=['run', 'report'])
+    parser.add_argument('--method', default='prvamp', choices=['prvamp'])
+    parser.add_argument('--manifest', type=Path, default=Path('data/manifests/rice_phase_slm_40x40.json'))
+    parser.add_argument('--data-dir', type=Path, default=Path('data/raw/phase_slm_40x40'))
+    parser.add_argument('--policy', type=Path, default=Path('configs/public/rice_phase_slm_40x40.json'))
+    parser.add_argument('--config', type=Path, default=Path('configs/public/prvamp_i02_damped.json'))
+    parser.add_argument('--output', type=Path, required=True)
+    args = parser.parse_args()
+    start = time.perf_counter()
+    if args.action == 'run':
+        fit_prvamp(args.manifest, args.data_dir, args.policy, args.config, args.output)
+    result = report(args.output, args.data_dir)
+    if args.action == 'run':
+        write_json(args.output / 'pipeline_timing.json', dict(end_to_end_including_evaluation_seconds=time.perf_counter()-start))
+    print(json.dumps({k: {n: v for n, v in m.items() if n != 'rows'} for k, m in result['metrics'].items()}, indent=2))
+
+
+if __name__ == '__main__':
+    main()

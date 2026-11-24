@@ -29,7 +29,15 @@ Tracked docs/results/i02_summary.json includes every row, runtime versions, sour
 
 Preparation used one SVD per run (10.87 s initial, 6.27 s follow-up). End-to-end times were 211.65 s and 373.30 s. Peak traced allocation was about 1.264 GB, excluding untraced native BLAS workspace; it is not a process-RSS measurement. Runs used CPU, Python 3.12.14, NumPy 2.5.5, SciPy 1.18.1 and four configured BLAS threads.
 
-## Next entry point: I03
+## I03 integration checkpoint
+The runner command `python -m tmbench.runner run --output runs/i03_prvamp` loads,
+fits, evaluates held-out splits and saves. `python -m tmbench.runner report
+--output runs/i03_prvamp` regenerates evaluation without fitting. Metrics retain
+per-row SSE, amplitude energy, valid counts and the full attempted-row denominator.
+35 tests pass. Existing I02 held-out report: validation relative residual 0.586235,
+test 0.575469, both 32/32 coverage. These scores do not certify convergence.
+
+## Next entry point: I03 verification, then I04
 Load the saved estimates and evaluate the already-frozen validation/test measurements with explicit valid-row coverage and metric denominators. Preserve all nonconvergence/instability outcomes. Do not interpret low training residual or finite estimates as predictive success. Neither held-out observations nor released comparator TMs have been used for solver tuning. No I03 completion is claimed.
 
 ## Scope
