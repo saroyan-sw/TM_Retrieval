@@ -43,7 +43,10 @@ are archived in docs/results/i03_prvamp_*; full histories remain local.
 These scores do not certify convergence.
 
 ## Next entry point: I04
-prGAMP implementation and focused checks are in progress. Preserve all
+prGAMP implementation and focused checks are integrated (41 tests pass). Run
+`python -m tmbench.runner run --method prgamp --output runs/i04_prgamp`, then
+`python scripts/archive_run.py runs/i04_prgamp`. See bayes_source_audit.md.
+The public-data execution is the remaining I04 checkpoint. Preserve all
 nonconvergence/instability outcomes. Neither held-out observations nor released
 comparator TMs are used for solver tuning.
 

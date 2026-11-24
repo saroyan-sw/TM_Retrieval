@@ -44,16 +44,18 @@ def report(output, data_dir):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('action', choices=['run', 'report'])
-    parser.add_argument('--method', default='prvamp', choices=['prvamp'])
+    parser.add_argument('--method', default='prvamp', choices=['prvamp', 'prgamp'])
     parser.add_argument('--manifest', type=Path, default=Path('data/manifests/rice_phase_slm_40x40.json'))
     parser.add_argument('--data-dir', type=Path, default=Path('data/raw/phase_slm_40x40'))
     parser.add_argument('--policy', type=Path, default=Path('configs/public/rice_phase_slm_40x40.json'))
-    parser.add_argument('--config', type=Path, default=Path('configs/public/prvamp_i02_damped.json'))
+    parser.add_argument('--config', type=Path)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
+    if args.config is None:
+        args.config = Path('configs/public') / {'prvamp': 'prvamp_i02_damped.json', 'prgamp': 'prgamp_i04.json'}[args.method]
     start = time.perf_counter()
     if args.action == 'run':
-        fit_prvamp(args.manifest, args.data_dir, args.policy, args.config, args.output)
+        fit_prvamp(args.manifest, args.data_dir, args.policy, args.config, args.output, method=args.method)
     result = report(args.output, args.data_dir)
     if args.action == 'run':
         write_json(args.output / 'pipeline_timing.json', dict(end_to_end_including_evaluation_seconds=time.perf_counter()-start))

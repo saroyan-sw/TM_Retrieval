@@ -105,7 +105,7 @@ def fit_rows(train, config, output):
     return summary
 
 
-def run(manifest_path, data_dir, policy_path, config_path, output):
+def run(manifest_path, data_dir, policy_path, config_path, output, method='prvamp'):
     output = Path(output)
     if output.exists() and any(output.iterdir()):
         raise FileExistsError('Use a fresh output directory')
@@ -123,9 +123,13 @@ def run(manifest_path, data_dir, policy_path, config_path, output):
                     platform=platform.platform(), device='CPU', git_commit=git('rev-parse', 'HEAD'),
                     git_dirty=bool(git('status', '--porcelain')),
                     threads={k: os.getenv(k) for k in ('OPENBLAS_NUM_THREADS', 'OMP_NUM_THREADS', 'MKL_NUM_THREADS')},
-                    config=config, manifest=manifest, policy=policy)
+                    config=config, manifest=manifest, policy=policy, method=method)
     write_json(output / 'provenance.json', versions)
-    summary = fit_rows(dataset.train, config, output)
+    if method == 'prvamp':
+        summary = fit_rows(dataset.train, config, output)
+    else:
+        from tmbench.bayes_fit import fit_rows as fit_bayes
+        summary = fit_bayes(dataset.train, config, output, method)
     summary['end_to_end_seconds'] = time.perf_counter() - start
     summary['peak_traced_bytes'] = tracemalloc.get_traced_memory()[1]
     summary['memory_note'] = 'Python/NumPy traced allocation peak, not process peak RSS or native BLAS workspace'
