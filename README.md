@@ -32,4 +32,21 @@ history and status into the selected output folder. Existing outputs are protect
 I01 and I02 checkpoints are complete. Both real-data configurations and all
 32 attempted rows are recorded in [results](docs/results/i02_summary.json).
 The stronger-damping run produced finite estimates for every row, but all
-reached the 300-iteration limit. Held-out prediction evaluation remains I03.
+reached the 300-iteration limit.
+
+## Reproducible fitting and held-out evaluation
+
+```powershell
+$env:OPENBLAS_NUM_THREADS='4'
+.\.venv\Scripts\python.exe -m tmbench.runner run --output runs/my_prvamp
+.\.venv\Scripts\python.exe -m tmbench.runner report --output runs/my_prvamp
+.\.venv\Scripts\python.exe scripts/archive_run.py runs/my_prvamp
+```
+
+The run command loads, checks and preprocesses the frozen data, fits training
+rows, and evaluates validation/test amplitudes. The report command reloads saved
+estimates without fitting. The archive command checks byte-identical report
+regeneration and recomputes training residuals, then preserves a compact matrix
+and provenance/report summary under docs/results. Full row histories remain in
+the run directory. Failed rows remain in the attempted-row denominator. Finite
+estimates at the iteration limit are not labelled converged.
