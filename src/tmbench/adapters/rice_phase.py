@@ -1,6 +1,7 @@
 """Load the paired PhaseSLM calibration measurements from the Rice release."""
 
 import hashlib
+import json
 import math
 from pathlib import Path
 
@@ -108,6 +109,8 @@ def _read_mat(
         "size_bytes": path.stat().st_size,
         "sha256": _sha256(path),
     }
+    if spec.get("sha256") and spec["sha256"] != info["sha256"]:
+        raise ValueError(f"Checksum mismatch for {path.name}")
     return values if axis == 0 else values.T, info
 
 
@@ -150,7 +153,10 @@ def _load_pair(
     if observations.dtype.kind not in "iuf":
         raise ValueError("Camera intensities must be real numeric values")
     encoding = manifest["pattern_encoding"]
-    return _decode_patterns(patterns, encoding), observations, {
+    scale = manifest.get("pattern_storage_scale", 1.0)
+    if not np.isfinite(scale) or scale <= 0:
+        raise ValueError("pattern_storage_scale must be positive and finite")
+    return _decode_patterns(patterns / scale, encoding), observations, {
         "patterns": pattern_info,
         "observations": observation_info,
         "paired_count": len(patterns),
@@ -187,10 +193,13 @@ def _split_training(
 
 
 def _select(
-    X: np.ndarray, intensities: np.ndarray, indices: np.ndarray, detector_ids: np.ndarray
+    X: np.ndarray, intensities: np.ndarray, indices: np.ndarray, detector_ids: np.ndarray,
+    saturation_value=None,
 ) -> CalibrationSplit:
     selected = intensities[indices]
     valid = np.isfinite(selected) & (selected >= 0)
+    if saturation_value is not None:
+        valid &= selected < saturation_value
     return CalibrationSplit(X[indices], selected, valid, indices, detector_ids)
 
 
@@ -214,9 +223,10 @@ def load(data_dir: Path, manifest: dict, split_policy: dict) -> CalibrationDatas
     train_X, train_I, train_info = _load_pair("train", manifest, data_dir, detector_ids)
     test_X, test_I, test_info = _load_pair("test", manifest, data_dir, detector_ids)
     train_ids, validation_ids, excluded = _split_training(train_X, test_X, split_policy)
-    train = _select(train_X, train_I, train_ids, detector_ids)
-    validation = _select(train_X, train_I, validation_ids, detector_ids)
-    test = _select(test_X, test_I, np.arange(len(test_X)), detector_ids)
+    saturation = manifest.get("saturation_value")
+    train = _select(train_X, train_I, train_ids, detector_ids, saturation)
+    validation = _select(train_X, train_I, validation_ids, detector_ids, saturation)
+    test = _select(test_X, test_I, np.arange(len(test_X)), detector_ids, saturation)
     report = {
         "dataset_id": manifest["dataset_id"],
         "source": manifest["source"],
@@ -224,6 +234,8 @@ def load(data_dir: Path, manifest: dict, split_policy: dict) -> CalibrationDatas
         "intensity_units": manifest.get("intensity_units"),
         "release_preprocessing": manifest.get("release_preprocessing"),
         "pattern_encoding": manifest["pattern_encoding"],
+        "pattern_storage_scale": manifest.get("pattern_storage_scale", 1.0),
+        "saturation_value": saturation,
         "files": {"train": train_info, "test": test_info},
         "pairing_check": "pattern and camera sample counts agree in release order",
         "detector_ids": detector_ids.tolist(),
@@ -243,4 +255,16 @@ def load(data_dir: Path, manifest: dict, split_policy: dict) -> CalibrationDatas
             for name, split in (("train", train), ("validation", validation), ("test", test))
         },
     }
+    if split_policy.get("frozen_manifest"):
+        frozen = json.loads(Path(split_policy["frozen_manifest"]).read_text(encoding="utf-8"))
+        actual_hashes = {
+            info[role]["filename"]: info[role]["sha256"]
+            for info in (train_info, test_info) for role in ("patterns", "observations")
+        }
+        if actual_hashes != frozen["source_sha256"]:
+            raise ValueError("Frozen split refers to different source files")
+        if frozen["policy"]["detector_ids"] != detector_ids.tolist():
+            raise ValueError("Detector selection differs from frozen manifest")
+        if frozen["splits"] != {k: v["source_indices"] for k, v in report["splits"].items()}:
+            raise ValueError("Resolved split differs from frozen manifest")
     return CalibrationDataset(train, validation, test, report)

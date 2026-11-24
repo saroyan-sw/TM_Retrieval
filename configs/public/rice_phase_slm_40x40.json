@@ -1,6 +1,7 @@
 {
   "dataset_id": "rice_phase_slm_40x40",
   "seed": 42,
+  "frozen_manifest": "data/manifests/rice_phase_slm_40x40_split.json",
   "validation_fraction": 0.1,
   "detector_ids": [
     8208, 8240, 8272, 8304, 8336, 8368, 8400, 8432,

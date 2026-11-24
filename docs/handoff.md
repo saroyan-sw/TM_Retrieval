@@ -1,14 +1,17 @@
-# Handoff
+# Handoff — 2026-11-24
 
-Checkpoint 2026-11-24: recovered the existing adapter, split policy, CLI and five tests from the OneDrive project copy into this repository. All five tests pass using `.venv/Scripts/python.exe -m pytest -q`. Public phase files are being downloaded; actual-array and encoding verification remain pending. This is an intermediate checkpoint, not completion of I01.
+## I01 complete
+Recovered the existing OneDrive loader in commit 6a0cbac, then inspected all four public phase files, corrected stored field scaling (-255/+255 to -1/+1), pinned SHA256 hashes and froze explicit split/detector IDs. Dataset provenance and remaining acquisition uncertainties are in dataset_inventory.md.
 
-The isolated `.venv` uses the bundled Python runtime. Run `.venv/Scripts/python.exe -m tmbench inspect-data` after downloads complete. I02 still needs the supplied prVAMP source; it was not found in either project directory. The user has been asked for its location.
+Run from this repository:
+```powershell
+.\.venv\Scripts\python.exe -m tmbench inspect-data
+.\.venv\Scripts\python.exe -m pytest -q
+```
+Verified: X training (17280,1600), validation (1920,1600), test (5,1600); 32 fixed detectors; 552960/61440/160 valid intensity observations; no train/test probe overlap. Seven focused tests pass. Raw public files remain local and untracked; download URLs and hashes are in the dataset manifest. Python packages are in the isolated .venv.
 
-## I01 entry point
+## I02 next
+Recover supplied prVAMP ZIP from previous project chats (user confirmed its location there). Adapt its likelihood and solver with a single shared training-X SVD, preserve held-out isolation, record per-row statuses and mismatch between quantized camera intensities and Rician field noise. No fit has yet been claimed. The user did not authorize an amplitude-regime substitution; the selected data is phase-only.
 
-1. Put the four Rice `PhaseSLM_40x40` calibration files in `data/raw/phase_slm_40x40/` and run `python -m tmbench check-files` from the repository root.
-2. Inspect the MATLAB arrays and release documentation. Update the manifest and inventory with checksums, file variables, orientation, encoding, observation domain, and known preprocessing.
-3. Implement the first adapter and freeze the training, validation, test, and detector selections. Use sample-major `X` of shape `(P, N)` and observations of shape `(P, M)`, where `P` counts patterns, `N` input modes, and `M` detector outputs. Compute predicted field as `X @ A.T` for `A` of shape `(M, N)`.
-4. Verify the loader on the public arrays and record the command and result. I02 starts after that checkpoint.
-
-Research can proceed independently in `research/`.
+## Scope
+No synthetic benchmark data, reference-TM tuning, published algorithm rankings or I03 completion claims. Tests use small numerical fixtures only. No remote push has been performed.

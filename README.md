@@ -1,24 +1,18 @@
 # TM Retrieval
 
-Benchmark transmission-matrix retrieval from known illumination patterns and measured optical outputs. The first dataset candidate is the Rice `PhaseSLM_40x40` release. I01 verifies and imports the public measurements, I02 adapts prVAMP, and I03 evaluates predictions on held-out patterns.
+Public-data transmission-matrix calibration benchmark. I01 imports verified Rice PhaseSLM_40x40 pairs; I02 adapts the existing prVAMP implementation.
 
-## Set up on Windows
-
-Run from the repository root with Python 3.10 or later.
-
+## Setup and inspect
+Python 3.10+:
 ```powershell
-py -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -e ".[dev]"
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -e ".[dev,hdf5]"
+.\.venv\Scripts\python.exe -m tmbench inspect-data
+.\.venv\Scripts\python.exe -m pytest -q
 ```
 
-If inspection shows the release uses HDF5-based MATLAB files, install the HDF5 extra with `-e ".[dev,hdf5]"`.
+Place the four calibration MAT files in data/raw/phase_slm_40x40. Exact public download URLs and SHA256 hashes are in data/manifests/rice_phase_slm_40x40.json. The current checkout already has the downloaded files locally.
 
-## Check the public data files
+Inspection verifies hashes, decodes signed fields, loads the predetermined 32 detectors, checks pairing and frozen splits, and writes runs/rice_phase_slm_40x40/inspection.json. All 1600 input modes are preserved; measurements remain in released intensity counts.
 
-Place the four calibration files from the [Rice phase subset](https://rice.app.box.com/v/TransmissionMatrices/folder/42189283459) in `data/raw/phase_slm_40x40/`. The command checks filenames and sizes. Array contents and their optical meaning are verified in I01.
-
-```powershell
-.\.venv\Scripts\python.exe -m tmbench check-files
-```
-
-See the [dataset inventory](docs/dataset_inventory.md) and [handoff](docs/handoff.md) for the first checkpoint. Source code, configs, and manifests are tracked. Downloaded measurements and run outputs stay local.
+See [dataset inventory](docs/dataset_inventory.md) for acquisition limitations and [handoff](docs/handoff.md) for checkpoint status.
