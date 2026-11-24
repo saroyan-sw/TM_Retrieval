@@ -9,6 +9,8 @@ dist/
 
 # Local calibration data and benchmark outputs
 /data/raw/
+/data/*_listing.html
+/data/project_page.html
 *.mat
 *.h5
 *.hdf5

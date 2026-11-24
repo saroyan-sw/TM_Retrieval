@@ -4,6 +4,9 @@ import argparse
 import json
 from pathlib import Path
 
+DEFAULT_MANIFEST = Path("data/manifests/rice_phase_slm_40x40.json")
+DEFAULT_DATA_DIR = Path("data/raw/phase_slm_40x40")
+
 
 def check_files(manifest_path: Path, data_dir: Path) -> int:
     """Report missing or empty calibration files listed in the manifest."""
@@ -29,18 +32,50 @@ def main() -> int:
     parser = argparse.ArgumentParser(prog="python -m tmbench")
     commands = parser.add_subparsers(dest="command", required=True)
     check = commands.add_parser("check-files", help="Check that calibration files are present")
-    check.add_argument(
-        "--manifest",
-        type=Path,
-        default=Path("data/manifests/rice_phase_slm_40x40.json"),
+    inspect = commands.add_parser(
+        "inspect-data", help="Load Rice calibration pairs and write an inspection report"
     )
-    check.add_argument("--data-dir", type=Path, default=Path("data/raw/phase_slm_40x40"))
+    for command in (check, inspect):
+        command.add_argument("--manifest", type=Path, default=DEFAULT_MANIFEST)
+        command.add_argument("--data-dir", type=Path, default=DEFAULT_DATA_DIR)
+    inspect.add_argument(
+        "--split-policy", type=Path, default=Path("configs/public/rice_phase_slm_40x40.json")
+    )
+    inspect.add_argument(
+        "--report", type=Path, default=Path("runs/rice_phase_slm_40x40/inspection.json")
+    )
     args = parser.parse_args()
 
     try:
-        return check_files(args.manifest, args.data_dir)
-    except (OSError, ValueError, KeyError, AttributeError) as error:
-        parser.exit(2, f"Error checking calibration files: {error}\n")
+        if args.command == "check-files":
+            return check_files(args.manifest, args.data_dir)
+        if check_files(args.manifest, args.data_dir):
+            return 1
+        return inspect_data(args.manifest, args.data_dir, args.split_policy, args.report)
+    except (OSError, ValueError, KeyError, TypeError, AttributeError, MemoryError) as error:
+        detail = str(error) or type(error).__name__
+        parser.exit(2, f"Error reading calibration data: {detail}\n")
+
+
+def inspect_data(manifest_path: Path, data_dir: Path, policy_path: Path, report_path: Path) -> int:
+    """Verify the calibration pairs and save provenance and source indices."""
+    from tmbench.adapters.rice_phase import load
+
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    policy = json.loads(policy_path.read_text(encoding="utf-8"))
+    report = load(data_dir, manifest, policy).report
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    report_path.write_text(json.dumps(report, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+    print(f"Pairing: {report['pairing_check']}")
+    for name, split in report["splits"].items():
+        print(
+            f"{name}: X {tuple(split['pattern_shape'])}, "
+            f"I {tuple(split['intensity_shape'])}, "
+            f"{split['valid_observations']:,} valid observations"
+        )
+    print(f"Training rows excluded for test overlap: {len(report['training_rows_excluded_for_test_overlap'])}")
+    print(f"Inspection report: {report_path}")
+    return 0
 
 
 if __name__ == "__main__":

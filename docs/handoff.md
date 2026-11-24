@@ -1,6 +1,8 @@
 # Handoff
 
-The Python project layout and initial Rice file manifest are ready. The file check reports missing and empty inputs.
+Checkpoint 2026-11-24: recovered the existing adapter, split policy, CLI and five tests from the OneDrive project copy into this repository. All five tests pass using `.venv/Scripts/python.exe -m pytest -q`. Public phase files are being downloaded; actual-array and encoding verification remain pending. This is an intermediate checkpoint, not completion of I01.
+
+The isolated `.venv` uses the bundled Python runtime. Run `.venv/Scripts/python.exe -m tmbench inspect-data` after downloads complete. I02 still needs the supplied prVAMP source; it was not found in either project directory. The user has been asked for its location.
 
 ## I01 entry point
 

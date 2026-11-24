@@ -1,6 +1,13 @@
 {
   "dataset_id": "rice_phase_slm_40x40",
   "status": "pending_array_inspection",
+  "input_modes": 1600,
+  "detector_count": 65536,
+  "pattern_encoding": "signed_binary_field",
+  "observation_domain": "intensity",
+  "intensity_units": null,
+  "release_preprocessing": null,
+  "file_layout": {},
   "source": {
     "project_url": "https://dsp.rice.edu/research/transmissionmatrices/",
     "release_url": "https://rice.app.box.com/v/TransmissionMatrices/folder/42189283459",
