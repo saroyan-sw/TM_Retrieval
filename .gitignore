@@ -1,0 +1,20 @@
+# Python build, test, and environment files
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+build/
+dist/
+
+# Local calibration data and benchmark outputs
+/data/raw/
+*.mat
+*.h5
+*.hdf5
+/runs/*
+!/runs/.gitkeep
+
+# Local environment variables
+.env
+.env.*

@@ -1,0 +1,24 @@
+{
+  "dataset_id": "rice_phase_slm_40x40",
+  "status": "pending_array_inspection",
+  "source": {
+    "project_url": "https://dsp.rice.edu/research/transmissionmatrices/",
+    "release_url": "https://rice.app.box.com/v/TransmissionMatrices/folder/42189283459",
+    "release_version": null,
+    "license": null
+  },
+  "calibration_pairs": {
+    "train": {
+      "patterns": "XH_train.mat",
+      "observations": "YH_squared_train.mat"
+    },
+    "test": {
+      "patterns": "XH_test.mat",
+      "observations": "YH_squared_test.mat"
+    }
+  },
+  "fitted_comparators": {
+    "gerchberg_saxton": "A_GS.mat",
+    "prvamp": "A_prVAMP.mat"
+  }
+}
