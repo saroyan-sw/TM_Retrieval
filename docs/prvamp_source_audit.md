@@ -47,3 +47,10 @@ status, parameters, timing and training diagnostic immediately. Pending/running
 statuses survive interruptions. Existing run directories cannot be overwritten.
 Iteration-limit estimates are kept but never labelled converged. Convergence
 does not establish predictive quality or a correct TM.
+
+Training-only stability follow-up: the initial 100-iteration, damping=0.5 run
+showed very large residuals on multiple rows. Preserve that run in full. A second
+declared configuration, prvamp_i02_damped.json, uses damping=0.1 and 300 iterations
+with the same data, detector IDs, seed and variance assumptions. This is a
+training-diagnostic-driven stability adjustment, not held-out hyperparameter
+selection or evidence of prediction accuracy. Both configurations remain tracked.
