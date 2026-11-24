@@ -1,0 +1,10 @@
+{
+  "seed": 20261124,
+  "noise_fraction": 0.01,
+  "max_iter": 100,
+  "min_iter": 20,
+  "tolerance": 1e-7,
+  "damping": 0.5,
+  "initializer": "random",
+  "stabilize": true
+}

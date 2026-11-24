@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import os
 from pathlib import Path
 
 DEFAULT_MANIFEST = Path("data/manifests/rice_phase_slm_40x40.json")
@@ -31,6 +32,12 @@ def check_files(manifest_path: Path, data_dir: Path) -> int:
 def main() -> int:
     parser = argparse.ArgumentParser(prog="python -m tmbench")
     commands = parser.add_subparsers(dest="command", required=True)
+    fit = commands.add_parser('fit-prvamp', help='Fit fixed detector rows using training measurements only')
+    fit.add_argument('--manifest', type=Path, default=DEFAULT_MANIFEST)
+    fit.add_argument('--data-dir', type=Path, default=DEFAULT_DATA_DIR)
+    fit.add_argument('--split-policy', type=Path, default=Path('configs/public/rice_phase_slm_40x40.json'))
+    fit.add_argument('--config', type=Path, default=Path('configs/public/prvamp_i02.json'))
+    fit.add_argument('--output', type=Path, default=Path('runs/prvamp_i02'))
     check = commands.add_parser("check-files", help="Check that calibration files are present")
     inspect = commands.add_parser(
         "inspect-data", help="Load Rice calibration pairs and write an inspection report"
@@ -47,6 +54,11 @@ def main() -> int:
     args = parser.parse_args()
 
     try:
+        if args.command == 'fit-prvamp':
+            for key in ('OPENBLAS_NUM_THREADS', 'OMP_NUM_THREADS', 'MKL_NUM_THREADS'):
+                os.environ.setdefault(key, '4')
+            from tmbench.fit import run
+            return run(args.manifest, args.data_dir, args.split_policy, args.config, args.output)
         if args.command == "check-files":
             return check_files(args.manifest, args.data_dir)
         if check_files(args.manifest, args.data_dir):
