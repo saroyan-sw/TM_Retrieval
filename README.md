@@ -2,8 +2,8 @@
 
 Public-data transmission-matrix calibration benchmark using verified Rice
 PhaseSLM_40x40 pairs, with prVAMP, prGAMP, prVBEM, warm-started prSAMP and
-Gerchberg–Saxton adapters. I01–I07 implementation checkpoints are complete and
-54 tests pass. The public runs
+Gerchberg–Saxton and Wirtinger Flow adapters. I01–I08 implementation checkpoints
+are complete and 58 tests pass. The public runs
 retain nonconvergence and failed calibration outcomes explicitly.
 
 ## Setup and inspect
@@ -116,3 +116,25 @@ initialization, and singular-value cutoff.
 
 All rows reached the preset iteration limit. Each report replayed byte-for-byte
 from saved estimates.
+
+## Wirtinger Flow baseline
+
+```powershell
+$env:OPENBLAS_NUM_THREADS='4'
+.\.venv\Scripts\python.exe -m tmbench.runner run --method wf --output runs/my_wf_original
+.\.venv\Scripts\python.exe -m tmbench.runner run --method wf --config configs/public/wf_i08_adaptive.json --output runs/my_wf_adaptive
+```
+
+Both presets fit the released training intensities and use the same seeded
+spectral initializer. The default policy follows the original learning-rate
+ramp. The adaptive policy uses Armijo backtracking. Both allow 50 gradient
+updates. See the [WF source audit](docs/wf_source_audit.md) for the gradient,
+initialization and step rules.
+
+| WF policy | Finite rows | Validation relative residual | Test relative residual |
+|---|---:|---:|---:|
+| [Original](docs/results/i08_wf_original_summary.json) | 32/32 | 0.504957 | 0.484315 |
+| [Adaptive](docs/results/i08_wf_adaptive_summary.json) | 32/32 | 0.493093 | 0.482124 |
+
+All rows reached the 50-update limit. Both reports replayed byte-for-byte from
+saved estimates.

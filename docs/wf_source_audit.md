@@ -46,5 +46,6 @@ policy, and row histories save accepted steps, losses and backtrack counts.
 The checks compare the complex derivative with centered directional differences
 and the initializer with a dense Hermitian eigensolve. Additional checks exercise
 the original step, the adaptive sufficient-decrease test and invalid-row
-handling. The archive verifier recalculates the final intensity loss and training
-amplitude residual before replaying the held-out report from saved coefficients.
+handling. The archive verifier independently recalculates the final intensity
+loss and training amplitude residual, and checks that the held-out report
+regenerates byte-for-byte from saved coefficients.

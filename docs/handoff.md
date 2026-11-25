@@ -1,7 +1,7 @@
 # Handoff — 2026-11-25
 
-I01–I07 implementation checkpoints are complete and committed. The current test
-suite passes all 54 tests. Public results below include iteration limits and the
+I01–I08 implementation checkpoints are complete and committed. The current test
+suite passes all 58 tests. Public results below include iteration limits and the
 failed variance-learning outcome; completion does not imply successful calibration
 or numerical convergence. Full runs remain in runs/; compact matrices, provenance,
 statuses, timings and report checks are versioned in docs/results/.
@@ -159,7 +159,49 @@ $env:MKL_NUM_THREADS='4'
 .\.venv\Scripts\python.exe scripts/archive_run.py runs/my_gs100
 ```
 
-I08 is the next plan checkpoint.
+## I08 complete — Wirtinger Flow
+
+The common runner's `--method wf` uses the training intensity loss, a
+spectral initializer and a declared step policy. The default follows the
+original Wirtinger Flow ramp. The adaptive preset uses an Armijo search on
+the same loss. The [WF source audit](wf_source_audit.md) records the equations,
+seed, spectral normalization, step rules, and limitations for real probes.
+
+| Policy | Validation relative amplitude residual | Test relative amplitude residual | Spectral initialization (s) | End-to-end with evaluation (s) |
+|---|---:|---:|---:|---:|
+| [Original](results/i08_wf_original_summary.json) | 0.504957 | 0.484315 | 52.78 | 119.91 |
+| [Adaptive](results/i08_wf_adaptive_summary.json) | 0.493093 | 0.482124 | 44.10 | 98.04 |
+
+Both presets ran 50 spectral iterations and 50 gradient updates per row on
+the same 17,280 training probes and 1,600 input modes. Both produced finite
+estimates for all 32 rows, all with status `max_iter_reached`. The held-out
+reports use 61,440 validation and 160 test observations. Initialization times
+sum the separately recorded spectral work for all detectors. The timings use
+shared hardware and reflect the measured duration of each run.
+
+The policies produced identical initial losses for all rows. All 1,600
+original updates followed the ramp. All 1,600 adaptive updates met the
+sufficient-decrease test, with 23 step halvings overall. The adaptive run had
+lower final training intensity loss on 30 of 32 rows. The archive verifier
+independently recalculated the final training loss and relative amplitude
+residual from each saved estimate and confirmed byte-identical held-out report
+replay. Compact matrices and summaries are in docs/results/i08_wf* and refer
+to source commit `2db07db`. The worktree flag includes the pre-existing
+untracked roadmap HTML file.
+
+To reproduce with fresh output directories:
+
+```powershell
+$env:OPENBLAS_NUM_THREADS='4'
+$env:OMP_NUM_THREADS='4'
+$env:MKL_NUM_THREADS='4'
+.\.venv\Scripts\python.exe -m tmbench.runner run --method wf --output runs/my_wf_original
+.\.venv\Scripts\python.exe -m tmbench.runner run --method wf --config configs/public/wf_i08_adaptive.json --output runs/my_wf_adaptive
+.\.venv\Scripts\python.exe scripts/archive_run.py runs/my_wf_original
+.\.venv\Scripts\python.exe scripts/archive_run.py runs/my_wf_adaptive
+```
+
+I09 is the next plan checkpoint.
 
 ## Scope
 No synthetic benchmark data, reference-TM tuning or published algorithm rankings.
