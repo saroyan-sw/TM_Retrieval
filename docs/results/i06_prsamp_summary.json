@@ -949,6 +949,8 @@
   "complete_run": false,
   "report_replay_byte_identical": true,
   "reloaded_training_residual_max_difference": 0.0,
+  "warm_start_artifacts_verified": 5,
+  "reloaded_warm_training_residual_max_difference": 0.0,
   "archive_sha256": "9ab3d90dbece4dd548b3400466da556649a05d004a4fbf265ef405e96cd7fa27",
   "artifact_sha256": {
     "evaluation.json": "8d631d62cbc4e3db05b55c6b6e0fbe1c540078681a3f64f9899e7bbf80e009f2",

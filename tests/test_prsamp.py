@@ -82,3 +82,22 @@ def test_samp_warm_start_adapter_cost_artifacts_and_repeatability(tmp_path):
         np.testing.assert_array_equal(a, b)
         history = json.loads((tmp_path/'first'/f"row_{row['detector_id']}_history.json").read_text())
         assert all(sorted(h['coordinate_order']) == list(range(5)) for h in history)
+
+
+def test_fixed_variance_warm_start_and_sweeps_recover_complex_fixture():
+    # Numerical verification only, not a generated benchmark dataset.
+    from tmbench.solvers.bayes import prvbem
+    rng = np.random.default_rng(83)
+    X = (rng.normal(size=(100, 6))+1j*rng.normal(size=(100, 6)))/10
+    truth = rng.normal(size=6)+1j*rng.normal(size=6)
+    y = abs(X@truth)
+    design = Design(X, gram=True)
+    warm = prvbem(design, y, 1e-4, 2.,
+                  dict(max_iter=20, learn_noise=False, learn_prior=False), 2)
+    result = prsamp(design, y, 1e-4, 2., dict(max_iter=5, min_iter=5, damping=.1), 3, warm)
+    assert warm.noise_variance == result.noise_variance == 1e-4
+    assert warm.prior_variance == result.prior_variance == 2.
+    assert result.history[-1]['relative_amplitude_residual'] < .001
+    phase = np.vdot(truth, result.x)
+    aligned = result.x * phase.conjugate()/abs(phase)
+    assert np.linalg.norm(aligned-truth)/np.linalg.norm(truth) < .001
