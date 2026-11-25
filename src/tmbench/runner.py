@@ -44,7 +44,7 @@ def report(output, data_dir):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('action', choices=['run', 'report'])
-    parser.add_argument('--method', default='prvamp', choices=['prvamp', 'prgamp', 'prvbem'])
+    parser.add_argument('--method', default='prvamp', choices=['prvamp', 'prgamp', 'prvbem', 'prsamp'])
     parser.add_argument('--manifest', type=Path, default=Path('data/manifests/rice_phase_slm_40x40.json'))
     parser.add_argument('--data-dir', type=Path, default=Path('data/raw/phase_slm_40x40'))
     parser.add_argument('--policy', type=Path, default=Path('configs/public/rice_phase_slm_40x40.json'))
@@ -52,7 +52,7 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     if args.config is None:
-        args.config = Path('configs/public') / {'prvamp': 'prvamp_i02_damped.json', 'prgamp': 'prgamp_i04.json', 'prvbem': 'prvbem_i05.json'}[args.method]
+        args.config = Path('configs/public') / {'prvamp': 'prvamp_i02_damped.json', 'prgamp': 'prgamp_i04.json', 'prvbem': 'prvbem_i05.json', 'prsamp': 'prsamp_i06.json'}[args.method]
     start = time.perf_counter()
     exit_code = 0
     if args.action == 'run':

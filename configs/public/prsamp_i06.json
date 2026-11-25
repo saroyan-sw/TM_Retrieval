@@ -1,0 +1,24 @@
+{
+  "seed": 20261124,
+  "noise_fraction": 0.01,
+  "max_iter": 5,
+  "min_iter": 5,
+  "tol": 1e-7,
+  "damping": 0.1,
+  "warm_start": {
+    "max_iter": 20,
+    "min_iter": 10,
+    "tol": 1e-7,
+    "damping": 1.0,
+    "learn_noise": true,
+    "learn_prior": true
+  },
+  "pilot": {
+    "rows": 4,
+    "seed": 20261124,
+    "max_iter": 20,
+    "min_iter": 10,
+    "tol": 1e-7,
+    "initial_noise_fraction": 0.01
+  }
+}

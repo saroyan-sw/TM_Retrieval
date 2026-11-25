@@ -1,6 +1,7 @@
 # TM Retrieval
 
-Public-data transmission-matrix calibration benchmark. I01 imports verified Rice PhaseSLM_40x40 pairs; I02 adapts the existing prVAMP implementation.
+Public-data transmission-matrix calibration benchmark using verified Rice
+PhaseSLM_40x40 pairs, with prVAMP, prGAMP, prVBEM and warm-started prSAMP adapters.
 
 ## Setup and inspect
 Python 3.10+:
@@ -50,3 +51,24 @@ regeneration and recomputes training residuals, then preserves a compact matrix
 and provenance/report summary under docs/results. Full row histories remain in
 the run directory. Failed rows remain in the attempted-row denominator. Finite
 estimates at the iteration limit are not labelled converged.
+
+## Bayesian baselines
+
+```powershell
+.\.venv\Scripts\python.exe -m tmbench.runner run --method prgamp --output runs/my_prgamp
+.\.venv\Scripts\python.exe -m tmbench.runner run --method prvbem --output runs/my_prvbem
+.\.venv\Scripts\python.exe -m tmbench.runner run --method prsamp --output runs/my_prsamp
+```
+
+Defaults are versioned in configs/public/*_i04.json, *_i05.json and *_i06.json;
+override with --config. All commands use the same frozen train/validation/test
+split and detector selection. prVBEM estimates variances from training data.
+prVBEM/prSAMP defaults run four predetermined training pilots, and prSAMP saves
+each prVBEM warm start before sweeping. Timings include those costs. prSAMP's
+five-sweep default is a bounded integration check, not a convergence guarantee.
+
+See the [Bayesian source audit](docs/bayes_source_audit.md) for equations, complex
+variance conventions, supported probes, safeguards and deviations from reference
+implementations. These local implementations and smoke runs do not establish
+published algorithm rankings; comprehensive parity and matched benchmarking
+remain I11/I12. The [handoff](docs/handoff.md) records verified checkpoint results.

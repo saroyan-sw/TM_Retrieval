@@ -61,6 +61,16 @@ Preserve all
 nonconvergence/instability outcomes. Neither held-out observations nor released
 comparator TMs are used for solver tuning.
 
+## I06 integration checkpoint
+The seeded swept solver and prVBEM warm-start adapter are integrated; 49 tests
+pass. Tests compare two full sweeps against a separate scalar-channel/direct-field
+oracle for binary, signed and complex probes. Warm starts and every coordinate
+permutation are persisted; timing includes preparation, pilots, warm starts and
+sweeps. The public command is `python -m tmbench.runner run --method prsamp
+--output runs/i06_prsamp`. The default is four training pilots, 20 warm-start
+iterations per row and five full sweeps. The public I05 and I06 artifact checks
+are still required before declaring these checkpoints complete.
+
 ## Scope
 No synthetic benchmark data, reference-TM tuning or published algorithm rankings.
 Tests use small numerical fixtures only. No remote push has been performed.

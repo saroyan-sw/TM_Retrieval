@@ -4,12 +4,12 @@ import time
 import numpy as np
 
 from .fit import write_json
-from .solvers.bayes import Design, prgamp, prvbem
+from .solvers.bayes import Design, prgamp, prvbem, prsamp
 from .pilots import estimate_variances
 
 
 def fit_rows(train, config, output, method):
-    if method not in ('prgamp', 'prvbem'):
+    if method not in ('prgamp', 'prvbem', 'prsamp'):
         raise ValueError('Unknown Bayesian solver')
     fraction = config['noise_fraction']
     if not np.isfinite(fraction) or not 0 < fraction < 1:
@@ -26,7 +26,7 @@ def fit_rows(train, config, output, method):
                    hyperparameter_policy='training energy with configured noise fraction; no held-out tuning')
     write_json(output / 'status.json', summary)
     start = time.perf_counter()
-    design = Design(train.X, gram=method == 'prvbem' or bool(config.get('pilot')))
+    design = Design(train.X, gram=method in ('prvbem', 'prsamp') or bool(config.get('pilot')))
     summary['prepare_seconds'] = time.perf_counter()-start
     pilot = None
     if config.get('pilot'):
@@ -55,8 +55,24 @@ def fit_rows(train, config, output, method):
                 if pilot is not None:
                     noise, prior = pilot['noise_fraction']*energy, pilot['prior_factor']*energy/design.probe_energy
                 record.update(initial_noise_variance=noise, initial_prior_variance=prior)
-                solver = {'prgamp': prgamp, 'prvbem': prvbem}[method]
-                result = solver(design, y, noise, prior, config, seed)
+                if method == 'prsamp':
+                    warm_start = time.perf_counter()
+                    warm_seed = [int(config['seed']), row, 606]
+                    warm = prvbem(design, y, noise, prior, config['warm_start'], warm_seed)
+                    record['warm_start_seconds'] = time.perf_counter()-warm_start
+                    warm_file = f'row_{row}_warm.npz'
+                    np.savez(output / warm_file, A_row=warm.x, variance=warm.variance, detector_id=row)
+                    write_json(output / f'row_{row}_warm_history.json', warm.history)
+                    record.update(warm_start_status=warm.status, warm_start_iterations=len(warm.history),
+                                  warm_start_seed=warm_seed, warm_start_file=warm_file,
+                                  warm_noise_variance=warm.noise_variance, warm_prior_variance=warm.prior_variance)
+                    write_json(output / 'status.json', summary)
+                    sweep_start = time.perf_counter()
+                    result = prsamp(design, y, noise, prior, config, seed, initial=warm)
+                    record['swept_seconds'] = time.perf_counter()-sweep_start
+                else:
+                    solver = {'prgamp': prgamp, 'prvbem': prvbem}[method]
+                    result = solver(design, y, noise, prior, config, seed)
                 estimate_file = f'row_{row}.npz'
                 np.savez(output / estimate_file, A_row=result.x, variance=result.variance, detector_id=row)
                 write_json(output / f'row_{row}_history.json', result.history)
@@ -76,5 +92,9 @@ def fit_rows(train, config, output, method):
     summary.update(status='complete', finite_estimate_rows=sum('estimate_file' in r for r in records),
                    converged_rows=sum(r.get('converged', False) for r in records))
     summary['finite_estimate_coverage'] = summary['finite_estimate_rows']/len(records)
+    if method == 'prsamp':
+        summary['warm_start_seconds'] = sum(r.get('warm_start_seconds', 0.) for r in records)
+        summary['swept_seconds'] = sum(r.get('swept_seconds', 0.) for r in records)
+        summary['timing_note'] = 'row solve_seconds includes warm start, sweeps and row writes; end-to-end also includes pilots/preparation/loading'
     write_json(output / 'status.json', summary)
     return summary

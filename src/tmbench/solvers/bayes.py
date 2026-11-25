@@ -194,3 +194,55 @@ def prvbem(design, y, noise, prior, config, seed):
             status = 'converged'
             break
     return Result(a, c, design.forward(a), status, history, noise, prior)
+
+
+def prsamp(design, y, noise, prior, config, seed, initial=None):
+    """Seeded swept GAMP; IPOL Algorithm 1 generalized to dense signed/complex X."""
+    y, noise, prior, rng, a, c = initialize(design, y, noise, prior, config, seed, initial)
+    g = np.zeros(design.P, complex)
+    sigma, r = np.zeros(design.N), np.zeros(design.N, complex)
+    history, status = [], 'max_iter_reached'
+    damping = config.get('damping', .1)
+    floor = 1e-12/prior
+    for iteration in range(1, config['max_iter']+1):
+        old, old_c = a.copy(), c.copy()
+        V = np.maximum(design.power@c, 1e-12*noise)
+        omega = design.forward(a)-V*g
+        z, vz = channel(omega, V, y, noise)
+        g, dg = (z-omega)/V, (vz/V-1)/V
+        g_start = g.copy()
+        stabilized = 0
+        order = rng.permutation(design.N)
+        for i in order:
+            column, power = design.X[:, i], design.power[:, i]
+            precision = -float(power@dg)
+            stabilized += int(precision < floor)
+            target_sigma = 1/max(precision, floor)
+            # Reference C uses undamped first sweep; subsequent s/r are damped.
+            weight = 1. if iteration == 1 else damping
+            sigma[i] = (1-weight)*sigma[i]+weight*target_sigma
+            target_r = a[i]+sigma[i]*np.vdot(column, g)
+            r[i] = (1-weight)*r[i]+weight*target_r
+            next_a = prior/(prior+sigma[i])*r[i]
+            next_c = prior*sigma[i]/(prior+sigma[i])
+            delta_v = power*(next_c-c[i])
+            next_V = V+delta_v
+            stabilized += np.count_nonzero(next_V < 1e-12*noise)
+            next_V = np.maximum(next_V, 1e-12*noise)
+            # Accumulate omega; use sweep-start g, not the evolving g.
+            omega += column*(next_a-a[i])-(next_V-V)*g_start
+            V = next_V
+            a[i], c[i] = next_a, next_c
+            z, vz = channel(omega, V, y, noise)
+            g, dg = (z-omega)/V, (vz/V-1)/V
+        entry = history_entry(design, a, old, y, iteration, stabilized)
+        entry['variance_relative_change'] = float(np.linalg.norm(c-old_c)/np.linalg.norm(old_c))
+        # Store permutations themselves: transparent replay of every swept order.
+        entry['coordinate_order'] = order.tolist()
+        history.append(entry)
+        if (iteration >= config.get('min_iter', 1)
+                and max(entry['relative_change'], entry['variance_relative_change']) < config.get('tol', 1e-6)):
+            status = 'converged'
+            break
+    return Result(a, c, design.forward(a), status, history, noise, prior,
+                  dict(sweep_seed=seed, initialization='prVBEM mean and variance' if initial is not None else 'seeded Gaussian'))
