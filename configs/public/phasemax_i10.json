@@ -1,0 +1,9 @@
+{
+  "seed": 20261124,
+  "spectral_iterations": 50,
+  "amplitude_padding_fraction": 0.0,
+  "max_iter": 5000,
+  "solver_time_limit_seconds": 10.0,
+  "solver_tolerance": 1e-6,
+  "feasibility_tolerance": 2e-5
+}

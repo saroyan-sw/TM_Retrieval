@@ -25,6 +25,14 @@ def archive(directory, target, allow_incomplete=False):
     X = dataset.train.X.astype(complex if np.iscomplexobj(dataset.train.X) else float)
     Y = dataset.train.amplitudes
     for index, row in enumerate(status['rows']):
+        anchor = None
+        if 'anchor_file' in row:
+            with np.load(directory / row['anchor_file'], allow_pickle=False) as artifact:
+                assert int(artifact['detector_id']) == row['detector_id']
+                anchor = artifact['anchor']
+            assert anchor.shape == (X.shape[1],) and np.isfinite(anchor).all()
+            np.testing.assert_allclose(np.linalg.norm(anchor), 1., rtol=1e-9, atol=1e-10)
+            assert 0 <= row['anchor_seconds'] <= row['solve_seconds']
         if 'estimate_file' not in row:
             continue
         saved = np.load(directory / row['estimate_file'], allow_pickle=False)
@@ -36,6 +44,12 @@ def archive(directory, target, allow_incomplete=False):
         residual = float(np.linalg.norm(predicted-Y[:, index])/np.linalg.norm(Y[:, index]))
         np.testing.assert_allclose(residual, row['training_relative_amplitude_residual'], rtol=1e-9, atol=1e-10)
         discrepancies.append(abs(residual-row['training_relative_amplitude_residual']))
+        if anchor is not None:
+            objective = np.vdot(anchor, saved['A_row']).real
+            violation = max(0., float(np.max(predicted - (Y[:, index] + row['amplitude_padding']))))
+            np.testing.assert_allclose(objective, row['anchor_objective'], rtol=1e-9, atol=1e-10)
+            np.testing.assert_allclose(violation, row['max_amplitude_violation'], rtol=1e-9, atol=1e-10)
+            assert row['backend_warm_start'] is False
         if 'final_intensity_loss' in row:
             target_intensity = dataset.train.intensities[:, index].astype(float)
             loss = np.mean((predicted**2 - target_intensity)**2) / 2

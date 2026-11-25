@@ -136,6 +136,9 @@ def run(manifest_path, data_dir, policy_path, config_path, output, method='prvam
     elif method == 'phaselift':
         from tmbench.phaselift_fit import fit_rows as fit_phaselift
         summary = fit_phaselift(dataset.train, config, output)
+    elif method == 'phasemax':
+        from tmbench.phasemax_fit import fit_rows as fit_phasemax
+        summary = fit_phasemax(dataset.train, config, output)
     else:
         from tmbench.bayes_fit import fit_rows as fit_bayes
         summary = fit_bayes(dataset.train, config, output, method)

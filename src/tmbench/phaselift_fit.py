@@ -8,14 +8,12 @@ import time
 import numpy as np
 
 from .fit import write_json
+from .solvers._convex import BACKEND, BackendUnavailable, UnsupportedSize
 from .solvers.phaselift import (
-    BACKEND,
     MAX_MODES,
     MAX_PATTERNS,
-    BackendUnavailable,
     PhaseLift,
     PhaseLiftConfig,
-    UnsupportedSize,
 )
 
 

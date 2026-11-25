@@ -3,19 +3,11 @@
 from dataclasses import dataclass
 
 import numpy as np
+from ._convex import BACKEND, UnsupportedSize, load_scs
 
 
 MAX_MODES = 32
 MAX_PATTERNS = 512
-BACKEND = 'SCS'
-
-
-class UnsupportedSize(ValueError):
-    pass
-
-
-class BackendUnavailable(RuntimeError):
-    pass
 
 
 @dataclass(frozen=True)
@@ -63,14 +55,7 @@ class PhaseLift:
         self.X = np.asarray(X, dtype=complex)
         if not np.isfinite(self.X).all() or not np.any(self.X):
             raise ValueError('X must have finite entries and nonzero probe energy')
-        try:
-            import cvxpy as cp
-            import scs
-        except ImportError as error:
-            raise BackendUnavailable('Install tmbench[convex] to use the PhaseLift backend') from error
-        if BACKEND not in cp.installed_solvers():
-            raise BackendUnavailable('SCS is unavailable in this CVXPY installation')
-        self.backend_versions = {'cvxpy': cp.__version__, 'scs': scs.__version__}
+        cp, self.backend_versions = load_scs('PhaseLift')
         self._solver_error = cp.SolverError
         self.config = config
         self._intensities = cp.Parameter(self.P, nonneg=True)

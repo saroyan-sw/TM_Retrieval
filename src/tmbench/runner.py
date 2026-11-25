@@ -19,6 +19,7 @@ DEFAULT_CONFIGS = {
     'gs': 'gs_i07_50.json',
     'wf': 'wf_i08_original.json',
     'phaselift': 'phaselift_i09.json',
+    'phasemax': 'phasemax_i10.json',
 }
 
 
@@ -49,10 +50,12 @@ def report(output, data_dir):
                   metrics=metrics, note='No reference TM; no coefficient-error or published ranking claim')
     if result['method'] == 'wf':
         result['policy'] = provenance['config']['policy']
-    if result['method'] == 'phaselift':
+    if result['method'] in ('phaselift', 'phasemax'):
         result.update(variant=status['variant'], backend=status['backend'],
                       preparation_status=status.get('preparation_status', 'prepared'),
                       reason=status.get('reason'))
+    if result['method'] == 'phasemax':
+        result.update(anchor_policy=status['anchor_policy'], backend_warm_start=status['backend_warm_start'])
     write_json(output / 'evaluation.json', result)
     return result
 
