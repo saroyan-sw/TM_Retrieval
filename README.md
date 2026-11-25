@@ -63,8 +63,12 @@ estimates at the iteration limit are not labelled converged.
 Defaults are versioned in configs/public/*_i04.json, *_i05.json and *_i06.json;
 override with --config. All commands use the same frozen train/validation/test
 split and detector selection. prVBEM estimates variances from training data.
-prVBEM/prSAMP defaults run four predetermined training pilots, and prSAMP saves
-each prVBEM warm start before sweeping. Timings include those costs. prSAMP's
+prVBEM defaults run four predetermined training pilots. The initial learned
+variances collapsed on this camera subset; that failed calibration is retained.
+prSAMP now defaults to an explicit fixed-variance configuration using training
+energy, and saves each prVBEM warm start before sweeping. The original pilot
+configuration remains available with --config configs/public/prsamp_i06.json.
+Timings include all initialization costs. prSAMP's
 five-sweep default is a bounded integration check, not a convergence guarantee.
 
 See the [Bayesian source audit](docs/bayes_source_audit.md) for equations, complex

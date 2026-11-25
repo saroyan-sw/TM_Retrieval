@@ -151,3 +151,22 @@ warm starts are retained and labelled. Warm arrays/history, status, iterations
 and seconds are saved before the swept solver starts. Row solve_seconds includes
 both stages; preparation, pilots, warm starts, swept time and end-to-end time are
 reported separately. Tests verify this accounting and deterministic replay.
+
+### Observed pilot collapse and explicit I06 follow-up
+
+The I05 public run's learned mean fields collapsed almost to zero. Pilot median
+noise/mean_intensity was 1.011745 and prior*probe_energy/mean_intensity 0.011746;
+the training-only I06 pilot trial also produced near-zero estimates. The original
+trial is preserved, including five completed rows, one interruption and 26 unrun
+rows. A short training-only fixed-variance burn-in diagnostic still subsequently
+collapsed under EM; it is recorded as an unsuccessful diagnostic.
+
+The follow-up **prsamp_i06_fixed_variance.json** is an explicit configuration
+change, now the CLI default: no pilots; noise and prior use the same declared
+training-energy assumptions as I04, and VBEM's optional noise/prior M-steps are
+disabled during the 20-iteration warm start. Five swept iterations follow. The
+mean-field coordinate and phase updates are unchanged. This tests I06 with a
+training initialization without transferring unusable pilot estimates. It does
+not claim to solve variance estimation on this camera, nor does it reproduce
+the paper's pilot transfer. Both attempts and costs are kept; no configuration
+is selected using validation/test responses.

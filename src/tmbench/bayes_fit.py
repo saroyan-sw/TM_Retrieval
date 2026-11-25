@@ -26,7 +26,16 @@ def fit_rows(train, config, output, method):
                    hyperparameter_policy='training energy with configured noise fraction; no held-out tuning')
     write_json(output / 'status.json', summary)
     start = time.perf_counter()
-    design = Design(train.X, gram=method in ('prvbem', 'prsamp') or bool(config.get('pilot')))
+    try:
+        design = Design(train.X, gram=method in ('prvbem', 'prsamp') or bool(config.get('pilot')))
+    except (ValueError, np.linalg.LinAlgError) as error:
+        for record in records:
+            record.update(status='unsupported_design', error=str(error))
+        summary.update(status='complete', prepare_seconds=time.perf_counter()-start,
+                       pilot_seconds=0., finite_estimate_rows=0, converged_rows=0,
+                       finite_estimate_coverage=0.)
+        write_json(output / 'status.json', summary)
+        return summary
     summary['prepare_seconds'] = time.perf_counter()-start
     pilot = None
     if config.get('pilot'):

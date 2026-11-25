@@ -10,10 +10,10 @@ from tmbench.runner import report
 from tmbench.solvers.prvamp.linear import matvec
 
 
-def archive(directory, target):
+def archive(directory, target, allow_incomplete=False):
     provenance = json.loads((directory / 'provenance.json').read_text())
     status = json.loads((directory / 'status.json').read_text())
-    if status['status'] != 'complete':
+    if status['status'] != 'complete' and not allow_incomplete:
         raise ValueError('Run is not complete')
     original = (directory / 'evaluation.json').read_bytes()
     evaluation = report(directory, Path('data/raw/phase_slm_40x40'))
@@ -36,6 +36,7 @@ def archive(directory, target):
     np.savez_compressed(matrix, A=estimates, detector_ids=dataset.train.detector_ids,
                         statuses=np.array([r['status'] for r in status['rows']]))
     result = dict(provenance=provenance, status=status, evaluation=evaluation,
+                  complete_run=status['status'] == 'complete',
                   report_replay_byte_identical=True,
                   reloaded_training_residual_max_difference=max(discrepancies, default=0.),
                   archive_sha256=hashlib.sha256(matrix.read_bytes()).hexdigest(),
@@ -55,5 +56,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('directory', type=Path)
     parser.add_argument('--target', type=Path, default=Path('docs/results'))
+    parser.add_argument('--allow-incomplete', action='store_true', help='Preserve a stopped trial without calling it complete')
     args = parser.parse_args()
-    archive(args.directory, args.target)
+    archive(args.directory, args.target, args.allow_incomplete)

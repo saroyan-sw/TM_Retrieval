@@ -52,7 +52,7 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     if args.config is None:
-        args.config = Path('configs/public') / {'prvamp': 'prvamp_i02_damped.json', 'prgamp': 'prgamp_i04.json', 'prvbem': 'prvbem_i05.json', 'prsamp': 'prsamp_i06.json'}[args.method]
+        args.config = Path('configs/public') / {'prvamp': 'prvamp_i02_damped.json', 'prgamp': 'prgamp_i04.json', 'prvbem': 'prvbem_i05.json', 'prsamp': 'prsamp_i06_fixed_variance.json'}[args.method]
     start = time.perf_counter()
     exit_code = 0
     if args.action == 'run':

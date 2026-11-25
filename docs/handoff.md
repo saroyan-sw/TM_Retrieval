@@ -52,24 +52,41 @@ bounded integration runs, not a matched algorithm ranking. See bayes_source_audi
 for fixed damping, precision floors and reference deviations. Compact estimates
 and replay verification are archived under docs/results/i04_prgamp_*.
 
-## Next entry point: I05
-prVBEM and training-only variance pilots are integrated; 45 tests pass. The
-public checkpoint command is `python -m tmbench.runner run --method prvbem
---output runs/i05_prvbem`, followed by the archive_run.py verifier. Its config
-fixes four training pilots (20 iterations) and 50 standalone iterations per row.
-Preserve all
-nonconvergence/instability outcomes. Neither held-out observations nor released
-comparator TMs are used for solver tuning.
+## I05 complete — degenerate real-data outcome retained
+prVBEM and training-only variance pilots are integrated and checked against
+independent phase integration, coordinate updates, EM formulas and a variational
+bound. The run runs/i05_prvbem completed four 20-iteration training pilots and
+32 standalone 50-iteration fits. All were finite iteration-limit results, but
+their coefficient means collapsed near zero: validation/test relative amplitude
+residuals are both 1.0. This is an unsuccessful calibration outcome, not convergence
+or accuracy. Pilot normalized noise/prior were 1.011745/0.011746; the noise model
+absorbed essentially all signal. The full report replayed byte-for-byte and
+training residuals were independently recomputed. Evidence is archived in
+docs/results/i05_prvbem_*. Pilot runtime and all pilot histories are included.
+
+A training-only diagnostic on detector 8208 held the initial variances fixed for
+10 coordinate sweeps before 20 EM sweeps. Its training residual worsened from
+0.42 at iteration 10 to 0.72 at iteration 30; it did not resolve collapse. This
+experimental schedule was not retained as a solver feature. The diagnostic is
+saved locally and in the failure evidence. No held-out score selected a setting.
 
 ## I06 integration checkpoint
 The seeded swept solver and prVBEM warm-start adapter are integrated; 49 tests
 pass. Tests compare two full sweeps against a separate scalar-channel/direct-field
 oracle for binary, signed and complex probes. Warm starts and every coordinate
 permutation are persisted; timing includes preparation, pilots, warm starts and
-sweeps. The public command is `python -m tmbench.runner run --method prsamp
---output runs/i06_prsamp`. The default is four training pilots, 20 warm-start
-iterations per row and five full sweeps. The public I05 and I06 artifact checks
-are still required before declaring these checkpoints complete.
+sweeps. The initial pilot-based run runs/i06_prsamp was stopped after five finite
+rows also gave training residual approximately 1.0. All 32 attempted rows remain
+recorded: five completed, one interrupted, 26 not run after pilot failure. This
+is an incomplete trial, not I06 completion. Its configuration remains available
+as configs/public/prsamp_i06.json.
+
+The explicit follow-up config prsamp_i06_fixed_variance.json uses noise=0.01 times
+training intensity and the training-energy prior, with 20 fixed-variance VBEM
+warm-start iterations and five prSAMP sweeps. It does not silently consume the
+degenerate pilot estimates. This is now the runner default for prsamp. Execute
+`python -m tmbench.runner run --method prsamp --output runs/i06_prsamp_fixed`
+and archive it before declaring I06 complete.
 
 ## Scope
 No synthetic benchmark data, reference-TM tuning or published algorithm rankings.

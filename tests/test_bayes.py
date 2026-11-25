@@ -84,3 +84,14 @@ def test_gamp_small_complex_recovery_fixture():
     y = abs(X@a)
     result = prgamp(Design(X), y, 1e-4, 2., dict(max_iter=200, min_iter=20, damping=.2, tol=1e-7), 2)
     assert np.linalg.norm(abs(X@result.x)-y)/np.linalg.norm(y) < .001
+
+
+def test_shared_preparation_failure_retains_all_rows(tmp_path):
+    from tmbench.bayes_fit import fit_rows
+    from tmbench.data import CalibrationSplit
+    split = CalibrationSplit(np.zeros((3, 2)), np.ones((3, 2)), np.ones((3, 2), bool),
+                             np.arange(3), np.array([8, 16]))
+    result = fit_rows(split, dict(seed=4, noise_fraction=.01, max_iter=2), tmp_path, 'prgamp')
+    assert result['status'] == 'complete'
+    assert result['attempted_rows'] == 2 and result['finite_estimate_rows'] == 0
+    assert [r['status'] for r in result['rows']] == ['unsupported_design']*2
