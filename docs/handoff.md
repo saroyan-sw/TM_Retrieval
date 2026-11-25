@@ -88,6 +88,12 @@ degenerate pilot estimates. This is now the runner default for prsamp. Execute
 `python -m tmbench.runner run --method prsamp --output runs/i06_prsamp_fixed`
 and archive it before declaring I06 complete.
 
+The fixed-variance run is already active (execution session 63389). Do not launch
+another copy into that directory. Inspect runs/i06_prsamp_fixed/status.json or
+poll the existing session; eight rows were complete at this handoff checkpoint.
+The implementation and 51 focused tests are in place; only completion of the
+public run, final artifact verification and result/handoff commit remain.
+
 ## Scope
 No synthetic benchmark data, reference-TM tuning or published algorithm rankings.
 Tests use small numerical fixtures only. No remote push has been performed.
