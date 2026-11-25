@@ -17,6 +17,7 @@ DEFAULT_CONFIGS = {
     'prvbem': 'prvbem_i05.json',
     'prsamp': 'prsamp_i06_fixed_variance.json',
     'gs': 'gs_i07_50.json',
+    'wf': 'wf_i08_original.json',
 }
 
 
@@ -45,6 +46,8 @@ def report(output, data_dir):
                for name in ('validation', 'test')}
     result = dict(method=provenance.get('method', 'prvamp'), estimate_sha256=hashes,
                   metrics=metrics, note='No reference TM; no coefficient-error or published ranking claim')
+    if result['method'] == 'wf':
+        result['policy'] = provenance['config']['policy']
     write_json(output / 'evaluation.json', result)
     return result
 

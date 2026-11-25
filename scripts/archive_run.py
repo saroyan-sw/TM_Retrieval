@@ -32,9 +32,14 @@ def archive(directory, target, allow_incomplete=False):
         if 'variance' in saved:
             assert saved['variance'].shape == saved['A_row'].shape
             assert np.isfinite(saved['variance']).all() and np.all(saved['variance'] > 0)
-        residual = float(np.linalg.norm(np.abs(matvec(X, saved['A_row']))-Y[:, index])/np.linalg.norm(Y[:, index]))
+        predicted = np.abs(matvec(X, saved['A_row']))
+        residual = float(np.linalg.norm(predicted-Y[:, index])/np.linalg.norm(Y[:, index]))
         np.testing.assert_allclose(residual, row['training_relative_amplitude_residual'], rtol=1e-9, atol=1e-10)
         discrepancies.append(abs(residual-row['training_relative_amplitude_residual']))
+        if 'final_intensity_loss' in row:
+            target_intensity = dataset.train.intensities[:, index].astype(float)
+            loss = np.mean((predicted**2 - target_intensity)**2) / 2
+            np.testing.assert_allclose(loss, row['final_intensity_loss'], rtol=1e-9, atol=1e-10)
         history = json.loads((directory / f"row_{row['detector_id']}_history.json").read_text())
         assert len(history) == row['iterations']
         if 'warm_start_file' in row:

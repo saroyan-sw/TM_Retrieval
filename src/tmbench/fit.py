@@ -130,6 +130,9 @@ def run(manifest_path, data_dir, policy_path, config_path, output, method='prvam
     elif method == 'gs':
         from tmbench.gs_fit import fit_rows as fit_gs
         summary = fit_gs(dataset.train, config, output)
+    elif method == 'wf':
+        from tmbench.wf_fit import fit_rows as fit_wf
+        summary = fit_wf(dataset.train, config, output)
     else:
         from tmbench.bayes_fit import fit_rows as fit_bayes
         summary = fit_bayes(dataset.train, config, output, method)
