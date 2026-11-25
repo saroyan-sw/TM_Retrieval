@@ -13,6 +13,7 @@ dependencies = ["numpy>=1.24", "scipy>=1.10"]
 [project.optional-dependencies]
 hdf5 = ["h5py>=3.8"]
 dev = ["pytest>=7"]
+convex = ["cvxpy>=1.6", "scs>=3.2.4.post1"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

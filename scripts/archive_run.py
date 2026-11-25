@@ -40,8 +40,16 @@ def archive(directory, target, allow_incomplete=False):
             target_intensity = dataset.train.intensities[:, index].astype(float)
             loss = np.mean((predicted**2 - target_intensity)**2) / 2
             np.testing.assert_allclose(loss, row['final_intensity_loss'], rtol=1e-9, atol=1e-10)
-        history = json.loads((directory / f"row_{row['detector_id']}_history.json").read_text())
-        assert len(history) == row['iterations']
+        if 'iterations' in row:
+            history = json.loads((directory / f"row_{row['detector_id']}_history.json").read_text())
+            assert len(history) == row['iterations']
+        if 'lifted' in saved:
+            target = dataset.train.intensities[:, index].astype(float)
+            lifted_intensity = np.sum((X @ saved['lifted']) * X.conj(), axis=1).real
+            np.testing.assert_allclose(np.linalg.norm(lifted_intensity - target),
+                                       row['lifted_intensity_residual_norm'], rtol=1e-9, atol=1e-10)
+            np.testing.assert_allclose(np.linalg.norm(predicted**2 - target),
+                                       row['rank1_intensity_residual_norm'], rtol=1e-9, atol=1e-10)
         if 'warm_start_file' in row:
             warm = np.load(directory / row['warm_start_file'], allow_pickle=False)
             assert int(warm['detector_id']) == row['detector_id']
@@ -58,16 +66,19 @@ def archive(directory, target, allow_incomplete=False):
             for entry in history:
                 np.testing.assert_array_equal(entry['coordinate_order'], rng.permutation(X.shape[1]))
     target.mkdir(parents=True, exist_ok=True)
-    matrix = target / f'{directory.name}_estimates.npz'
-    np.savez_compressed(matrix, A=estimates, detector_ids=dataset.train.detector_ids,
-                        statuses=np.array([r['status'] for r in status['rows']]))
+    archive_sha256 = None
+    if discrepancies:
+        matrix = target / f'{directory.name}_estimates.npz'
+        np.savez_compressed(matrix, A=estimates, detector_ids=dataset.train.detector_ids,
+                            statuses=np.array([r['status'] for r in status['rows']]))
+        archive_sha256 = hashlib.sha256(matrix.read_bytes()).hexdigest()
     result = dict(provenance=provenance, status=status, evaluation=evaluation,
                   complete_run=status['status'] == 'complete',
                   report_replay_byte_identical=True,
                   reloaded_training_residual_max_difference=max(discrepancies, default=0.),
                   warm_start_artifacts_verified=len(warm_discrepancies),
                   reloaded_warm_training_residual_max_difference=max(warm_discrepancies, default=0.),
-                  archive_sha256=hashlib.sha256(matrix.read_bytes()).hexdigest(),
+                  archive_sha256=archive_sha256,
                   artifact_sha256={p.name: hashlib.sha256(p.read_bytes()).hexdigest()
                                    for p in sorted(directory.iterdir()) if p.is_file()})
     for name in ('pilot', 'pipeline_timing'):

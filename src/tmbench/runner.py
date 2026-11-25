@@ -18,6 +18,7 @@ DEFAULT_CONFIGS = {
     'prsamp': 'prsamp_i06_fixed_variance.json',
     'gs': 'gs_i07_50.json',
     'wf': 'wf_i08_original.json',
+    'phaselift': 'phaselift_i09.json',
 }
 
 
@@ -48,6 +49,10 @@ def report(output, data_dir):
                   metrics=metrics, note='No reference TM; no coefficient-error or published ranking claim')
     if result['method'] == 'wf':
         result['policy'] = provenance['config']['policy']
+    if result['method'] == 'phaselift':
+        result.update(variant=status['variant'], backend=status['backend'],
+                      preparation_status=status.get('preparation_status', 'prepared'),
+                      reason=status.get('reason'))
     write_json(output / 'evaluation.json', result)
     return result
 
