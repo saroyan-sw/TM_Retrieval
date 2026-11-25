@@ -60,8 +60,9 @@ estimates at the iteration limit are not labelled converged.
 .\.venv\Scripts\python.exe -m tmbench.runner run --method prsamp --output runs/my_prsamp
 ```
 
-Defaults are versioned in configs/public/*_i04.json, *_i05.json and *_i06.json;
-override with --config. All commands use the same frozen train/validation/test
+Defaults are versioned in configs/public; prSAMP uses
+prsamp_i06_fixed_variance.json. Override with --config.
+All commands use the same frozen train/validation/test
 split and detector selection. prVBEM estimates variances from training data.
 prVBEM defaults run four predetermined training pilots. The initial learned
 variances collapsed on this camera subset; that failed calibration is retained.
