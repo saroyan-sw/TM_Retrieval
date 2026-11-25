@@ -1,7 +1,7 @@
 # Handoff — 2026-11-25
 
-I01–I06 implementation checkpoints are complete and committed. The current test
-suite passes all 51 tests. Public results below include iteration limits and the
+I01–I07 implementation checkpoints are complete and committed. The current test
+suite passes all 54 tests. Public results below include iteration limits and the
 failed variance-learning outcome; completion does not imply successful calibration
 or numerical convergence. Full runs remain in runs/; compact matrices, provenance,
 statuses, timings and report checks are versioned in docs/results/.
@@ -121,8 +121,45 @@ $env:MKL_NUM_THREADS='4'
 .\.venv\Scripts\python.exe scripts/archive_run.py runs/my_prsamp
 ```
 
-There are no active benchmark processes left from this task. Work stops at I06;
-I07 and the later verification/matched-comparison campaigns are not started.
+## I07 complete — Gerchberg–Saxton
+
+The common runner exposes `--method gs`. Each run computes one pseudoinverse of
+the frozen training probe matrix and shares it across the 32 detectors. Both
+presets start from the same independent complex Gaussian draws per detector. Each
+cycle projects onto the measured training amplitudes, then solves for coefficients
+using the cached pseudoinverse. See [GS source audit](gs_source_audit.md) for the
+paper, conventions and numerical checks.
+
+Both public runs use 17,280 training probes with all 1,600 input modes. One SVD
+per run yielded a rank-1,600 pseudoinverse. The fits cover all 32 detectors.
+Every row completed its fixed iteration budget with status `max_iter_reached`.
+The first 50 residuals of each 100-cycle history match the 50-cycle run exactly,
+and training amplitude residuals are nonincreasing across all 32 trajectories.
+
+| Run | Validation relative residual | Test relative residual | Pseudoinverse prep (s) | End-to-end with evaluation (s) |
+|---|---:|---:|---:|---:|
+| [i07_gs50](results/i07_gs50_summary.json) | 0.560646 | 0.520022 | 17.87 | 104.71 |
+| [i07_gs100](results/i07_gs100_summary.json) | 0.559506 | 0.522309 | 18.81 | 184.20 |
+
+Each report pools 61,440 validation and 160 test observations. The archive
+verifier reloaded all 64 estimates, independently checked training residuals
+and regenerated both reports byte-for-byte. The compact estimates and reports
+are in docs/results/i07_gs*. Both runs point to source commit `4fdfcc5`. The
+worktree flag includes an existing untracked roadmap HTML file.
+
+To reproduce with fresh output directories:
+
+```powershell
+$env:OPENBLAS_NUM_THREADS='4'
+$env:OMP_NUM_THREADS='4'
+$env:MKL_NUM_THREADS='4'
+.\.venv\Scripts\python.exe -m tmbench.runner run --method gs --output runs/my_gs50
+.\.venv\Scripts\python.exe -m tmbench.runner run --method gs --config configs/public/gs_i07_100.json --output runs/my_gs100
+.\.venv\Scripts\python.exe scripts/archive_run.py runs/my_gs50
+.\.venv\Scripts\python.exe scripts/archive_run.py runs/my_gs100
+```
+
+I08 is the next plan checkpoint.
 
 ## Scope
 No synthetic benchmark data, reference-TM tuning or published algorithm rankings.
