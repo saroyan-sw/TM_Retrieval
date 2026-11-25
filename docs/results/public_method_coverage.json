@@ -1,0 +1,329 @@
+{
+  "dataset_id": "rice_phase_slm_40x40",
+  "frozen_split": "data/manifests/rice_phase_slm_40x40_split.json",
+  "training_shape": [
+    17280,
+    1600
+  ],
+  "detector_ids": [
+    8208,
+    8240,
+    8272,
+    8304,
+    8336,
+    8368,
+    8400,
+    8432,
+    24592,
+    24624,
+    24656,
+    24688,
+    24720,
+    24752,
+    24784,
+    24816,
+    40976,
+    41008,
+    41040,
+    41072,
+    41104,
+    41136,
+    41168,
+    41200,
+    57360,
+    57392,
+    57424,
+    57456,
+    57488,
+    57520,
+    57552,
+    57584
+  ],
+  "scope": "Archived held-out runs and size rejections from I03 through I10",
+  "methods": [
+    {
+      "method": "prvamp",
+      "runs": [
+        {
+          "run": "i03_prvamp",
+          "summary_file": "i03_prvamp_summary.json",
+          "status": "complete",
+          "attempted_rows": 32,
+          "finite_estimate_rows": 32,
+          "converged_rows": 0,
+          "row_status_counts": {
+            "max_iter_reached": 32
+          },
+          "held_out": {
+            "validation": {
+              "evaluated_rows": 32,
+              "coverage": 1.0
+            },
+            "test": {
+              "evaluated_rows": 32,
+              "coverage": 1.0
+            }
+          },
+          "reason": null
+        }
+      ]
+    },
+    {
+      "method": "prgamp",
+      "runs": [
+        {
+          "run": "i04_prgamp",
+          "summary_file": "i04_prgamp_summary.json",
+          "status": "complete",
+          "attempted_rows": 32,
+          "finite_estimate_rows": 32,
+          "converged_rows": 0,
+          "row_status_counts": {
+            "max_iter_reached": 32
+          },
+          "held_out": {
+            "validation": {
+              "evaluated_rows": 32,
+              "coverage": 1.0
+            },
+            "test": {
+              "evaluated_rows": 32,
+              "coverage": 1.0
+            }
+          },
+          "reason": null
+        }
+      ]
+    },
+    {
+      "method": "prvbem",
+      "runs": [
+        {
+          "run": "i05_prvbem",
+          "summary_file": "i05_prvbem_summary.json",
+          "status": "complete",
+          "attempted_rows": 32,
+          "finite_estimate_rows": 32,
+          "converged_rows": 0,
+          "row_status_counts": {
+            "max_iter_reached": 32
+          },
+          "held_out": {
+            "validation": {
+              "evaluated_rows": 32,
+              "coverage": 1.0
+            },
+            "test": {
+              "evaluated_rows": 32,
+              "coverage": 1.0
+            }
+          },
+          "reason": null
+        }
+      ]
+    },
+    {
+      "method": "prsamp",
+      "runs": [
+        {
+          "run": "i06_prsamp",
+          "summary_file": "i06_prsamp_summary.json",
+          "status": "stopped_after_degenerate_pilots",
+          "attempted_rows": 32,
+          "finite_estimate_rows": 5,
+          "converged_rows": 0,
+          "row_status_counts": {
+            "interrupted": 1,
+            "max_iter_reached": 5,
+            "not_run_after_pilot_failure": 26
+          },
+          "held_out": {
+            "validation": {
+              "evaluated_rows": 5,
+              "coverage": 0.15625
+            },
+            "test": {
+              "evaluated_rows": 5,
+              "coverage": 0.15625
+            }
+          },
+          "reason": "Training-only pilot means collapsed near zero; completed swept estimates also had training relative residual approximately 1. Preserve this trial; use explicit fixed-variance warm-start configuration for continued I06 integration."
+        },
+        {
+          "run": "i06_prsamp_fixed",
+          "summary_file": "i06_prsamp_fixed_summary.json",
+          "status": "complete",
+          "attempted_rows": 32,
+          "finite_estimate_rows": 32,
+          "converged_rows": 0,
+          "row_status_counts": {
+            "max_iter_reached": 32
+          },
+          "held_out": {
+            "validation": {
+              "evaluated_rows": 32,
+              "coverage": 1.0
+            },
+            "test": {
+              "evaluated_rows": 32,
+              "coverage": 1.0
+            }
+          },
+          "reason": null
+        }
+      ]
+    },
+    {
+      "method": "gs",
+      "runs": [
+        {
+          "run": "i07_gs50",
+          "summary_file": "i07_gs50_summary.json",
+          "status": "complete",
+          "attempted_rows": 32,
+          "finite_estimate_rows": 32,
+          "converged_rows": 0,
+          "row_status_counts": {
+            "max_iter_reached": 32
+          },
+          "held_out": {
+            "validation": {
+              "evaluated_rows": 32,
+              "coverage": 1.0
+            },
+            "test": {
+              "evaluated_rows": 32,
+              "coverage": 1.0
+            }
+          },
+          "reason": null
+        },
+        {
+          "run": "i07_gs100",
+          "summary_file": "i07_gs100_summary.json",
+          "status": "complete",
+          "attempted_rows": 32,
+          "finite_estimate_rows": 32,
+          "converged_rows": 0,
+          "row_status_counts": {
+            "max_iter_reached": 32
+          },
+          "held_out": {
+            "validation": {
+              "evaluated_rows": 32,
+              "coverage": 1.0
+            },
+            "test": {
+              "evaluated_rows": 32,
+              "coverage": 1.0
+            }
+          },
+          "reason": null
+        }
+      ]
+    },
+    {
+      "method": "wf",
+      "runs": [
+        {
+          "run": "i08_wf_original",
+          "summary_file": "i08_wf_original_summary.json",
+          "status": "complete",
+          "attempted_rows": 32,
+          "finite_estimate_rows": 32,
+          "converged_rows": 0,
+          "row_status_counts": {
+            "max_iter_reached": 32
+          },
+          "held_out": {
+            "validation": {
+              "evaluated_rows": 32,
+              "coverage": 1.0
+            },
+            "test": {
+              "evaluated_rows": 32,
+              "coverage": 1.0
+            }
+          },
+          "reason": null
+        },
+        {
+          "run": "i08_wf_adaptive",
+          "summary_file": "i08_wf_adaptive_summary.json",
+          "status": "complete",
+          "attempted_rows": 32,
+          "finite_estimate_rows": 32,
+          "converged_rows": 0,
+          "row_status_counts": {
+            "max_iter_reached": 32
+          },
+          "held_out": {
+            "validation": {
+              "evaluated_rows": 32,
+              "coverage": 1.0
+            },
+            "test": {
+              "evaluated_rows": 32,
+              "coverage": 1.0
+            }
+          },
+          "reason": null
+        }
+      ]
+    },
+    {
+      "method": "phaselift",
+      "runs": [
+        {
+          "run": "i09_phaselift",
+          "summary_file": "i09_phaselift_summary.json",
+          "status": "complete",
+          "attempted_rows": 32,
+          "finite_estimate_rows": 0,
+          "converged_rows": 0,
+          "row_status_counts": {
+            "unsupported_size": 32
+          },
+          "held_out": {
+            "validation": {
+              "evaluated_rows": 0,
+              "coverage": 0.0
+            },
+            "test": {
+              "evaluated_rows": 0,
+              "coverage": 0.0
+            }
+          },
+          "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+        }
+      ]
+    },
+    {
+      "method": "phasemax",
+      "runs": [
+        {
+          "run": "i10_phasemax",
+          "summary_file": "i10_phasemax_summary.json",
+          "status": "complete",
+          "attempted_rows": 32,
+          "finite_estimate_rows": 0,
+          "converged_rows": 0,
+          "row_status_counts": {
+            "unsupported_size": 32
+          },
+          "held_out": {
+            "validation": {
+              "evaluated_rows": 0,
+              "coverage": 0.0
+            },
+            "test": {
+              "evaluated_rows": 0,
+              "coverage": 0.0
+            }
+          },
+          "reason": "17280 patterns and 1600 modes exceed the dense PhaseMax limits of 2048 patterns and 128 modes"
+        }
+      ]
+    }
+  ]
+}

@@ -2,9 +2,9 @@
 
 Public-data transmission-matrix calibration benchmark using verified Rice
 PhaseSLM_40x40 pairs, with prVAMP, prGAMP, prVBEM, warm-started prSAMP and
-Gerchberg–Saxton, Wirtinger Flow and bounded PhaseLift adapters. I01–I09
-implementation checkpoints are complete and 64 tests pass with the convex
-extra installed. The public runs
+Gerchberg–Saxton, Wirtinger Flow, bounded PhaseLift and bounded PhaseMax adapters.
+I01–I10 implementation checkpoints are complete and 71 tests pass with the
+convex extra installed. The public runs
 retain nonconvergence and failed calibration outcomes explicitly.
 
 ## Setup and inspect
@@ -156,3 +156,21 @@ intensity residual with positive values. The frozen Rice public run recorded
 `unsupported_size` for all 32 detectors and wrote a zero-coverage report with
 CLI exit code 1. See the [I09 public result](docs/results/i09_phaselift_summary.json)
 and [PhaseLift source audit](docs/phaselift_source_audit.md).
+
+## Bounded PhaseMax
+
+The PhaseMax runner uses the same `convex` extra. It builds amplitude caps
+from square-root training intensities and records the seeded spectral anchor
+separately from the solver estimate. The optional padding fraction defaults
+to zero.
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest -q tests/test_phasemax.py
+.\.venv\Scripts\python.exe -m tmbench.runner run --method phasemax --output runs/my_phasemax
+```
+
+The solver accepts up to 128 input modes and 2,048 training patterns. The
+frozen Rice run recorded `unsupported_size` for all 32 detectors and returned
+exit code 1. See the [PhaseMax source audit](docs/phasemax_source_audit.md),
+[I10 public result](docs/results/i10_phasemax_summary.json), and
+[eight-method coverage manifest](docs/results/public_method_coverage.json).

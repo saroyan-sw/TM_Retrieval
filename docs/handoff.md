@@ -1,11 +1,10 @@
 # Handoff — 2026-11-25
 
-I01–I09 implementation checkpoints are complete and committed. The current test
-suite passes all 64 tests with the convex extra. Public results include size
-rejections, iteration limits and the
-failed variance-learning outcome; completion does not imply successful calibration
-or numerical convergence. Full runs remain in runs/; compact matrices, provenance,
-statuses, timings and report checks are versioned in docs/results/.
+I01–I10 implementation checkpoints are complete and committed. All 71 tests
+pass with the convex extra. Public results include size rejections, iteration
+limits, and the failed variance-learning outcome. Full runs are in runs/.
+Compact matrices, provenance, statuses, timings and report checks are versioned
+in docs/results/.
 
 ## I01 complete
 Recovered the existing OneDrive loader in commit 6a0cbac, then inspected all four public phase files, corrected stored field scaling (-255/+255 to -1/+1), pinned SHA256 hashes and froze explicit split/detector IDs. Dataset provenance and remaining acquisition uncertainties are in dataset_inventory.md.
@@ -237,7 +236,43 @@ $env:OPENBLAS_NUM_THREADS='4'
 .\.venv\Scripts\python.exe scripts/archive_run.py runs/my_phaselift
 ```
 
-I10 is the next plan checkpoint.
+## I10 complete — bounded PhaseMax
+
+The common runner exposes `--method phasemax`. It maximizes the real inner
+product with a unit anchor subject to componentwise upper bounds on predicted
+amplitudes. The runner derives its anchor from 50 spectral iterations on the
+training intensities. The adapter saves the anchor, seed and cost separately
+and sets the SCS warm-start flag to false. The public preset uses the measured
+amplitudes as the bounds. A positive padding fraction enables the optional
+one-sided relaxation. See the [PhaseMax source audit](phasemax_source_audit.md).
+
+PhaseMax admits up to 128 illuminated modes and 2,048 training patterns.
+A numerical check at both caps matched the analytical complex solution.
+The frozen Rice design has 1,600 modes and 17,280 training patterns. The
+audited amplitude candidate has 256 modes and 3,072 released training
+patterns. The frozen public run rejected 32/32 rows as `unsupported_size`
+before computing any anchor or invoking the backend. The runner returned
+exit code 1 with zero validation and test coverage. The archive verifier
+replayed that report byte-for-byte. See the [I10 run archive](results/i10_phasemax_summary.json).
+
+The [coverage manifest](results/public_method_coverage.json) indexes 11
+archived runs across all eight methods on the same frozen Rice split. It
+records finite and evaluated row counts, statuses and reasons. It includes
+the interrupted prSAMP pilot trial and both convex size rejections. The
+implementation and public run point to commit `7c99855`.
+
+To reproduce the solver checks and zero-coverage public report with a fresh
+output directory, run the following with the `convex` extra installed.
+
+```powershell
+$env:OPENBLAS_NUM_THREADS='4'
+.\.venv\Scripts\python.exe -m pytest -q tests/test_phasemax.py
+.\.venv\Scripts\python.exe -m tmbench.runner run --method phasemax --output runs/my_phasemax
+.\.venv\Scripts\python.exe scripts/archive_run.py runs/my_phasemax
+.\.venv\Scripts\python.exe scripts/summarize_public_coverage.py
+```
+
+I11 is the next plan checkpoint.
 
 ## Scope
 No synthetic benchmark data, reference-TM tuning or published algorithm rankings.
