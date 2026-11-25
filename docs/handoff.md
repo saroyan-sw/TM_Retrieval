@@ -1,5 +1,11 @@
 # Handoff — 2026-11-25
 
+I01–I06 implementation checkpoints are complete and committed. The current test
+suite passes all 51 tests. Public results below include iteration limits and the
+failed variance-learning outcome; completion does not imply successful calibration
+or numerical convergence. Full runs remain in runs/; compact matrices, provenance,
+statuses, timings and report checks are versioned in docs/results/.
+
 ## I01 complete
 Recovered the existing OneDrive loader in commit 6a0cbac, then inspected all four public phase files, corrected stored field scaling (-255/+255 to -1/+1), pinned SHA256 hashes and froze explicit split/detector IDs. Dataset provenance and remaining acquisition uncertainties are in dataset_inventory.md.
 
@@ -70,9 +76,9 @@ A training-only diagnostic on detector 8208 held the initial variances fixed for
 experimental schedule was not retained as a solver feature. The diagnostic is
 saved locally and in the failure evidence. No held-out score selected a setting.
 
-## I06 integration checkpoint
-The seeded swept solver and prVBEM warm-start adapter are integrated; 49 tests
-pass. Tests compare two full sweeps against a separate scalar-channel/direct-field
+## I06 complete — bounded public integration
+The seeded swept solver and prVBEM warm-start adapter are integrated. Tests
+compare two full sweeps against a separate scalar-channel/direct-field
 oracle for binary, signed and complex probes. Warm starts and every coordinate
 permutation are persisted; timing includes preparation, pilots, warm starts and
 sweeps. The initial pilot-based run runs/i06_prsamp was stopped after five finite
@@ -84,15 +90,39 @@ as configs/public/prsamp_i06.json.
 The explicit follow-up config prsamp_i06_fixed_variance.json uses noise=0.01 times
 training intensity and the training-energy prior, with 20 fixed-variance VBEM
 warm-start iterations and five prSAMP sweeps. It does not silently consume the
-degenerate pilot estimates. This is now the runner default for prsamp. Execute
-`python -m tmbench.runner run --method prsamp --output runs/i06_prsamp_fixed`
-and archive it before declaring I06 complete.
+degenerate pilot estimates. This is now the runner default for prsamp. The
+completed run runs/i06_prsamp_fixed produced finite estimates for all 32 detectors,
+all at the five-sweep limit; none converged. Validation/test relative amplitude
+residuals are 0.557684/0.480495, with amplitude MSE 5.364922/5.256755. Coverage is
+32/32, with 61440 validation and 160 test observations. This is an integration
+check with declared budgets, not the I12 matched comparison.
 
-The fixed-variance run is already active (execution session 63389). Do not launch
-another copy into that directory. Inspect runs/i06_prsamp_fixed/status.json or
-poll the existing session; eight rows were complete at this handoff checkpoint.
-The implementation and 51 focused tests are in place; only completion of the
-public run, final artifact verification and result/handoff commit remain.
+X-only preparation took 0.71 s, all 32 warm starts 128.47 s, and the swept solves
+1627.48 s. End-to-end fitting took 1762.87 s; including held-out evaluation it
+took 1767.00 s. No pilot was run in this explicit follow-up. Traced fit-stage peak
+allocation was 698363298 bytes; this excludes untraced native workspace and is
+not peak process RSS or full-pipeline memory. Timings are from a shared Windows
+computer, not a controlled speed comparison.
+
+The archive verifier reloaded all 32 final estimates and all 32 warm starts,
+independently recomputed their training residuals, checked all 160 saved sweep
+permutations against the recorded seeds, and regenerated the evaluation
+byte-for-byte. No precision safeguards were activated in the fixed-variance run.
+Artifacts: docs/results/i06_prsamp_fixed_estimates.npz and
+docs/results/i06_prsamp_fixed_summary.json. Full local rows/history are retained.
+
+To reproduce with a fresh output directory:
+```powershell
+$env:OPENBLAS_NUM_THREADS='4'
+$env:OMP_NUM_THREADS='4'
+$env:MKL_NUM_THREADS='4'
+.\.venv\Scripts\python.exe -m tmbench.runner run --method prsamp --output runs/my_prsamp
+.\.venv\Scripts\python.exe -m tmbench.runner report --output runs/my_prsamp
+.\.venv\Scripts\python.exe scripts/archive_run.py runs/my_prsamp
+```
+
+There are no active benchmark processes left from this task. Work stops at I06;
+I07 and the later verification/matched-comparison campaigns are not started.
 
 ## Scope
 No synthetic benchmark data, reference-TM tuning or published algorithm rankings.
