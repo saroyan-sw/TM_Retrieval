@@ -1,6 +1,7 @@
 """Complex Bayesian row solvers. Source equations and deviations: docs/bayes_source_audit.md."""
 from dataclasses import dataclass, field
 import numpy as np
+from scipy.special import i0e
 
 from .prvamp.linear import matvec
 from .prvamp.moments import bessel_ratio, positive_scalar
@@ -52,10 +53,15 @@ def channel(p, V, y, noise):
     ratio = bessel_ratio(k)
     direction = np.divide(p, radius, out=np.zeros_like(p), where=radius > 0)
     mean = noise / S * p + V / S * y * ratio * direction
-    inv = np.divide(1., k, out=np.zeros_like(k), where=k > 0)
-    complement = np.where(k > 1e6, inv / 2 + inv**2 / 8 + inv**3 / 8, 1 - ratio)
+    complement = ratio_complement(k, ratio)
     variance = noise * V / S + (V / S)**2 * y**2 * complement * (1 + ratio)
     return mean, variance
+
+
+def ratio_complement(k, ratio):
+    """Stable 1-I1(k)/I0(k), including highly concentrated phase factors."""
+    inv = np.divide(1., k, out=np.zeros_like(k), where=k > 0)
+    return np.where(k > 1e6, inv/2+inv**2/8+inv**3/8, 1-ratio)
 
 
 def initialize(design, y, noise, prior, config, seed, initial=None):
@@ -120,6 +126,71 @@ def prgamp(design, y, noise, prior, config, seed):
                            float(np.linalg.norm(ts-old_ts)/max(np.linalg.norm(old_ts), 1e-30)))
         entry['state_relative_change'] = state_change
         if iteration >= config.get('min_iter', 1) and state_change < config.get('tol', 1e-6):
+            status = 'converged'
+            break
+    return Result(a, c, design.forward(a), status, history, noise, prior)
+
+
+def phase_mean(field, y, noise):
+    """Mean of y*exp(i theta) under the mean-field phase factor (not GAMP)."""
+    radius = abs(field)
+    k = 2*y*radius/noise
+    ratio = bessel_ratio(k)
+    direction = np.divide(field, radius, out=np.zeros_like(field), where=radius > 0)
+    return y*ratio*direction, k, ratio
+
+
+def expected_error(design, y, pseudo, field, c, phase_variance=None):
+    # This form avoids cancellation of three O(||y||²) terms near exact fit.
+    if phase_variance is None:
+        phase_variance = (y-abs(pseudo))*(y+abs(pseudo))
+    difference = field-pseudo
+    return float(np.vdot(difference, difference).real + np.sum(phase_variance) + design.colnorm@c)
+
+
+def prvbem(design, y, noise, prior, config, seed):
+    """Mean-field coordinate VB-EM, Dremeau/Krzakala equations 8–18."""
+    if design.gram is None:
+        raise ValueError('VBEM requires Gram preparation')
+    y, noise, prior, rng, a, c = initialize(design, y, noise, prior, config, seed)
+    damping = config.get('damping', 1.)
+    history, status = [], 'max_iter_reached'
+    energy = float(y@y/design.P)
+    for iteration in range(1, config['max_iter']+1):
+        old, old_c, old_noise, old_prior = a.copy(), c.copy(), noise, prior
+        pseudo, k, ratio = phase_mean(design.forward(a), y, noise)
+        target_c = 1/(1/prior + design.colnorm/noise)
+        c = (1-damping)*c + damping*target_c
+        # Cached Gram residual is exactly X.H @ (pseudo - X @ a).
+        residual = design.adjoint(pseudo) - matvec(design.gram, a)
+        for i in range(design.N):
+            target = target_c[i]/noise * (residual[i]+design.colnorm[i]*a[i])
+            delta = damping*(target-a[i])
+            a[i] += delta
+            residual -= design.gram[:, i]*delta
+        field = design.forward(a)
+        complement = ratio_complement(k, ratio)
+        error = expected_error(design, y, pseudo, field, c, y**2*complement*(1+ratio))
+        stabilized = 0
+        if config.get('learn_noise', True):
+            target = error/design.P
+            stabilized += int(target < 1e-12*energy)
+            noise = max(target, 1e-12*energy)
+        if config.get('learn_prior', False):
+            target = float(np.mean(abs(a)**2+c))
+            stabilized += int(target < 1e-12*energy/design.probe_energy)
+            prior = max(target, 1e-12*energy/design.probe_energy)
+        # ELBO up to observation-only constants, with the current phase factor.
+        bound = (-design.P*np.log(noise)-error/noise-design.N*np.log(prior)
+                 -float(np.sum(abs(a)**2+c))/prior+np.sum(np.log(c)+1)
+                 +np.sum(np.log(i0e(k))+k*complement))
+        entry = history_entry(design, a, old, y, iteration, stabilized,
+                              noise_variance=noise, prior_variance=prior, variational_bound=float(bound))
+        change = max(entry['relative_change'], float(np.linalg.norm(c-old_c)/np.linalg.norm(old_c)),
+                     abs(noise-old_noise)/old_noise, abs(prior-old_prior)/old_prior)
+        entry['state_relative_change'] = change
+        history.append(entry)
+        if iteration >= config.get('min_iter', 1) and change < config.get('tol', 1e-6):
             status = 'converged'
             break
     return Result(a, c, design.forward(a), status, history, noise, prior)

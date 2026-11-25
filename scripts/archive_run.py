@@ -41,6 +41,10 @@ def archive(directory, target):
                   archive_sha256=hashlib.sha256(matrix.read_bytes()).hexdigest(),
                   artifact_sha256={p.name: hashlib.sha256(p.read_bytes()).hexdigest()
                                    for p in sorted(directory.iterdir()) if p.is_file()})
+    for name in ('pilot', 'pipeline_timing'):
+        path = directory / f'{name}.json'
+        if path.exists():
+            result[name] = json.loads(path.read_text())
     write_json(target / f'{directory.name}_summary.json', result)
     print(json.dumps(dict(run=directory.name, finite_rows=status['finite_estimate_rows'],
                          converged_rows=status['converged_rows'], replay='byte-identical',

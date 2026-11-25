@@ -53,7 +53,11 @@ for fixed damping, precision floors and reference deviations. Compact estimates
 and replay verification are archived under docs/results/i04_prgamp_*.
 
 ## Next entry point: I05
-prVBEM and training-only variance pilots are being integrated. Preserve all
+prVBEM and training-only variance pilots are integrated; 45 tests pass. The
+public checkpoint command is `python -m tmbench.runner run --method prvbem
+--output runs/i05_prvbem`, followed by the archive_run.py verifier. Its config
+fixes four training pilots (20 iterations) and 50 standalone iterations per row.
+Preserve all
 nonconvergence/instability outcomes. Neither held-out observations nor released
 comparator TMs are used for solver tuning.
 

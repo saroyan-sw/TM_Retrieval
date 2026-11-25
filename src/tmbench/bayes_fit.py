@@ -4,11 +4,12 @@ import time
 import numpy as np
 
 from .fit import write_json
-from .solvers.bayes import Design, prgamp
+from .solvers.bayes import Design, prgamp, prvbem
+from .pilots import estimate_variances
 
 
 def fit_rows(train, config, output, method):
-    if method != 'prgamp':
+    if method not in ('prgamp', 'prvbem'):
         raise ValueError('Unknown Bayesian solver')
     fraction = config['noise_fraction']
     if not np.isfinite(fraction) or not 0 < fraction < 1:
@@ -25,8 +26,16 @@ def fit_rows(train, config, output, method):
                    hyperparameter_policy='training energy with configured noise fraction; no held-out tuning')
     write_json(output / 'status.json', summary)
     start = time.perf_counter()
-    design = Design(train.X)
+    design = Design(train.X, gram=method == 'prvbem' or bool(config.get('pilot')))
     summary['prepare_seconds'] = time.perf_counter()-start
+    pilot = None
+    if config.get('pilot'):
+        pilot = estimate_variances(train, design, config['pilot'], lambda p: write_json(output / 'pilot.json', p))
+        summary['pilot_seconds'] = pilot['seconds']
+        summary['pilot_status'] = pilot['status']
+        summary['hyperparameter_policy'] = 'training-only VBEM pilots; median normalized noise/prior; per-row energy rescaling'
+    else:
+        summary['pilot_seconds'] = 0.
     amplitudes = train.amplitudes
     for index, record in enumerate(records):
         start = time.perf_counter()
@@ -35,14 +44,19 @@ def fit_rows(train, config, output, method):
         record.update(seed=seed, status='running')
         write_json(output / 'status.json', summary)
         try:
-            if not train.valid[:, index].all():
+            if pilot is not None and pilot['status'] != 'complete':
+                record['status'] = 'pilot_failed'
+            elif not train.valid[:, index].all():
                 record['status'] = 'unsupported_mask'
             else:
                 y = amplitudes[:, index]
                 energy = float(np.mean(y**2))
                 noise, prior = fraction*energy, (1-fraction)*energy/design.probe_energy
+                if pilot is not None:
+                    noise, prior = pilot['noise_fraction']*energy, pilot['prior_factor']*energy/design.probe_energy
                 record.update(initial_noise_variance=noise, initial_prior_variance=prior)
-                result = prgamp(design, y, noise, prior, config, seed)
+                solver = {'prgamp': prgamp, 'prvbem': prvbem}[method]
+                result = solver(design, y, noise, prior, config, seed)
                 estimate_file = f'row_{row}.npz'
                 np.savez(output / estimate_file, A_row=result.x, variance=result.variance, detector_id=row)
                 write_json(output / f'row_{row}_history.json', result.history)
