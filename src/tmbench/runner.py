@@ -2,14 +2,22 @@
 import argparse
 import hashlib
 import json
-import os
 from pathlib import Path
 import time
 
-from tmbench.fit import run as fit_prvamp, write_json
+from tmbench.fit import run as fit_run, write_json
 from tmbench.adapters.rice_phase import load
 from tmbench.evaluation.metrics import evaluate
 import numpy as np
+
+
+DEFAULT_CONFIGS = {
+    'prvamp': 'prvamp_i02_damped.json',
+    'prgamp': 'prgamp_i04.json',
+    'prvbem': 'prvbem_i05.json',
+    'prsamp': 'prsamp_i06_fixed_variance.json',
+    'gs': 'gs_i07_50.json',
+}
 
 
 def report(output, data_dir):
@@ -44,7 +52,7 @@ def report(output, data_dir):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('action', choices=['run', 'report'])
-    parser.add_argument('--method', default='prvamp', choices=['prvamp', 'prgamp', 'prvbem', 'prsamp'])
+    parser.add_argument('--method', default='prvamp', choices=DEFAULT_CONFIGS)
     parser.add_argument('--manifest', type=Path, default=Path('data/manifests/rice_phase_slm_40x40.json'))
     parser.add_argument('--data-dir', type=Path, default=Path('data/raw/phase_slm_40x40'))
     parser.add_argument('--policy', type=Path, default=Path('configs/public/rice_phase_slm_40x40.json'))
@@ -52,11 +60,11 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     if args.config is None:
-        args.config = Path('configs/public') / {'prvamp': 'prvamp_i02_damped.json', 'prgamp': 'prgamp_i04.json', 'prvbem': 'prvbem_i05.json', 'prsamp': 'prsamp_i06_fixed_variance.json'}[args.method]
+        args.config = Path('configs/public') / DEFAULT_CONFIGS[args.method]
     start = time.perf_counter()
     exit_code = 0
     if args.action == 'run':
-        exit_code = fit_prvamp(args.manifest, args.data_dir, args.policy, args.config, args.output, method=args.method)
+        exit_code = fit_run(args.manifest, args.data_dir, args.policy, args.config, args.output, method=args.method)
     result = report(args.output, args.data_dir)
     if args.action == 'run':
         write_json(args.output / 'pipeline_timing.json', dict(end_to_end_including_evaluation_seconds=time.perf_counter()-start))

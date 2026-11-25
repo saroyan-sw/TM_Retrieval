@@ -1,0 +1,5 @@
+{
+  "seed": 20261124,
+  "max_iter": 100,
+  "pinv_rcond": 1e-12
+}

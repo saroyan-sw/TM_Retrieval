@@ -127,6 +127,9 @@ def run(manifest_path, data_dir, policy_path, config_path, output, method='prvam
     write_json(output / 'provenance.json', versions)
     if method == 'prvamp':
         summary = fit_rows(dataset.train, config, output)
+    elif method == 'gs':
+        from tmbench.gs_fit import fit_rows as fit_gs
+        summary = fit_gs(dataset.train, config, output)
     else:
         from tmbench.bayes_fit import fit_rows as fit_bayes
         summary = fit_bayes(dataset.train, config, output, method)
