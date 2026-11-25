@@ -1,7 +1,8 @@
 # Handoff — 2026-11-25
 
-I01–I08 implementation checkpoints are complete and committed. The current test
-suite passes all 58 tests. Public results below include iteration limits and the
+I01–I09 implementation checkpoints are complete and committed. The current test
+suite passes all 64 tests with the convex extra. Public results include size
+rejections, iteration limits and the
 failed variance-learning outcome; completion does not imply successful calibration
 or numerical convergence. Full runs remain in runs/; compact matrices, provenance,
 statuses, timings and report checks are versioned in docs/results/.
@@ -201,7 +202,42 @@ $env:MKL_NUM_THREADS='4'
 .\.venv\Scripts\python.exe scripts/archive_run.py runs/my_wf_adaptive
 ```
 
-I09 is the next plan checkpoint.
+## I09 complete — bounded PhaseLift
+
+The common runner exposes `--method phaselift`. The optional `convex` extra
+adds CVXPY and SCS for the trace-minimizing SDP with a PSD matrix and exact
+or bounded intensity constraints. Accepted estimates retain the lift and
+its leading rank-one factor. Row records include backend status and
+iterations, numerical rank, feasibility checks, and distinct residuals
+for the lift and extracted factor. See the [PhaseLift source audit](phaselift_source_audit.md).
+
+The active limits are 32 modes and 512 training patterns. The frozen Rice
+PhaseSLM_40x40 design has 1,600 modes and 17,280 training patterns. The
+audited AmpSLM_16x16 candidate also exceeds both limits with 256 modes and
+3,072 released training patterns. Both designs retain their illuminated
+modes. The public run `runs/i09_phaselift` rejected all 32 rows as
+`unsupported_size` before importing the backend or allocating the dense
+operator. Validation and test each have zero evaluated rows and null metrics.
+The common runner returns exit code 1 for this coverage outcome. The verifier
+replayed the report byte-for-byte and archived the
+[public status and provenance](results/i09_phaselift_summary.json).
+
+Six focused cases exercise exact complex lifting, analytic noisy constraints,
+infeasibility, higher-rank extraction, the size caps and the optional backend
+path. They are numerical checks. All 64 tests passed with CVXPY 1.9.3 and SCS
+3.3.2. The run points to implementation commit `39ea6fc`.
+
+To reproduce the checks and the public coverage report with a fresh output directory:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -e ".[dev,hdf5,convex]"
+$env:OPENBLAS_NUM_THREADS='4'
+.\.venv\Scripts\python.exe -m pytest -q tests/test_phaselift.py
+.\.venv\Scripts\python.exe -m tmbench.runner run --method phaselift --output runs/my_phaselift
+.\.venv\Scripts\python.exe scripts/archive_run.py runs/my_phaselift
+```
+
+I10 is the next plan checkpoint.
 
 ## Scope
 No synthetic benchmark data, reference-TM tuning or published algorithm rankings.

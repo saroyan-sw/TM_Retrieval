@@ -2,8 +2,9 @@
 
 Public-data transmission-matrix calibration benchmark using verified Rice
 PhaseSLM_40x40 pairs, with prVAMP, prGAMP, prVBEM, warm-started prSAMP and
-Gerchberg–Saxton and Wirtinger Flow adapters. I01–I08 implementation checkpoints
-are complete and 58 tests pass. The public runs
+Gerchberg–Saxton, Wirtinger Flow and bounded PhaseLift adapters. I01–I09
+implementation checkpoints are complete and 64 tests pass with the convex
+extra installed. The public runs
 retain nonconvergence and failed calibration outcomes explicitly.
 
 ## Setup and inspect
@@ -138,3 +139,20 @@ initialization and step rules.
 
 All rows reached the 50-update limit. Both reports replayed byte-for-byte from
 saved estimates.
+
+## Bounded PhaseLift
+
+Install the optional convex backend and run the focused checks.
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -e ".[dev,hdf5,convex]"
+.\.venv\Scripts\python.exe -m pytest -q tests/test_phaselift.py
+.\.venv\Scripts\python.exe -m tmbench.runner run --method phaselift --output runs/my_phaselift
+```
+
+The dense solver supports up to 32 modes and 512 training patterns. It exposes
+an exact intensity constraint at `relative_noise_bound = 0` and a bounded
+intensity residual with positive values. The frozen Rice public run recorded
+`unsupported_size` for all 32 detectors and wrote a zero-coverage report with
+CLI exit code 1. See the [I09 public result](docs/results/i09_phaselift_summary.json)
+and [PhaseLift source audit](docs/phaselift_source_audit.md).

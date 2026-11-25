@@ -1,0 +1,731 @@
+{
+  "provenance": {
+    "python": "3.12.14",
+    "numpy": "2.5.5",
+    "scipy": "1.18.1",
+    "platform": "Windows-11-10.0.26100-SP0",
+    "device": "CPU",
+    "git_commit": "39ea6fcb1970942c09319345e44d6a575116ebd5",
+    "git_dirty": true,
+    "threads": {
+      "OPENBLAS_NUM_THREADS": "4",
+      "OMP_NUM_THREADS": "4",
+      "MKL_NUM_THREADS": "4"
+    },
+    "config": {
+      "relative_noise_bound": 0.05,
+      "max_iter": 5000,
+      "solver_tolerance": 1e-06,
+      "feasibility_tolerance": 2e-05,
+      "rank_rtol": 0.0001
+    },
+    "manifest": {
+      "dataset_id": "rice_phase_slm_40x40",
+      "status": "verified_public_pairs",
+      "input_modes": 1600,
+      "detector_count": 65536,
+      "pattern_encoding": "signed_binary_field",
+      "pattern_storage_scale": 255,
+      "saturation_value": 255,
+      "observation_domain": "intensity",
+      "intensity_units": "released uint8 camera intensity counts; absolute radiometric calibration unavailable",
+      "release_preprocessing": "Unknown camera/release corrections. Preserve counts; no dark subtraction or rescaling. Amplitude is sqrt(counts). Mask counts >=255 conservatively as possible saturation.",
+      "file_layout": {
+        "XH_train.mat": {
+          "filename": "XH_train.mat",
+          "format": "hdf5_mat",
+          "variable": "XH_train",
+          "stored_shape": [
+            1600,
+            19200
+          ],
+          "stored_dtype": "float32",
+          "sample_axis_in_storage": 1,
+          "size_bytes": 10269858,
+          "sha256": "63580c5ed9cb314c49f80471221a345f1ee88de8757de63edc2bd6d58d9a2725",
+          "sample_axis": 1,
+          "box_file_id": "249286625322",
+          "url": "https://rice.app.box.com/index.php?rm=box_download_shared_file&shared_name=j4cn9avkj8e6zizbpkr5irlbm8g9xus0&file_id=f_249286625322"
+        },
+        "YH_squared_train.mat": {
+          "filename": "YH_squared_train.mat",
+          "format": "hdf5_mat",
+          "variable": "YH_squared_train",
+          "stored_shape": [
+            65536,
+            19200
+          ],
+          "stored_dtype": "uint8",
+          "sample_axis_in_storage": 1,
+          "size_bytes": 854797463,
+          "sha256": "b5a85378654850de41db8310cb10ed707a11d0efa315c6d17062cec2e7dc95e4",
+          "sample_axis": 1,
+          "box_file_id": "249287939815",
+          "url": "https://rice.app.box.com/index.php?rm=box_download_shared_file&shared_name=j4cn9avkj8e6zizbpkr5irlbm8g9xus0&file_id=f_249287939815"
+        },
+        "XH_test.mat": {
+          "filename": "XH_test.mat",
+          "format": "hdf5_mat",
+          "variable": "XH_test",
+          "stored_shape": [
+            1600,
+            5
+          ],
+          "stored_dtype": "float64",
+          "sample_axis_in_storage": 1,
+          "size_bytes": 6224,
+          "sha256": "c31a96a71f2138ade2bfd8f4a3bd8329e6e0debdc1bce87673537aaeebc309e7",
+          "sample_axis": 1,
+          "box_file_id": "249287077219",
+          "url": "https://rice.app.box.com/index.php?rm=box_download_shared_file&shared_name=j4cn9avkj8e6zizbpkr5irlbm8g9xus0&file_id=f_249287077219"
+        },
+        "YH_squared_test.mat": {
+          "filename": "YH_squared_test.mat",
+          "format": "hdf5_mat",
+          "variable": "YH_squared_test",
+          "stored_shape": [
+            65536,
+            5
+          ],
+          "stored_dtype": "uint8",
+          "sample_axis_in_storage": 1,
+          "size_bytes": 241303,
+          "sha256": "c01c133f992b21afe3496625543023796202187f26ccbf11f4a4fa9ac15d12b0",
+          "sample_axis": 1,
+          "box_file_id": "249286699955",
+          "url": "https://rice.app.box.com/index.php?rm=box_download_shared_file&shared_name=j4cn9avkj8e6zizbpkr5irlbm8g9xus0&file_id=f_249286699955"
+        }
+      },
+      "source": {
+        "project_url": "https://dsp.rice.edu/research/transmissionmatrices/",
+        "release_url": "https://rice.app.box.com/v/TransmissionMatrices/folder/42189283459",
+        "release_version": "Box files dated 2017-11-21; inspected 2026-11-24; SHA256 pinned per file",
+        "license": null,
+        "paper_url": "https://rice.box.com/s/4jipt0ebr9lm03ccg53fqgf4tsodcpco"
+      },
+      "calibration_pairs": {
+        "train": {
+          "patterns": "XH_train.mat",
+          "observations": "YH_squared_train.mat"
+        },
+        "test": {
+          "patterns": "XH_test.mat",
+          "observations": "YH_squared_test.mat"
+        }
+      },
+      "fitted_comparators": {
+        "gerchberg_saxton": "A_GS.mat",
+        "prvamp": "A_prVAMP.mat"
+      }
+    },
+    "policy": {
+      "dataset_id": "rice_phase_slm_40x40",
+      "seed": 42,
+      "frozen_manifest": "data/manifests/rice_phase_slm_40x40_split.json",
+      "validation_fraction": 0.1,
+      "detector_ids": [
+        8208,
+        8240,
+        8272,
+        8304,
+        8336,
+        8368,
+        8400,
+        8432,
+        24592,
+        24624,
+        24656,
+        24688,
+        24720,
+        24752,
+        24784,
+        24816,
+        40976,
+        41008,
+        41040,
+        41072,
+        41104,
+        41136,
+        41168,
+        41200,
+        57360,
+        57392,
+        57424,
+        57456,
+        57488,
+        57520,
+        57552,
+        57584
+      ]
+    },
+    "method": "phaselift"
+  },
+  "status": {
+    "status": "complete",
+    "method": "phaselift",
+    "variant": "bounded_intensity_noise",
+    "backend": "SCS",
+    "backend_started": false,
+    "attempted_rows": 32,
+    "rows": [
+      {
+        "detector_id": 8208,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 8240,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 8272,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 8304,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 8336,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 8368,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 8400,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 8432,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 24592,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 24624,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 24656,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 24688,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 24720,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 24752,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 24784,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 24816,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 40976,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 41008,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 41040,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 41072,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 41104,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 41136,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 41168,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 41200,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 57360,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 57392,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 57424,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 57456,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 57488,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 57520,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 57552,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      },
+      {
+        "detector_id": 57584,
+        "status": "unsupported_size",
+        "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+      }
+    ],
+    "solver_config": {
+      "relative_noise_bound": 0.05,
+      "max_iter": 5000,
+      "solver_tolerance": 1e-06,
+      "feasibility_tolerance": 2e-05,
+      "rank_rtol": 0.0001
+    },
+    "training_shape": [
+      17280,
+      1600
+    ],
+    "limits": {
+      "max_patterns": 512,
+      "max_modes": 32
+    },
+    "dense_operator_bytes": 707788800000,
+    "preparation_status": "unsupported_size",
+    "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes",
+    "prepare_seconds": 8.359999628737569e-05,
+    "finite_estimate_rows": 0,
+    "converged_rows": 0,
+    "finite_estimate_coverage": 0.0,
+    "end_to_end_seconds": 2.9933217000216246,
+    "peak_traced_bytes": 616855832,
+    "memory_note": "Python/NumPy traced allocation peak, not process peak RSS or native BLAS workspace"
+  },
+  "evaluation": {
+    "method": "phaselift",
+    "estimate_sha256": {},
+    "metrics": {
+      "validation": {
+        "attempted_rows": 32,
+        "evaluated_rows": 0,
+        "coverage": 0.0,
+        "valid_count": 0,
+        "squared_error": 0,
+        "amplitude_energy": 0,
+        "amplitude_mse": null,
+        "relative_amplitude_residual": null,
+        "aggregation": "pooled valid observations among evaluated rows; coverage uses all attempted rows",
+        "rows": [
+          {
+            "detector_id": 8208,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 8240,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 8272,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 8304,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 8336,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 8368,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 8400,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 8432,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 24592,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 24624,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 24656,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 24688,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 24720,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 24752,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 24784,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 24816,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 40976,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 41008,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 41040,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 41072,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 41104,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 41136,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 41168,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 41200,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 57360,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 57392,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 57424,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 57456,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 57488,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 57520,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 57552,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 57584,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          }
+        ]
+      },
+      "test": {
+        "attempted_rows": 32,
+        "evaluated_rows": 0,
+        "coverage": 0.0,
+        "valid_count": 0,
+        "squared_error": 0,
+        "amplitude_energy": 0,
+        "amplitude_mse": null,
+        "relative_amplitude_residual": null,
+        "aggregation": "pooled valid observations among evaluated rows; coverage uses all attempted rows",
+        "rows": [
+          {
+            "detector_id": 8208,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 8240,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 8272,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 8304,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 8336,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 8368,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 8400,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 8432,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 24592,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 24624,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 24656,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 24688,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 24720,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 24752,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 24784,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 24816,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 40976,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 41008,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 41040,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 41072,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 41104,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 41136,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 41168,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 41200,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 57360,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 57392,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 57424,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 57456,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 57488,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 57520,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 57552,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          },
+          {
+            "detector_id": 57584,
+            "solver_status": "unsupported_size",
+            "evaluated": false
+          }
+        ]
+      }
+    },
+    "note": "No reference TM; no coefficient-error or published ranking claim",
+    "variant": "bounded_intensity_noise",
+    "backend": "SCS",
+    "preparation_status": "unsupported_size",
+    "reason": "17280 patterns and 1600 modes exceed the dense PhaseLift limits of 512 patterns and 32 modes"
+  },
+  "complete_run": true,
+  "report_replay_byte_identical": true,
+  "reloaded_training_residual_max_difference": 0.0,
+  "warm_start_artifacts_verified": 0,
+  "reloaded_warm_training_residual_max_difference": 0.0,
+  "archive_sha256": null,
+  "artifact_sha256": {
+    "evaluation.json": "36d550420d6c81238365ada247d8c7769a464941c169f3b4a9ab22895cdef047",
+    "inspection.json": "6c74bf76dba7bf634356cd04db0f0978c2a6fb1aff01b02e25591bfec2c25103",
+    "pipeline_timing.json": "05fd79bd9f6d6de23dcdd4fa1a789460ac9d3e0875addab540460906e409fd8f",
+    "provenance.json": "00298d593935dc03fef190c7ca6bedc672d7c70e3757b3411e5bd387220d9785",
+    "status.json": "50b7e0eefb50bfbc69d680650aaa4f667dceb3fb10b36f2c4a68138dad030913"
+  },
+  "pipeline_timing": {
+    "end_to_end_including_evaluation_seconds": 5.318106000020634
+  }
+}
