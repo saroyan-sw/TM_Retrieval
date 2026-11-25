@@ -1,4 +1,4 @@
-# Handoff — 2026-11-24
+# Handoff — 2026-11-25
 
 ## I01 complete
 Recovered the existing OneDrive loader in commit 6a0cbac, then inspected all four public phase files, corrected stored field scaling (-255/+255 to -1/+1), pinned SHA256 hashes and froze explicit split/detector IDs. Dataset provenance and remaining acquisition uncertainties are in dataset_inventory.md.
@@ -42,11 +42,18 @@ recomputes training residuals. Compact estimates and provenance/status/evaluatio
 are archived in docs/results/i03_prvamp_*; full histories remain local.
 These scores do not certify convergence.
 
-## Next entry point: I04
-prGAMP implementation and focused checks are integrated (41 tests pass). Run
-`python -m tmbench.runner run --method prgamp --output runs/i04_prgamp`, then
-`python scripts/archive_run.py runs/i04_prgamp`. See bayes_source_audit.md.
-The public-data execution is the remaining I04 checkpoint. Preserve all
+## I04 complete
+prGAMP passed its equation, Onsager, complex-adjoint, recovery, repeatability and
+failure-denominator tests (41 tests at the I04 code checkpoint). The public run
+runs/i04_prgamp used all 32 fixed detectors and all 1600 input modes. All 32 rows
+produced finite estimates and reached the 100-iteration limit; none converged.
+Validation/test relative amplitude residuals are 0.632898/0.655574. These are
+bounded integration runs, not a matched algorithm ranking. See bayes_source_audit.md
+for fixed damping, precision floors and reference deviations. Compact estimates
+and replay verification are archived under docs/results/i04_prgamp_*.
+
+## Next entry point: I05
+prVBEM and training-only variance pilots are being integrated. Preserve all
 nonconvergence/instability outcomes. Neither held-out observations nor released
 comparator TMs are used for solver tuning.
 
