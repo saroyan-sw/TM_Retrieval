@@ -19,16 +19,19 @@ LABELS = dict(prgamp='prGAMP', prsamp='prSAMP', prvbem='prVBEM', prvamp='prVAMP'
 
 
 def draw_sweep(ax, groups, settings, xlabel, title):
-    floor = 1e-10
+    floor, ceiling = 1e-10, 1e2
     for index, method in enumerate(METHODS):
         rows = [groups.get((key, method, 'oracle' if method in AMP_METHODS else 'none')) for _, key in settings]
         values = [row.get('phase_nmse', {}) if row else {} for row in rows]
         coordinates = [position for position, _ in settings]
-        bands = [np.maximum([item.get(stat, np.nan) for item in values], floor)
-                 for stat in ('q25', 'median', 'q75')]
+        summary = np.array([[item.get(stat, np.nan) for item in values] for stat in ('q25', 'median', 'q75')])
+        bands = np.clip(summary, floor, ceiling)
         color = plt.get_cmap('tab10')(index)
         ax.plot(coordinates, bands[1], color=color, marker='o', markersize=3, label=LABELS[method])
         ax.fill_between(coordinates, bands[0], bands[2], color=color, alpha=.08)
+        above = summary[1] > ceiling
+        if np.any(above):
+            ax.scatter(np.asarray(coordinates)[above], bands[1][above], color=color, marker='^', s=35)
     ax.set(xlabel=xlabel, ylabel='Phase-aligned coefficient NMSE', title=title, yscale='log')
     ax.grid(alpha=.22)
 
@@ -70,6 +73,36 @@ def plot_images(pdf, groups, output, cfg, regime):
     plt.close(fig)
 
 
+def plot_timing(pdf, groups, cfg):
+    columns = cfg['timing_modes']
+    rows = []
+    for method in METHODS:
+        values = []
+        for modes in columns:
+            group = groups[(f'timing_gaussian_{modes}', method, 'oracle' if method in AMP_METHODS else 'none')]
+            duration = group.get('solve_wall_seconds', {}).get('median')
+            suffix = '*' if group['statuses'].get('timed_out', 0) else ''
+            values.append(f'{duration:.3f}{suffix}' if duration is not None else '—')
+        rows.append([LABELS[method], *values])
+    for method, name in [('prvamp', 'SVD preparation'), ('gs50', 'Pseudoinverse preparation')]:
+        policy = 'oracle' if method in AMP_METHODS else 'none'
+        prep = [groups[(f'timing_gaussian_{modes}', method, policy)]['prepare_cpu_seconds']['median']
+                for modes in columns]
+        rows.append([name, *(f'{seconds:.3f}' for seconds in prep)])
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.set_axis_off()
+    ax.set_title('Complex Gaussian probes · isolated timing at 12 measurements per mode', pad=20)
+    table = ax.table(cellText=rows, colLabels=['Method / preparation', *map(str, columns)],
+                     colWidths=[.39, *([.19] * len(columns))], cellLoc='center', loc='center')
+    table.auto_set_font_size(False)
+    table.set_fontsize(10)
+    table.scale(1., 1.55)
+    for (row, _), cell in table.get_celld().items():
+        cell.set_edgecolor('#d5dbe4')
+        cell.set_facecolor('#dde7f4' if row == 0 else '#f2f5f9' if row % 2 else 'white')
+    save(pdf, fig, 'Solve times are wall seconds. Preparation rows use CPU seconds. * A solver reached its CPU limit.')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--summary', type=Path, required=True)
@@ -82,15 +115,18 @@ def main():
     cfg = summary['metadata']['config']
     groups = {(row['study'], row['method'], row['variance_policy']): row for row in summary['simulation']}
     legend = dict(loc='upper center', ncols=5, bbox_to_anchor=(.5, .15), fontsize=8, frameon=False)
+    sweep_note = ('Medians and quartiles shown from 1e-10 through 1e2. Triangles mark larger medians. '
+                  'Full errors and failures are in the summary.')
     with PdfPages(args.output, metadata={'Title': 'Transmission-matrix retrieval benchmark I12',
                                        'CreationDate': None, 'ModDate': None}) as pdf:
+        plot_timing(pdf, groups, cfg)
         fig, ax = plt.subplots(figsize=(10, 5.8))
         fig.subplots_adjust(bottom=.24)
         draw_sweep(ax, groups, [(ratio, f'ratio_gaussian_{ratio:02}') for ratio in cfg['oversampling_ratios']],
                    'Measurements per input mode (P/N)', 'Complex Gaussian probes · sampling ratio')
         handles, labels = ax.get_legend_handles_labels()
         fig.legend(handles, labels, **legend)
-        save(pdf, fig, 'Lines show trial medians, shading shows quartiles. Plot floor 1e-10. Failed fits count toward coverage.')
+        save(pdf, fig, sweep_note)
 
         fig, axes = plt.subplots(1, 2, figsize=(11, 5.8))
         fig.subplots_adjust(bottom=.24, wspace=.3)
@@ -99,7 +135,7 @@ def main():
                        'Complex field-noise scale σ', f'Binary {regime} probes')
             ax.set_xscale('log')
         fig.legend(handles, labels, **legend)
-        save(pdf, fig, 'Lines show trial medians, shading shows quartiles. Plot floor 1e-10. Failed fits count toward coverage.')
+        save(pdf, fig, sweep_note)
 
         for regime in ('gaussian', 'amplitude', 'phase'):
             plot_images(pdf, groups, args.run, cfg, regime)

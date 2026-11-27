@@ -14,11 +14,13 @@ def coefficient_error(x, target):
     return max(0., float((np.vdot(x, x).real + total - 2*abs(np.vdot(x, target))) / total))
 
 
-def check_simulations(output, cfg):
+def check_simulations(output, cfg, study_prefixes=('',)):
     count = 0
     for suite in ('timing', 'figures'):
         for case in cases(cfg, suite):
             study, regime, modes, ratio, sigma, trial, group, image = case
+            if not study.startswith(study_prefixes):
+                continue
             path = output/'simulation'/study/f'{trial:02}.json'
             record = read_json(path)
             seed = [cfg['seed'], group, trial]
