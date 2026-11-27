@@ -1,4 +1,4 @@
-# Handoff — 2026-11-25
+# Handoff — 2026-11-27
 
 I01–I10 implementation checkpoints are complete and committed. All 71 tests
 pass with the convex extra. Public results include size rejections, iteration
@@ -363,6 +363,50 @@ paper-style transfer yielded nominal residuals near 1 for prGAMP,
 prVAMP and prSAMP. Standalone prVBEM also approached that residual.
 All matched-budget prSAMP rows exhausted their budget in the warm
 start. Each method retained all attempted detectors in its denominator.
+
+## I12 complete — paper-style simulations and measured comparisons
+
+The campaign recorded all 10,530 simulated fits over 1,033 inputs and
+all 576 measured fits. The independent verifier recomputed errors for
+every saved estimate and checked all planned outcomes. All 75 tests
+pass with the convex extra installed.
+
+- **Simulation.** 10,106 fits returned finite estimates. All 424
+  recorded failures were nonfinite original Wirtinger Flow updates.
+  This includes both budgets on every binary-amplitude noise and image
+  instance. prGAMP also diverged on binary amplitude examples while
+  its vectors remained finite. For Gaussian probes at 3N, oracle
+  prVAMP had median phase-aligned NMSE 4.23e-4 over 50 trials.
+- **Timing.** The three isolated Table 1-style inputs used one thread
+  and 12N Gaussian measurements. At N = 1,024, PhaseLift and prSAMP
+  reached the process-CPU ceiling. These times describe truncated
+  optimization. CPU deadlines are checked between updates, so a
+  costly update can cross the budget before a check.
+- **Measured data.** 544 of 576 fits returned finite estimates. Every
+  PhaseMax estimate exceeded the declared amplitude constraint tolerance.
+  Its 32 eight-second fits completed a median of one update after
+  initialization. Treat these scores as approximate predictions.
+  The measured test split contains five patterns, and no measured
+  row reached a solver convergence criterion.
+
+The [seven-page figure report](results/i12_figures.pdf) includes the timing
+table, Gaussian oversampling curves, both noise sweeps, the representative
+image trials, and the measured comparison. The summary and per-fit archive
+retain the unclipped errors and resource limits. The
+[measured coefficient archive](results/i12_rice_estimates.npz) stores the
+544 estimates and the 32 uncovered outcomes in their frozen order.
+The [frozen R05 protocol](dataset_inventory.md#frozen-r05-protocol-for-i12)
+documents the generated targets, solver variants and resource limits
+used for this protocol-level replication.
+
+```powershell
+python scripts/check_i12.py --output runs/i12
+python scripts/plot_i12.py --summary docs/results/i12_summary.json --run runs/i12 --output docs/results/i12_figures.pdf
+```
+
+Figure rendering uses Matplotlib 3.11.2. The run directory contains the
+simulated coefficient vectors and keyed trial inputs can be regenerated
+from the saved seeds.
 
 ## Scope
 I01–I11 distinguish numerical verification fixtures from measured

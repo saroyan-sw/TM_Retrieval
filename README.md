@@ -77,9 +77,8 @@ five-sweep default is a bounded integration check, not a convergence guarantee.
 
 See the [Bayesian source audit](docs/bayes_source_audit.md) for equations, complex
 variance conventions, supported probes, safeguards and deviations from reference
-implementations. These local implementations and smoke runs do not establish
-published algorithm rankings; comprehensive parity and matched benchmarking
-remain I11/I12. The [handoff](docs/handoff.md) records verified checkpoint results.
+implementations. The [handoff](docs/handoff.md) records the integration runs
+and the separate I11 and I12 checkpoints.
 
 Completed public integration runs (all keep the full 32-row denominator):
 
@@ -161,3 +160,20 @@ Their archived Rice runs recorded size rejections. See the
 [PhaseLift audit](docs/phaselift_source_audit.md),
 [PhaseMax audit](docs/phasemax_source_audit.md), and
 [ICCP benchmark protocol notes](docs/dataset_inventory.md#iccp-2017-benchmark-protocol).
+
+## Solver verification and matched benchmark
+
+[I11 evidence](docs/results/i11_verification.json) records the controlled
+checks, independent convex references, and Rice training diagnostic. The
+[R05 protocol](docs/dataset_inventory.md#frozen-r05-protocol-for-i12)
+specifies the separate paper-style simulation and measured Rice comparisons
+and gives the resumable run command.
+
+The [I12 summary](docs/results/i12_summary.json) contains the aggregate
+metrics and completion counts. The [I12 figures](docs/results/i12_figures.pdf)
+show isolated timing, sampling and noise sweeps, representative image
+trials, and measured estimates under both budgets.
+[Per-fit records](docs/results/i12_trials.jsonl.gz)
+preserve statuses and denominators. The
+[measured estimates](docs/results/i12_rice_estimates.npz) store a matrix
+per method and budget arm, in the frozen detector order.
