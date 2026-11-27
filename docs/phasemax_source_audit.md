@@ -55,4 +55,24 @@ training patterns. The audited Rice amplitude candidate has 256 modes
 and 3,072 released training patterns. Both exceed these caps. The size
 gate runs before anchor preparation and optional backend import, with
 all original modes and attempted detectors recorded.
+
+## Operator preset
+
+`phasemax_operator.json` uses ADMM for the amplitude-constrained
+objective above. It splits the field into `X @ a` and an auxiliary
+vector constrained to the amplitude disks. The coefficient step uses
+a reusable Cholesky factor of `X.H @ X / P`. The field step projects
+each complex value onto its disk. The dual step enforces equality of
+the two fields. This implements the same constrained objective as the
+dense solver and uses a different numerical method from
+[PhasePack's penalty continuation solver](https://github.com/tomgoldstein/phasepack-matlab/blob/master/solvers/solvePhaseMax.m).
+
+Memory scales as O(PN + N²). The shared factor requires a numerically
+full-column-rank probe matrix. The preset uses the training spectral
+anchor, zero amplitude padding, at most 500 updates, and a 120-second
+solve budget. Preparation, anchor construction, and solving are timed
+separately. Reports retain the maximum amplitude violation and the
+primal and dual residuals. A finite time- or iteration-limited estimate
+is scored for prediction, with feasibility and convergence recorded
+separately.
 See the [dataset inventory](dataset_inventory.md).

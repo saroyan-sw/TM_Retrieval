@@ -5,7 +5,7 @@ import pytest
 
 from tmbench.data import CalibrationSplit
 from tmbench.phaselift_fit import fit_rows
-from tmbench.solvers.phaselift import PhaseLift, PhaseLiftConfig
+from tmbench.solvers.phaselift import OperatorPhaseLift, OperatorPhaseLiftConfig, PhaseLift, PhaseLiftConfig
 
 
 @pytest.fixture
@@ -94,3 +94,41 @@ def test_missing_optional_backend_has_explicit_status(tmp_path, monkeypatch):
     status = fit_rows(train, {}, tmp_path)
     assert status['rows'][0]['status'] == 'backend_unavailable'
     assert 'tmbench[convex]' in status['reason']
+
+
+def test_operator_phase_lift_complex_adjoint_and_noiseless_recovery():
+    X = np.array([[1, 0], [0, 1], [1, 1], [1, -1], [1, 1j], [1, -1j]])
+    truth = np.array([1 + .2j, .6 - 1.3j])
+    expected_lift = np.outer(truth, truth.conj())
+    intensity = np.abs(X @ truth)**2
+    cfg = OperatorPhaseLiftConfig(max_iter=300, regularization_fraction=1e-5)
+    solver = OperatorPhaseLift(X, cfg)
+
+    weights = np.array([1., .5, -.2, .3, -.7, .1])
+    explicit_adjoint = sum(weight * np.outer(probe.conj(), probe) for weight, probe in zip(weights, X))
+    np.testing.assert_allclose(solver.adjoint(weights), explicit_adjoint, atol=1e-14)
+    np.testing.assert_allclose(solver.forward(expected_lift), intensity)
+    assert float(weights @ solver.forward(expected_lift)) == pytest.approx(
+        np.vdot(solver.adjoint(weights), expected_lift).real
+    )
+
+    result = solver.fit(intensity)
+    assert result.status == 'converged'
+    assert result.diagnostics['numerical_rank'] == 1
+    np.testing.assert_allclose(result.lifted, expected_lift, atol=4e-5)
+
+
+def test_operator_phase_lift_accepts_larger_design_and_retains_rank_two(tmp_path):
+    rng = np.random.default_rng(31)
+    X = rng.normal(size=(520, 2))
+    truth = np.array([1., 1j])
+    intensity = np.abs(X @ truth)**2
+    split = CalibrationSplit(X, intensity[:, None], np.ones((len(X), 1), bool),
+                             np.arange(len(X)), np.array([7]))
+    summary = fit_rows(split, dict(implementation='operator', max_iter=300,
+                                  regularization_fraction=1e-5), tmp_path)
+    row = summary['rows'][0]
+    assert summary['backend'] == 'scipy_proximal_gradient'
+    assert row['converged'] and row['numerical_rank'] == 2
+    with np.load(tmp_path / row['estimate_file'], allow_pickle=False) as arrays:
+        np.testing.assert_allclose(np.abs(X @ arrays['A_row'])**2, intensity, rtol=1e-4, atol=1e-6)

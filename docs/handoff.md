@@ -272,7 +272,41 @@ $env:OPENBLAS_NUM_THREADS='4'
 .\.venv\Scripts\python.exe scripts/summarize_public_coverage.py
 ```
 
-I11 is the next plan checkpoint.
+## Full-size PhaseLift and PhaseMax smoke run
+
+The CLI defaults now use implicit products for PhaseLift and a shared
+Gram factor with disk projections for PhaseMax. Their original dense
+SCS presets remain available for the bounded reference checks.
+
+All four Rice files were restored and verified against the pinned
+SHA-256 hashes. Both new presets ran on detector 8208 using the full
+17,280 x 1,600 training design, the frozen 1,920-pattern validation split,
+and all five test patterns. Results were gathered on CPU with four
+configured BLAS threads. Peak working-set measurements include loading,
+fitting and evaluation.
+
+| Method | Iterations | End to end (s) | Peak working set (MiB) | Validation relative residual | Test relative residual |
+|---|---:|---:|---:|---:|---:|
+| PhaseLift, proximal gradient | 50 | 74.73 | 891.5 | 0.820774 | 0.869421 |
+| PhaseMax, ADMM | 500 | 20.09 | 657.9 | 0.587871 | 0.600365 |
+
+Both estimates reached the iteration limit. PhaseLift returned a
+numerically rank-224 lifted matrix. The rank-two extraction on real
+probes increased the intensity residual norm from 185.12 to 982.26.
+PhaseMax's largest amplitude-bound violation was 0.03856 in amplitude
+units, or 1.58% of the root-mean-square training amplitude. Its estimate
+was scored for prediction and flagged as outside constraint tolerance.
+
+The runs and replay-verified summaries are local in
+`runs/operator_smoke_phaselift_8208`, `runs/operator_smoke_phasemax_8208`
+and `runs/operator_smoke_verified`. Both reports regenerated
+byte-for-byte, and the archive verifier independently checked saved
+training residuals.
+
+I11 is the next checkpoint. The
+[ICCP protocol and proposed comparisons](dataset_inventory.md#iccp-2017-benchmark-protocol)
+record the simulation and camera experiments, initialization and budget
+details, and evidence needed for R05/I12.
 
 ## Scope
 No synthetic benchmark data, reference-TM tuning or published algorithm rankings.

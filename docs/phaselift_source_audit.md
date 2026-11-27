@@ -60,3 +60,26 @@ The numerical fixtures verify complex lifting orientation, rank-one
 extraction, distinction between lifted and extracted residuals, an analytical
 noisy bound, infeasibility, missing backend, and size rejection. These fixtures
 verify solver mathematics. Public-data evidence comes from the Rice runner.
+
+## Implicit operator preset
+
+`phaselift_operator.json` solves
+`min_(M >= 0) 0.5 * ||A(M) - I||^2 + lambda * trace(M)`.
+This is the penalized form used by [PhasePack's PhaseLift solver](https://github.com/tomgoldstein/phasepack-matlab/blob/master/solvers/solvePhaseLift.m).
+The Python implementation uses accelerated proximal gradient with a zero
+initial lift. It evaluates `A(M)` by multiplying the probes by `M` and
+taking rowwise inner products. Its adjoint is `X.H @ (weights[:, None] * X)`.
+The maximum row sum of `A A*` bounds the gradient Lipschitz constant and
+sets the step size. Each proximal update shifts the eigenvalues by
+`lambda * step` and clips them to zero. The preset sets `lambda` to
+0.001 times the largest eigenvalue of `A*(I)`. Intensity normalization
+cancels when the matrix and penalty are restored to the original units.
+
+Memory scales as O(PN + N²). The eigendecomposition remains computationally
+expensive at large N. For real probes, the real lifted matrix can represent
+a complex coefficient vector with two real eigencomponents. Extract the two
+leading components as its real and imaginary parts. For complex probes,
+extract the leading component. Save the lifted matrix and the extracted
+vector and report both intensity residuals. The relative proximal step
+determines convergence. A time or iteration limit retains a finite estimate
+with that status.

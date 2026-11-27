@@ -9,34 +9,46 @@ import numpy as np
 
 from .fit import write_json
 from .solvers._convex import BACKEND, BackendUnavailable, UnsupportedSize
-from .solvers.phasemax import MAX_MODES, MAX_PATTERNS, PhaseMax, PhaseMaxConfig
+from .solvers.phasemax import MAX_MODES, MAX_PATTERNS, OperatorPhaseMax, PhaseMax, PhaseMaxConfig
+from .solvers.prvamp.linear import matvec
 from .solvers.wf import WirtingerFlow
 
 
 def fit_rows(train, config, output):
-    seed = config['seed']
-    spectral_iterations = config['spectral_iterations']
+    options = dict(config)
+    seed = options.pop('seed')
+    spectral_iterations = options.pop('spectral_iterations')
+    implementation = options.pop('implementation', 'dense_scs')
+    if implementation == 'operator':
+        solver_class = OperatorPhaseMax
+        backend = OperatorPhaseMax.backend
+    elif implementation == 'dense_scs':
+        solver_class = PhaseMax
+        backend = BACKEND
+    else:
+        raise ValueError(f'Unknown PhaseMax implementation: {implementation}')
     if type(seed) is not int or seed < 0:
         raise ValueError('seed must be a nonnegative integer')
     if type(spectral_iterations) is not int or spectral_iterations < 1:
         raise ValueError('spectral_iterations must be a positive integer')
-    settings = PhaseMaxConfig(**{k: v for k, v in config.items() if k not in ('seed', 'spectral_iterations')})
+    settings = PhaseMaxConfig(**options)
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
     checkpoint = output / 'status.json'
     records = [dict(detector_id=int(row), status='pending') for row in train.detector_ids]
     summary = dict(status='running', method='phasemax', variant=settings.variant,
-                   backend=BACKEND, backend_started=False, backend_warm_start=False,
+                   backend=backend, backend_started=False, backend_warm_start=False,
                    anchor_policy='training_intensity_spectral', anchor_iterations=spectral_iterations,
                    anchor_seed=seed, attempted_rows=len(records), rows=records,
-                   training_shape=list(train.X.shape), solver_config=asdict(settings),
-                   limits=dict(max_patterns=MAX_PATTERNS, max_modes=MAX_MODES))
+                   training_shape=list(train.X.shape), solver_config=asdict(settings))
+    if implementation == 'dense_scs':
+        summary['limits'] = dict(max_patterns=MAX_PATTERNS, max_modes=MAX_MODES)
     with checkpoint.open('x', encoding='utf-8') as handle:
         json.dump(summary, handle)
 
     start = time.perf_counter()
     try:
-        solver = PhaseMax(train.X, settings)
+        solver = solver_class(train.X, settings)
         initializer = WirtingerFlow(solver.X)
     except (ValueError, BackendUnavailable) as error:
         status = 'unsupported_design'
@@ -52,7 +64,9 @@ def fit_rows(train, config, output):
         write_json(checkpoint, summary)
         print(f'phasemax: {status}: {error}', flush=True)
         return summary
-    summary.update(prepare_seconds=time.perf_counter() - start, backend_versions=solver.backend_versions)
+    summary['prepare_seconds'] = time.perf_counter() - start
+    if implementation == 'dense_scs':
+        summary['backend_versions'] = solver.backend_versions
 
     for index, record in enumerate(records):
         start = time.perf_counter()
@@ -82,12 +96,12 @@ def fit_rows(train, config, output):
                 summary['backend_started'] = True
                 record.update(status=result.status, **result.diagnostics)
                 if result.x is not None:
-                    residual = np.abs(solver.X @ result.x) - amplitudes
+                    residual = np.abs(matvec(solver.X, result.x)) - amplitudes
                     energy = float(amplitudes @ amplitudes)
                     squared_error = float(residual @ residual)
                     estimate_file = f'row_{row}.npz'
                     np.savez(output / estimate_file, A_row=result.x, detector_id=row)
-                    record.update(estimate_file=estimate_file, converged=result.status == 'optimal',
+                    record.update(estimate_file=estimate_file, converged=result.status in ('optimal', 'converged'),
                                   training_squared_error=squared_error, training_amplitude_energy=energy,
                                   training_sample_count=len(amplitudes),
                                   training_relative_amplitude_residual=float(np.sqrt(squared_error / energy)))

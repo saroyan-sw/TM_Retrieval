@@ -58,11 +58,11 @@ def archive(directory, target, allow_incomplete=False):
             history = json.loads((directory / f"row_{row['detector_id']}_history.json").read_text())
             assert len(history) == row['iterations']
         if 'lifted' in saved:
-            target = dataset.train.intensities[:, index].astype(float)
+            target_intensity = dataset.train.intensities[:, index].astype(float)
             lifted_intensity = np.sum((X @ saved['lifted']) * X.conj(), axis=1).real
-            np.testing.assert_allclose(np.linalg.norm(lifted_intensity - target),
+            np.testing.assert_allclose(np.linalg.norm(lifted_intensity - target_intensity),
                                        row['lifted_intensity_residual_norm'], rtol=1e-9, atol=1e-10)
-            np.testing.assert_allclose(np.linalg.norm(predicted**2 - target),
+            np.testing.assert_allclose(np.linalg.norm(predicted**2 - target_intensity),
                                        row['rank1_intensity_residual_norm'], rtol=1e-9, atol=1e-10)
         if 'warm_start_file' in row:
             warm = np.load(directory / row['warm_start_file'], allow_pickle=False)

@@ -5,7 +5,7 @@ import pytest
 
 from tmbench.data import CalibrationSplit
 from tmbench.phasemax_fit import fit_rows
-from tmbench.solvers.phasemax import MAX_MODES, MAX_PATTERNS, PhaseMax, PhaseMaxConfig
+from tmbench.solvers.phasemax import MAX_MODES, MAX_PATTERNS, OperatorPhaseMax, PhaseMax, PhaseMaxConfig
 
 
 @pytest.fixture
@@ -94,3 +94,33 @@ def test_size_caps_precede_backend_and_anchor_setup(shape, expected, monkeypatch
     assert [row['status'] for row in summary['rows']] == [expected, expected]
     assert not summary['backend_started']
     assert list(tmp_path.glob('*.npz')) == []
+
+
+def test_operator_phase_max_matches_complex_disk_oracle_with_zero_bound():
+    X = np.array([[1, 2j], [.3 - 1j, 1.2]])
+    bounds = np.array([1.3, 0.])
+    anchor = np.array([.4 + .7j, 1 - .2j])
+    field_anchor = np.linalg.solve(X.conj().T, anchor)
+    expected = np.linalg.solve(X, bounds * field_anchor / abs(field_anchor))
+    solver = OperatorPhaseMax(X, PhaseMaxConfig(solver_tolerance=1e-8))
+
+    result = solver.fit(bounds, anchor)
+    assert result.status == 'converged' and result.diagnostics['feasible']
+    np.testing.assert_allclose(result.x, expected, atol=1e-7)
+    with pytest.raises(ValueError, match='full-column-rank'):
+        OperatorPhaseMax(np.ones((3, 2)), PhaseMaxConfig())
+
+
+def test_operator_phase_max_retains_budget_limited_estimate_above_dense_cap(tmp_path):
+    X = np.tile(np.eye(2), (MAX_PATTERNS // 2 + 1, 1))
+    intensity = np.abs(X @ np.array([1., .3]))**2
+    train = CalibrationSplit(X, intensity[:, None], np.ones((len(X), 1), bool),
+                             np.arange(len(X)), np.array([7]))
+    summary = fit_rows(train, dict(implementation='operator', seed=23, spectral_iterations=5,
+                                  max_iter=1), tmp_path)
+    row = summary['rows'][0]
+    assert summary['backend'] == 'scipy_admm'
+    assert summary['finite_estimate_rows'] == 1
+    assert row['status'] == 'max_iter_reached' and row['backend_iterations'] == 1
+    assert not row['converged'] and not row['feasible']
+    assert row['max_amplitude_violation'] > 0

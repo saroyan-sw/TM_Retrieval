@@ -3,8 +3,7 @@
 Public-data transmission-matrix calibration benchmark using verified Rice
 PhaseSLM_40x40 pairs, with prVAMP, prGAMP, prVBEM, warm-started prSAMP and
 Gerchberg–Saxton, Wirtinger Flow, bounded PhaseLift and bounded PhaseMax adapters.
-I01–I10 implementation checkpoints are complete and 71 tests pass with the
-convex extra installed. The public runs
+I01–I10 implementation checkpoints are complete. The public runs
 retain nonconvergence and failed calibration outcomes explicitly.
 
 ## Setup and inspect
@@ -16,7 +15,7 @@ python -m venv .venv
 .\.venv\Scripts\python.exe -m pytest -q
 ```
 
-Place the four calibration MAT files in data/raw/phase_slm_40x40. Exact public download URLs and SHA256 hashes are in data/manifests/rice_phase_slm_40x40.json. The current checkout already has the downloaded files locally.
+Place the four calibration MAT files in data/raw/phase_slm_40x40. Exact public download URLs and SHA256 hashes are in data/manifests/rice_phase_slm_40x40.json. The raw files are ignored by Git.
 
 Inspection verifies hashes, decodes signed fields, loads the predetermined 32 detectors, checks pairing and frozen splits, and writes runs/rice_phase_slm_40x40/inspection.json. All 1600 input modes are preserved; measurements remain in released intensity counts.
 
@@ -140,37 +139,25 @@ initialization and step rules.
 All rows reached the 50-update limit. Both reports replayed byte-for-byte from
 saved estimates.
 
-## Bounded PhaseLift
+## PhaseLift and PhaseMax on Rice data
 
-Install the optional convex backend and run the focused checks.
+The runner defaults to SciPy implementations for both methods. PhaseLift
+uses accelerated proximal gradient on a trace-regularized intensity loss
+with implicit measurement products. PhaseMax projects onto the measured
+amplitude disks and shares a Cholesky factor of the probe Gram matrix
+across detectors. Both presets retain finite estimates at their iteration
+or time limits and record stopping criteria and residuals.
 
 ```powershell
-.\.venv\Scripts\python.exe -m pip install -e ".[dev,hdf5,convex]"
-.\.venv\Scripts\python.exe -m pytest -q tests/test_phaselift.py
+$env:OPENBLAS_NUM_THREADS='4'
 .\.venv\Scripts\python.exe -m tmbench.runner run --method phaselift --output runs/my_phaselift
-```
-
-The dense solver supports up to 32 modes and 512 training patterns. It exposes
-an exact intensity constraint at `relative_noise_bound = 0` and a bounded
-intensity residual with positive values. The frozen Rice public run recorded
-`unsupported_size` for all 32 detectors and wrote a zero-coverage report with
-CLI exit code 1. See the [I09 public result](docs/results/i09_phaselift_summary.json)
-and [PhaseLift source audit](docs/phaselift_source_audit.md).
-
-## Bounded PhaseMax
-
-The PhaseMax runner uses the same `convex` extra. It builds amplitude caps
-from square-root training intensities and records the seeded spectral anchor
-separately from the solver estimate. The optional padding fraction defaults
-to zero.
-
-```powershell
-.\.venv\Scripts\python.exe -m pytest -q tests/test_phasemax.py
 .\.venv\Scripts\python.exe -m tmbench.runner run --method phasemax --output runs/my_phasemax
 ```
 
-The solver accepts up to 128 input modes and 2,048 training patterns. The
-frozen Rice run recorded `unsupported_size` for all 32 detectors and returned
-exit code 1. See the [PhaseMax source audit](docs/phasemax_source_audit.md),
-[I10 public result](docs/results/i10_phasemax_summary.json), and
-[eight-method coverage manifest](docs/results/public_method_coverage.json).
+The original bounded SCS variants are available with
+`--config configs/public/phaselift_i09.json` and
+`--config configs/public/phasemax_i10.json` and the optional `convex` extra.
+Their archived Rice runs recorded size rejections. See the
+[PhaseLift audit](docs/phaselift_source_audit.md),
+[PhaseMax audit](docs/phasemax_source_audit.md), and
+[ICCP benchmark protocol notes](docs/dataset_inventory.md#iccp-2017-benchmark-protocol).

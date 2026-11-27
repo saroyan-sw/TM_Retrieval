@@ -1,8 +1,11 @@
 """Dense bounded PhaseLift for the sample-major field X @ a."""
 
 from dataclasses import dataclass
+import time
 
 import numpy as np
+from scipy.linalg import eigh
+
 from ._convex import BACKEND, UnsupportedSize, load_scs
 
 
@@ -134,5 +137,117 @@ class PhaseLift:
         diagnostics.update(
             leading_positive_trace_fraction=largest / float(np.maximum(eigenvalues, 0).sum()),
             rank1_intensity_residual_norm=float(np.linalg.norm(np.abs(self.X @ x)**2 - I)),
+        )
+        return PhaseLiftResult(status, diagnostics, x, lifted)
+
+
+@dataclass(frozen=True)
+class OperatorPhaseLiftConfig:
+    regularization_fraction: float = 0.001
+    max_iter: int = 50
+    solver_time_limit_seconds: float = 120.
+    solver_tolerance: float = 1e-6
+    rank_rtol: float = 1e-4
+
+    def __post_init__(self):
+        if type(self.max_iter) is not int or self.max_iter < 1:
+            raise ValueError('max_iter must be a positive integer')
+        if not np.isfinite(self.solver_time_limit_seconds) or self.solver_time_limit_seconds <= 0:
+            raise ValueError('solver_time_limit_seconds must be finite and positive')
+        for name in ('regularization_fraction', 'solver_tolerance', 'rank_rtol'):
+            if not 0 < getattr(self, name) < 1:
+                raise ValueError(f'{name} must be between zero and one')
+
+    @property
+    def variant(self):
+        return 'trace_regularized_intensity_loss'
+
+
+class OperatorPhaseLift:
+    """Solve the trace-regularized PSD problem with implicit measurement products."""
+
+    backend = 'scipy_proximal_gradient'
+
+    def __init__(self, X, config):
+        self.X = np.asarray(X, dtype=complex if np.iscomplexobj(X) else float)
+        if self.X.ndim != 2 or min(self.X.shape) == 0 or not np.isfinite(self.X).all():
+            raise ValueError('X must be a finite, nonempty matrix')
+        self.P, self.N = self.X.shape
+        self.adjoint_design = self.X.conj().T if np.iscomplexobj(self.X) else self.X.T
+        self.config = config
+        # A A* has nonnegative entries |X[p] @ X[q].H|**2. Its maximum
+        # row sum bounds its spectral norm and thus the gradient Lipschitz constant.
+        self.lipschitz_bound = float(self.forward(self.adjoint(np.ones(self.P))).max())
+        if not np.isfinite(self.lipschitz_bound) or self.lipschitz_bound <= 0:
+            raise ValueError('X must have finite, positive probe energy')
+
+    def forward(self, lifted):
+        return np.einsum('pi,pi->p', self.X @ lifted, self.adjoint_design.T).real
+
+    def adjoint(self, values):
+        gram = self.adjoint_design @ (values[:, None] * self.X)
+        return (gram + gram.conj().T) / 2
+
+    def fit(self, intensities):
+        if np.iscomplexobj(intensities):
+            raise ValueError('Intensities must be real')
+        intensity = np.asarray(intensities, dtype=float)
+        if intensity.shape != (self.P,) or not np.isfinite(intensity).all() or np.any(intensity < 0):
+            raise ValueError('Expected one finite nonnegative intensity per sample')
+        scale = float(intensity.mean())
+        if not np.isfinite(scale) or scale <= 0:
+            raise ValueError('Finite positive intensity energy required')
+
+        cfg = self.config
+        start = time.perf_counter()
+        target = intensity / scale
+        adjoint_target = self.adjoint(target)
+        largest = eigh(adjoint_target, subset_by_index=[self.N - 1, self.N - 1], eigvals_only=True)[0]
+        penalty = float(cfg.regularization_fraction * largest)
+        if not np.isfinite(penalty) or penalty <= 0:
+            raise ValueError('Positive intensities must overlap illuminated probes')
+        step = 1 / self.lipschitz_bound
+        estimate = np.zeros_like(adjoint_target)
+        extrapolated = estimate
+        momentum = 1.
+        status = 'max_iter_reached'
+
+        for iteration in range(1, cfg.max_iter + 1):
+            gradient = self.adjoint(self.forward(extrapolated)) - adjoint_target
+            candidate = extrapolated - step * gradient
+            eigenvalues, eigenvectors = eigh(candidate)
+            eigenvalues = np.maximum(eigenvalues - step * penalty, 0.)
+            positive = eigenvalues > 0
+            basis = eigenvectors[:, positive]
+            updated = (basis * eigenvalues[positive]) @ basis.conj().T
+            change = float(np.linalg.norm(updated - extrapolated) / max(np.linalg.norm(updated), 1e-15))
+            next_momentum = (1 + np.sqrt(1 + 4 * momentum**2)) / 2
+            extrapolated = updated + ((momentum - 1) / next_momentum) * (updated - estimate)
+            estimate, momentum = updated, next_momentum
+            if change <= cfg.solver_tolerance:
+                status = 'converged'
+                break
+            if time.perf_counter() - start >= cfg.solver_time_limit_seconds:
+                status = 'timed_out'
+                break
+
+        eigenvalues *= scale
+        lifted = estimate * scale
+        largest = float(eigenvalues[-1])
+        diagnostics = dict(backend=self.backend, backend_status=status, backend_iterations=iteration,
+                           backend_solve_seconds=time.perf_counter() - start, intensity_scale=scale,
+                           trace_penalty=penalty * scale, relative_proximal_step=change,
+                           lifted_trace=float(eigenvalues.sum()),
+                           numerical_rank=int(np.count_nonzero(eigenvalues > largest * cfg.rank_rtol)))
+        if largest <= 0:
+            return PhaseLiftResult('rank_zero', diagnostics)
+        # With real probes, Re(a a.H) can have rank two. Its first two
+        # eigenvectors recover the real and imaginary components up to O(2).
+        x = np.sqrt(largest) * eigenvectors[:, -1]
+        if not np.iscomplexobj(self.X) and self.N > 1:
+            x = x + 1j * np.sqrt(eigenvalues[-2]) * eigenvectors[:, -2]
+        diagnostics.update(
+            lifted_intensity_residual_norm=float(np.linalg.norm(self.forward(lifted) - intensity)),
+            rank1_intensity_residual_norm=float(np.linalg.norm(np.abs(self.X @ x)**2 - intensity)),
         )
         return PhaseLiftResult(status, diagnostics, x, lifted)

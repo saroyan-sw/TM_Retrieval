@@ -18,8 +18,8 @@ DEFAULT_CONFIGS = {
     'prsamp': 'prsamp_i06_fixed_variance.json',
     'gs': 'gs_i07_50.json',
     'wf': 'wf_i08_original.json',
-    'phaselift': 'phaselift_i09.json',
-    'phasemax': 'phasemax_i10.json',
+    'phaselift': 'phaselift_operator.json',
+    'phasemax': 'phasemax_operator.json',
 }
 
 

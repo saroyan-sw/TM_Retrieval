@@ -1,0 +1,8 @@
+{
+  "implementation": "operator",
+  "regularization_fraction": 0.001,
+  "max_iter": 50,
+  "solver_time_limit_seconds": 120.0,
+  "solver_tolerance": 1e-6,
+  "rank_rtol": 0.0001
+}
