@@ -1,0 +1,5501 @@
+{
+  "metadata": {
+    "config": {
+      "seed": 20261127,
+      "timing_modes": [
+        64,
+        256,
+        1024
+      ],
+      "timing_trials": 1,
+      "oversampling_modes": 256,
+      "oversampling_ratios": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "noise_levels": [
+        0.1,
+        1,
+        5,
+        15
+      ],
+      "sweep_trials": 50,
+      "image_modes": 1024,
+      "image_trials": 10,
+      "patterns_per_mode": 12,
+      "simulation_cpu_limit_seconds": 20,
+      "rice_nominal_cpu_limit_seconds": 35,
+      "rice_matched_cpu_limit_seconds": 8,
+      "rice_matched_max_iterations": 2000,
+      "rice_detector_chunk_size": 4,
+      "assumed_training_noise_fraction": 0.01
+    },
+    "source_sha256": "03a759bf053db8b4645ec8c28a72521f88b254dafed58ba2d7955ab083feda7f",
+    "platform": "Windows-10-10.0.20348-SP0",
+    "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "logical_cpus": 28,
+    "python": "3.11.9",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "thread_settings": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1"
+    },
+    "memory_measure": "Maximum OS-reported working set over each worker lifetime"
+  },
+  "simulation": [
+    {
+      "study": "image_amplitude",
+      "method": "gs100",
+      "variance_policy": "none",
+      "attempted": 10,
+      "recorded": 10,
+      "finite": 10,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 10
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 2.1706001133613686,
+        "q25": 1.8934640326374312,
+        "q75": 138.89188368049344
+      },
+      "phase_conjugation_nmse": {
+        "median": 2.1706001133613686,
+        "q25": 1.8934640326374312,
+        "q75": 138.89188368049344
+      },
+      "solve_cpu_seconds": {
+        "median": 10.3984375,
+        "q25": 9.98046875,
+        "q75": 10.61328125
+      },
+      "solve_wall_seconds": {
+        "median": 10.451230349979596,
+        "q25": 9.995280775008723,
+        "q75": 10.65119129998493
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 12.0625,
+        "q25": 11.84375,
+        "q75": 12.609375
+      },
+      "iterations": {
+        "median": 100.0,
+        "q25": 100.0,
+        "q75": 100.0
+      },
+      "max_worker_peak_rss_bytes": 1312014336,
+      "median_error_image_trial": 8
+    },
+    {
+      "study": "image_amplitude",
+      "method": "gs50",
+      "variance_policy": "none",
+      "attempted": 10,
+      "recorded": 10,
+      "finite": 10,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 10
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 4.2444020291217095,
+        "q25": 3.502632682668732,
+        "q75": 137.44886599326588
+      },
+      "phase_conjugation_nmse": {
+        "median": 4.2444020291217095,
+        "q25": 3.502632682668732,
+        "q75": 137.44886599326588
+      },
+      "solve_cpu_seconds": {
+        "median": 5.46875,
+        "q25": 5.37890625,
+        "q75": 5.609375
+      },
+      "solve_wall_seconds": {
+        "median": 5.495180350000737,
+        "q25": 5.423141975028557,
+        "q75": 5.616049475007458
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 12.0625,
+        "q25": 11.84375,
+        "q75": 12.609375
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1312014336,
+      "median_error_image_trial": 8
+    },
+    {
+      "study": "image_amplitude",
+      "method": "phaselift",
+      "variance_policy": "none",
+      "attempted": 10,
+      "recorded": 10,
+      "finite": 10,
+      "converged": 0,
+      "statuses": {
+        "timed_out": 10
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 111.23582758727218,
+        "q25": 66.25094547750828,
+        "q75": 174.00366697466603
+      },
+      "phase_conjugation_nmse": {
+        "median": 111.23582758727218,
+        "q25": 66.25094547750828,
+        "q75": 174.00366697466603
+      },
+      "solve_cpu_seconds": {
+        "median": 23.1328125,
+        "q25": 22.47265625,
+        "q75": 24.32421875
+      },
+      "solve_wall_seconds": {
+        "median": 23.240351750020636,
+        "q25": 22.616132300012396,
+        "q75": 24.417202675016597
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 3.0546875,
+        "q25": 3.0234375,
+        "q75": 3.18359375
+      },
+      "iterations": {
+        "median": 5.0,
+        "q25": 5.0,
+        "q75": 6.0
+      },
+      "max_worker_peak_rss_bytes": 1312014336,
+      "median_error_image_trial": 7
+    },
+    {
+      "study": "image_amplitude",
+      "method": "phasemax",
+      "variance_policy": "none",
+      "attempted": 10,
+      "recorded": 10,
+      "finite": 10,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 10
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 115.13227545500473,
+        "q25": 114.48614346451934,
+        "q75": 115.63986689847431
+      },
+      "phase_conjugation_nmse": {
+        "median": 115.13227545500473,
+        "q25": 114.48614346451934,
+        "q75": 115.63986689847431
+      },
+      "solve_cpu_seconds": {
+        "median": 7.2578125,
+        "q25": 6.828125,
+        "q75": 7.64453125
+      },
+      "solve_wall_seconds": {
+        "median": 7.276193349971436,
+        "q25": 6.853371574979974,
+        "q75": 7.6652839749876875
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.890625,
+        "q25": 0.8515625,
+        "q75": 0.9140625
+      },
+      "constraint_violation": {
+        "median": 0.24023651142764196,
+        "q25": 0.23325979612655562,
+        "q75": 0.2588459668421993
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1312014336,
+      "median_error_image_trial": 3
+    },
+    {
+      "study": "image_amplitude",
+      "method": "prgamp",
+      "variance_policy": "oracle",
+      "attempted": 10,
+      "recorded": 10,
+      "finite": 10,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 10
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 2.4662914845487022e+160,
+        "q25": 1.1361812152814648e+159,
+        "q75": 1.0927487511484993e+161
+      },
+      "phase_conjugation_nmse": {
+        "median": 2.4662914845487022e+160,
+        "q25": 1.1361812152814648e+159,
+        "q75": 1.0927487511484993e+161
+      },
+      "solve_cpu_seconds": {
+        "median": 12.1640625,
+        "q25": 12.05859375,
+        "q75": 12.30078125
+      },
+      "solve_wall_seconds": {
+        "median": 12.321876549976878,
+        "q25": 12.21597980002116,
+        "q75": 12.449315825026133
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.7578125,
+        "q25": 0.72265625,
+        "q75": 0.77734375
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1312014336,
+      "median_error_image_trial": 7
+    },
+    {
+      "study": "image_amplitude",
+      "method": "prsamp",
+      "variance_policy": "oracle",
+      "attempted": 10,
+      "recorded": 10,
+      "finite": 10,
+      "converged": 0,
+      "statuses": {
+        "timed_out": 10
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 20.748795232863603,
+        "q25": 17.53748555968441,
+        "q75": 23.213372213119854
+      },
+      "phase_conjugation_nmse": {
+        "median": 20.748795232863603,
+        "q25": 17.53748555968441,
+        "q75": 23.213372213119854
+      },
+      "solve_cpu_seconds": {
+        "median": 20.1953125,
+        "q25": 20.171875,
+        "q75": 20.24609375
+      },
+      "solve_wall_seconds": {
+        "median": 20.44804245000705,
+        "q25": 20.416479199993773,
+        "q75": 20.56160087500757
+      },
+      "initialization_cpu_seconds": {
+        "median": 14.21875,
+        "q25": 13.984375,
+        "q75": 14.37109375
+      },
+      "prepare_cpu_seconds": {
+        "median": 1.640625,
+        "q25": 1.60546875,
+        "q75": 1.69921875
+      },
+      "iterations": {
+        "median": 1.5,
+        "q25": 1.0,
+        "q75": 2.0
+      },
+      "max_worker_peak_rss_bytes": 1312014336,
+      "median_error_image_trial": 4
+    },
+    {
+      "study": "image_amplitude",
+      "method": "prvamp",
+      "variance_policy": "oracle",
+      "attempted": 10,
+      "recorded": 10,
+      "finite": 10,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 10
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 0.00010386679841333817,
+        "q25": 4.4741583599322945e-05,
+        "q75": 0.0006188518172010262
+      },
+      "phase_conjugation_nmse": {
+        "median": 0.00010386679841333817,
+        "q25": 4.4741583599322945e-05,
+        "q75": 0.0006188518172010262
+      },
+      "solve_cpu_seconds": {
+        "median": 6.5,
+        "q25": 6.16015625,
+        "q75": 6.59375
+      },
+      "solve_wall_seconds": {
+        "median": 6.584648199990625,
+        "q25": 6.189807600036147,
+        "q75": 6.615785250018234
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 11.265625,
+        "q25": 10.578125,
+        "q75": 11.76953125
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1312014336,
+      "median_error_image_trial": 7
+    },
+    {
+      "study": "image_amplitude",
+      "method": "prvbem",
+      "variance_policy": "oracle",
+      "attempted": 10,
+      "recorded": 10,
+      "finite": 10,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 10
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 21.14885866485757,
+        "q25": 19.488886971965055,
+        "q75": 25.165717859766325
+      },
+      "phase_conjugation_nmse": {
+        "median": 21.14885866485757,
+        "q25": 19.488886971965055,
+        "q75": 25.165717859766325
+      },
+      "solve_cpu_seconds": {
+        "median": 13.890625,
+        "q25": 13.77734375,
+        "q75": 14.2265625
+      },
+      "solve_wall_seconds": {
+        "median": 14.044536950037582,
+        "q25": 13.813923674999387,
+        "q75": 14.35089460000745
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 1.671875,
+        "q25": 1.609375,
+        "q75": 1.69921875
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1312014336,
+      "median_error_image_trial": 5
+    },
+    {
+      "study": "image_amplitude",
+      "method": "wf50",
+      "variance_policy": "none",
+      "attempted": 10,
+      "recorded": 10,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {
+        "failed": 10
+      },
+      "finite_coverage": 0.0,
+      "solve_cpu_seconds": {
+        "median": 5.375,
+        "q25": 5.3203125,
+        "q75": 5.578125
+      },
+      "solve_wall_seconds": {
+        "median": 5.4148223499942105,
+        "q25": 5.321055774984416,
+        "q75": 5.586777799995616
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.078125,
+        "q25": 0.06640625,
+        "q75": 0.078125
+      },
+      "iterations": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "max_worker_peak_rss_bytes": 1312014336
+    },
+    {
+      "study": "image_amplitude",
+      "method": "wf500",
+      "variance_policy": "none",
+      "attempted": 10,
+      "recorded": 10,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {
+        "failed": 10
+      },
+      "finite_coverage": 0.0,
+      "solve_cpu_seconds": {
+        "median": 5.4921875,
+        "q25": 5.37890625,
+        "q75": 5.66796875
+      },
+      "solve_wall_seconds": {
+        "median": 5.522732799989171,
+        "q25": 5.409324699998251,
+        "q75": 5.6991450500208884
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.078125,
+        "q25": 0.06640625,
+        "q75": 0.078125
+      },
+      "iterations": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "max_worker_peak_rss_bytes": 1312014336
+    },
+    {
+      "study": "image_gaussian",
+      "method": "gs100",
+      "variance_policy": "none",
+      "attempted": 10,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "image_gaussian",
+      "method": "gs50",
+      "variance_policy": "none",
+      "attempted": 10,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "image_gaussian",
+      "method": "phaselift",
+      "variance_policy": "none",
+      "attempted": 10,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "image_gaussian",
+      "method": "phasemax",
+      "variance_policy": "none",
+      "attempted": 10,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "image_gaussian",
+      "method": "prgamp",
+      "variance_policy": "oracle",
+      "attempted": 10,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "image_gaussian",
+      "method": "prsamp",
+      "variance_policy": "oracle",
+      "attempted": 10,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "image_gaussian",
+      "method": "prvamp",
+      "variance_policy": "oracle",
+      "attempted": 10,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "image_gaussian",
+      "method": "prvbem",
+      "variance_policy": "oracle",
+      "attempted": 10,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "image_gaussian",
+      "method": "wf50",
+      "variance_policy": "none",
+      "attempted": 10,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "image_gaussian",
+      "method": "wf500",
+      "variance_policy": "none",
+      "attempted": 10,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "image_phase",
+      "method": "gs100",
+      "variance_policy": "none",
+      "attempted": 10,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "image_phase",
+      "method": "gs50",
+      "variance_policy": "none",
+      "attempted": 10,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "image_phase",
+      "method": "phaselift",
+      "variance_policy": "none",
+      "attempted": 10,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "image_phase",
+      "method": "phasemax",
+      "variance_policy": "none",
+      "attempted": 10,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "image_phase",
+      "method": "prgamp",
+      "variance_policy": "oracle",
+      "attempted": 10,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "image_phase",
+      "method": "prsamp",
+      "variance_policy": "oracle",
+      "attempted": 10,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "image_phase",
+      "method": "prvamp",
+      "variance_policy": "oracle",
+      "attempted": 10,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "image_phase",
+      "method": "prvbem",
+      "variance_policy": "oracle",
+      "attempted": 10,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "image_phase",
+      "method": "wf50",
+      "variance_policy": "none",
+      "attempted": 10,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "image_phase",
+      "method": "wf500",
+      "variance_policy": "none",
+      "attempted": 10,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_0.1",
+      "method": "gs100",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_0.1",
+      "method": "gs50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_0.1",
+      "method": "phaselift",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_0.1",
+      "method": "phasemax",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_0.1",
+      "method": "prgamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_0.1",
+      "method": "prsamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_0.1",
+      "method": "prvamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_0.1",
+      "method": "prvbem",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_0.1",
+      "method": "wf50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_0.1",
+      "method": "wf500",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_1",
+      "method": "gs100",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_1",
+      "method": "gs50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_1",
+      "method": "phaselift",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_1",
+      "method": "phasemax",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_1",
+      "method": "prgamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_1",
+      "method": "prsamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_1",
+      "method": "prvamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_1",
+      "method": "prvbem",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_1",
+      "method": "wf50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_1",
+      "method": "wf500",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_15",
+      "method": "gs100",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_15",
+      "method": "gs50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_15",
+      "method": "phaselift",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_15",
+      "method": "phasemax",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_15",
+      "method": "prgamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_15",
+      "method": "prsamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_15",
+      "method": "prvamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_15",
+      "method": "prvbem",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_15",
+      "method": "wf50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_15",
+      "method": "wf500",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_5",
+      "method": "gs100",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_5",
+      "method": "gs50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_5",
+      "method": "phaselift",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_5",
+      "method": "phasemax",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_5",
+      "method": "prgamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_5",
+      "method": "prsamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_5",
+      "method": "prvamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_5",
+      "method": "prvbem",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_5",
+      "method": "wf50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_amplitude_5",
+      "method": "wf500",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_0.1",
+      "method": "gs100",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_0.1",
+      "method": "gs50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_0.1",
+      "method": "phaselift",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_0.1",
+      "method": "phasemax",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_0.1",
+      "method": "prgamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_0.1",
+      "method": "prsamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_0.1",
+      "method": "prvamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_0.1",
+      "method": "prvbem",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_0.1",
+      "method": "wf50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_0.1",
+      "method": "wf500",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_1",
+      "method": "gs100",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_1",
+      "method": "gs50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_1",
+      "method": "phaselift",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_1",
+      "method": "phasemax",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_1",
+      "method": "prgamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_1",
+      "method": "prsamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_1",
+      "method": "prvamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_1",
+      "method": "prvbem",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_1",
+      "method": "wf50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_1",
+      "method": "wf500",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_15",
+      "method": "gs100",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_15",
+      "method": "gs50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_15",
+      "method": "phaselift",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_15",
+      "method": "phasemax",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_15",
+      "method": "prgamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_15",
+      "method": "prsamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_15",
+      "method": "prvamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_15",
+      "method": "prvbem",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_15",
+      "method": "wf50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_15",
+      "method": "wf500",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_5",
+      "method": "gs100",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_5",
+      "method": "gs50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_5",
+      "method": "phaselift",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_5",
+      "method": "phasemax",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_5",
+      "method": "prgamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_5",
+      "method": "prsamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_5",
+      "method": "prvamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_5",
+      "method": "prvbem",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_5",
+      "method": "wf50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "noise_phase_5",
+      "method": "wf500",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_01",
+      "method": "gs100",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_01",
+      "method": "gs50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_01",
+      "method": "phaselift",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_01",
+      "method": "phasemax",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_01",
+      "method": "prgamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_01",
+      "method": "prsamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_01",
+      "method": "prvamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_01",
+      "method": "prvbem",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_01",
+      "method": "wf50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_01",
+      "method": "wf500",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_02",
+      "method": "gs100",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_02",
+      "method": "gs50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_02",
+      "method": "phaselift",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_02",
+      "method": "phasemax",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_02",
+      "method": "prgamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_02",
+      "method": "prsamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_02",
+      "method": "prvamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_02",
+      "method": "prvbem",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_02",
+      "method": "wf50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_02",
+      "method": "wf500",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_03",
+      "method": "gs100",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_03",
+      "method": "gs50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_03",
+      "method": "phaselift",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_03",
+      "method": "phasemax",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_03",
+      "method": "prgamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_03",
+      "method": "prsamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_03",
+      "method": "prvamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_03",
+      "method": "prvbem",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_03",
+      "method": "wf50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_03",
+      "method": "wf500",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_04",
+      "method": "gs100",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_04",
+      "method": "gs50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_04",
+      "method": "phaselift",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_04",
+      "method": "phasemax",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_04",
+      "method": "prgamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_04",
+      "method": "prsamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_04",
+      "method": "prvamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_04",
+      "method": "prvbem",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_04",
+      "method": "wf50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_04",
+      "method": "wf500",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_05",
+      "method": "gs100",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_05",
+      "method": "gs50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_05",
+      "method": "phaselift",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_05",
+      "method": "phasemax",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_05",
+      "method": "prgamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_05",
+      "method": "prsamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_05",
+      "method": "prvamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_05",
+      "method": "prvbem",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_05",
+      "method": "wf50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_05",
+      "method": "wf500",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_06",
+      "method": "gs100",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_06",
+      "method": "gs50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_06",
+      "method": "phaselift",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_06",
+      "method": "phasemax",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_06",
+      "method": "prgamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_06",
+      "method": "prsamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_06",
+      "method": "prvamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_06",
+      "method": "prvbem",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_06",
+      "method": "wf50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_06",
+      "method": "wf500",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_07",
+      "method": "gs100",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_07",
+      "method": "gs50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_07",
+      "method": "phaselift",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_07",
+      "method": "phasemax",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_07",
+      "method": "prgamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_07",
+      "method": "prsamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_07",
+      "method": "prvamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_07",
+      "method": "prvbem",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_07",
+      "method": "wf50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_07",
+      "method": "wf500",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_08",
+      "method": "gs100",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_08",
+      "method": "gs50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_08",
+      "method": "phaselift",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_08",
+      "method": "phasemax",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_08",
+      "method": "prgamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_08",
+      "method": "prsamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_08",
+      "method": "prvamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_08",
+      "method": "prvbem",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_08",
+      "method": "wf50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_08",
+      "method": "wf500",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_09",
+      "method": "gs100",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_09",
+      "method": "gs50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_09",
+      "method": "phaselift",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_09",
+      "method": "phasemax",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_09",
+      "method": "prgamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_09",
+      "method": "prsamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_09",
+      "method": "prvamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_09",
+      "method": "prvbem",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_09",
+      "method": "wf50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_09",
+      "method": "wf500",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_10",
+      "method": "gs100",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_10",
+      "method": "gs50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_10",
+      "method": "phaselift",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_10",
+      "method": "phasemax",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_10",
+      "method": "prgamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_10",
+      "method": "prsamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_10",
+      "method": "prvamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_10",
+      "method": "prvbem",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_10",
+      "method": "wf50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_10",
+      "method": "wf500",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_11",
+      "method": "gs100",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_11",
+      "method": "gs50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_11",
+      "method": "phaselift",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_11",
+      "method": "phasemax",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_11",
+      "method": "prgamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_11",
+      "method": "prsamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_11",
+      "method": "prvamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_11",
+      "method": "prvbem",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_11",
+      "method": "wf50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_11",
+      "method": "wf500",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_12",
+      "method": "gs100",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_12",
+      "method": "gs50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_12",
+      "method": "phaselift",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_12",
+      "method": "phasemax",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_12",
+      "method": "prgamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_12",
+      "method": "prgamp",
+      "variance_policy": "training_energy",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_12",
+      "method": "prsamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_12",
+      "method": "prsamp",
+      "variance_policy": "training_energy",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_12",
+      "method": "prvamp",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_12",
+      "method": "prvamp",
+      "variance_policy": "training_energy",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_12",
+      "method": "prvbem",
+      "variance_policy": "oracle",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_12",
+      "method": "prvbem",
+      "variance_policy": "training_energy",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_12",
+      "method": "wf50",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "ratio_gaussian_12",
+      "method": "wf500",
+      "variance_policy": "none",
+      "attempted": 50,
+      "recorded": 0,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {},
+      "finite_coverage": 0.0
+    },
+    {
+      "study": "timing_gaussian_1024",
+      "method": "gs100",
+      "variance_policy": "none",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 5.0785088048752876e-17,
+        "q25": 5.0785088048752876e-17,
+        "q75": 5.0785088048752876e-17
+      },
+      "solve_cpu_seconds": {
+        "median": 1.40625,
+        "q25": 1.40625,
+        "q75": 1.40625
+      },
+      "solve_wall_seconds": {
+        "median": 1.405425800010562,
+        "q25": 1.405425800010562,
+        "q75": 1.405425800010562
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 10.671875,
+        "q25": 10.671875,
+        "q75": 10.671875
+      },
+      "iterations": {
+        "median": 100.0,
+        "q25": 100.0,
+        "q75": 100.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_1024",
+      "method": "gs50",
+      "variance_policy": "none",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 8.881778579322525e-05,
+        "q25": 8.881778579322525e-05,
+        "q75": 8.881778579322525e-05
+      },
+      "solve_cpu_seconds": {
+        "median": 0.734375,
+        "q25": 0.734375,
+        "q75": 0.734375
+      },
+      "solve_wall_seconds": {
+        "median": 0.7341535000014119,
+        "q25": 0.7341535000014119,
+        "q75": 0.7341535000014119
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 10.671875,
+        "q25": 10.671875,
+        "q75": 10.671875
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_1024",
+      "method": "phaselift",
+      "variance_policy": "none",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 0,
+      "statuses": {
+        "timed_out": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 1.969620874372477,
+        "q25": 1.969620874372477,
+        "q75": 1.969620874372477
+      },
+      "solve_cpu_seconds": {
+        "median": 24.953125,
+        "q25": 24.953125,
+        "q75": 24.953125
+      },
+      "solve_wall_seconds": {
+        "median": 24.97261850000359,
+        "q25": 24.97261850000359,
+        "q75": 24.97261850000359
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 3.5625,
+        "q25": 3.5625,
+        "q75": 3.5625
+      },
+      "iterations": {
+        "median": 5.0,
+        "q25": 5.0,
+        "q75": 5.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_1024",
+      "method": "phasemax",
+      "variance_policy": "none",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 1.04625096270309,
+        "q25": 1.04625096270309,
+        "q75": 1.04625096270309
+      },
+      "solve_cpu_seconds": {
+        "median": 1.15625,
+        "q25": 1.15625,
+        "q75": 1.15625
+      },
+      "solve_wall_seconds": {
+        "median": 1.1541674000327475,
+        "q25": 1.1541674000327475,
+        "q75": 1.1541674000327475
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 1.875,
+        "q25": 1.875,
+        "q75": 1.875
+      },
+      "constraint_violation": {
+        "median": 0.20169115656544262,
+        "q25": 0.20169115656544262,
+        "q75": 0.20169115656544262
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_1024",
+      "method": "prgamp",
+      "variance_policy": "oracle",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 0.0002877600663199959,
+        "q25": 0.0002877600663199959,
+        "q75": 0.0002877600663199959
+      },
+      "solve_cpu_seconds": {
+        "median": 1.640625,
+        "q25": 1.640625,
+        "q75": 1.640625
+      },
+      "solve_wall_seconds": {
+        "median": 1.632950900006108,
+        "q25": 1.632950900006108,
+        "q75": 1.632950900006108
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.328125,
+        "q25": 0.328125,
+        "q75": 0.328125
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_1024",
+      "method": "prsamp",
+      "variance_policy": "oracle",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 0,
+      "statuses": {
+        "timed_out": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 0.002281817705601262,
+        "q25": 0.002281817705601262,
+        "q75": 0.002281817705601262
+      },
+      "solve_cpu_seconds": {
+        "median": 20.0625,
+        "q25": 20.0625,
+        "q75": 20.0625
+      },
+      "solve_wall_seconds": {
+        "median": 20.07660870003747,
+        "q25": 20.07660870003747,
+        "q75": 20.07660870003747
+      },
+      "initialization_cpu_seconds": {
+        "median": 2.03125,
+        "q25": 2.03125,
+        "q75": 2.03125
+      },
+      "prepare_cpu_seconds": {
+        "median": 2.015625,
+        "q25": 2.015625,
+        "q75": 2.015625
+      },
+      "iterations": {
+        "median": 10.0,
+        "q25": 10.0,
+        "q75": 10.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_1024",
+      "method": "prvamp",
+      "variance_policy": "oracle",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 4.229669854252189e-21,
+        "q25": 4.229669854252189e-21,
+        "q75": 4.229669854252189e-21
+      },
+      "solve_cpu_seconds": {
+        "median": 0.953125,
+        "q25": 0.953125,
+        "q75": 0.953125
+      },
+      "solve_wall_seconds": {
+        "median": 0.9446007999940775,
+        "q25": 0.9446007999940775,
+        "q75": 0.9446007999940775
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 8.46875,
+        "q25": 8.46875,
+        "q75": 8.46875
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_1024",
+      "method": "prvbem",
+      "variance_policy": "oracle",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 8.232379355739128e-05,
+        "q25": 8.232379355739128e-05,
+        "q75": 8.232379355739128e-05
+      },
+      "solve_cpu_seconds": {
+        "median": 2.0625,
+        "q25": 2.0625,
+        "q75": 2.0625
+      },
+      "solve_wall_seconds": {
+        "median": 2.0566613000119105,
+        "q25": 2.0566613000119105,
+        "q75": 2.0566613000119105
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 2.15625,
+        "q25": 2.15625,
+        "q75": 2.15625
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_1024",
+      "method": "wf50",
+      "variance_policy": "none",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 0.011024229131358624,
+        "q25": 0.011024229131358624,
+        "q75": 0.011024229131358624
+      },
+      "solve_cpu_seconds": {
+        "median": 1.375,
+        "q25": 1.375,
+        "q75": 1.375
+      },
+      "solve_wall_seconds": {
+        "median": 1.3789054999942891,
+        "q25": 1.3789054999942891,
+        "q75": 1.3789054999942891
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.6875,
+        "q25": 0.6875,
+        "q75": 0.6875
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.0625,
+        "q25": 0.0625,
+        "q75": 0.0625
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_1024",
+      "method": "wf500",
+      "variance_policy": "none",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 1,
+      "statuses": {
+        "converged": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 1.3930870133692053e-15,
+        "q25": 1.3930870133692053e-15,
+        "q75": 1.3930870133692053e-15
+      },
+      "solve_cpu_seconds": {
+        "median": 5.078125,
+        "q25": 5.078125,
+        "q75": 5.078125
+      },
+      "solve_wall_seconds": {
+        "median": 5.0810332000255585,
+        "q25": 5.0810332000255585,
+        "q75": 5.0810332000255585
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.6875,
+        "q25": 0.6875,
+        "q75": 0.6875
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.0625,
+        "q25": 0.0625,
+        "q75": 0.0625
+      },
+      "iterations": {
+        "median": 314.0,
+        "q25": 314.0,
+        "q75": 314.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_256",
+      "method": "gs100",
+      "variance_policy": "none",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 6.553322806908661e-13,
+        "q25": 6.553322806908661e-13,
+        "q75": 6.553322806908661e-13
+      },
+      "solve_cpu_seconds": {
+        "median": 0.078125,
+        "q25": 0.078125,
+        "q75": 0.078125
+      },
+      "solve_wall_seconds": {
+        "median": 0.07414789998438209,
+        "q25": 0.07414789998438209,
+        "q75": 0.07414789998438209
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.1875,
+        "q25": 0.1875,
+        "q75": 0.1875
+      },
+      "iterations": {
+        "median": 100.0,
+        "q25": 100.0,
+        "q75": 100.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_256",
+      "method": "gs50",
+      "variance_policy": "none",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 0.5692587119412528,
+        "q25": 0.5692587119412528,
+        "q75": 0.5692587119412528
+      },
+      "solve_cpu_seconds": {
+        "median": 0.046875,
+        "q25": 0.046875,
+        "q75": 0.046875
+      },
+      "solve_wall_seconds": {
+        "median": 0.039325199963059276,
+        "q25": 0.039325199963059276,
+        "q75": 0.039325199963059276
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.1875,
+        "q25": 0.1875,
+        "q75": 0.1875
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_256",
+      "method": "phaselift",
+      "variance_policy": "none",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 0.611503888641657,
+        "q25": 0.611503888641657,
+        "q75": 0.611503888641657
+      },
+      "solve_cpu_seconds": {
+        "median": 3.96875,
+        "q25": 3.96875,
+        "q75": 3.96875
+      },
+      "solve_wall_seconds": {
+        "median": 3.981119900010526,
+        "q25": 3.981119900010526,
+        "q75": 3.981119900010526
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.0625,
+        "q25": 0.0625,
+        "q75": 0.0625
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_256",
+      "method": "phasemax",
+      "variance_policy": "none",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 0.9194732407464189,
+        "q25": 0.9194732407464189,
+        "q75": 0.9194732407464189
+      },
+      "solve_cpu_seconds": {
+        "median": 0.0625,
+        "q25": 0.0625,
+        "q75": 0.0625
+      },
+      "solve_wall_seconds": {
+        "median": 0.06058689998462796,
+        "q25": 0.06058689998462796,
+        "q75": 0.06058689998462796
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.03125,
+        "q25": 0.03125,
+        "q75": 0.03125
+      },
+      "constraint_violation": {
+        "median": 0.1786009958192834,
+        "q25": 0.1786009958192834,
+        "q75": 0.1786009958192834
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_256",
+      "method": "prgamp",
+      "variance_policy": "oracle",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 0.00021280533156584514,
+        "q25": 0.00021280533156584514,
+        "q75": 0.00021280533156584514
+      },
+      "solve_cpu_seconds": {
+        "median": 0.109375,
+        "q25": 0.109375,
+        "q75": 0.109375
+      },
+      "solve_wall_seconds": {
+        "median": 0.10478570003760979,
+        "q25": 0.10478570003760979,
+        "q75": 0.10478570003760979
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_256",
+      "method": "prsamp",
+      "variance_policy": "oracle",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 6.423257762337478e-12,
+        "q25": 6.423257762337478e-12,
+        "q75": 6.423257762337478e-12
+      },
+      "solve_cpu_seconds": {
+        "median": 5.515625,
+        "q25": 5.515625,
+        "q75": 5.515625
+      },
+      "solve_wall_seconds": {
+        "median": 5.528393400018103,
+        "q25": 5.528393400018103,
+        "q75": 5.528393400018103
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.125,
+        "q25": 0.125,
+        "q75": 0.125
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.046875,
+        "q25": 0.046875,
+        "q75": 0.046875
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_256",
+      "method": "prvamp",
+      "variance_policy": "oracle",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 1.4682932017616982e-20,
+        "q25": 1.4682932017616982e-20,
+        "q75": 1.4682932017616982e-20
+      },
+      "solve_cpu_seconds": {
+        "median": 0.078125,
+        "q25": 0.078125,
+        "q75": 0.078125
+      },
+      "solve_wall_seconds": {
+        "median": 0.07564699999056756,
+        "q25": 0.07564699999056756,
+        "q75": 0.07564699999056756
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.15625,
+        "q25": 0.15625,
+        "q75": 0.15625
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_256",
+      "method": "prvbem",
+      "variance_policy": "oracle",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 0.5767436063283268,
+        "q25": 0.5767436063283268,
+        "q75": 0.5767436063283268
+      },
+      "solve_cpu_seconds": {
+        "median": 0.109375,
+        "q25": 0.109375,
+        "q75": 0.109375
+      },
+      "solve_wall_seconds": {
+        "median": 0.12422340002376586,
+        "q25": 0.12422340002376586,
+        "q75": 0.12422340002376586
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.046875,
+        "q25": 0.046875,
+        "q75": 0.046875
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_256",
+      "method": "wf50",
+      "variance_policy": "none",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 0.008580910787275733,
+        "q25": 0.008580910787275733,
+        "q75": 0.008580910787275733
+      },
+      "solve_cpu_seconds": {
+        "median": 0.0625,
+        "q25": 0.0625,
+        "q75": 0.0625
+      },
+      "solve_wall_seconds": {
+        "median": 0.07251090003410354,
+        "q25": 0.07251090003410354,
+        "q75": 0.07251090003410354
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.03125,
+        "q25": 0.03125,
+        "q75": 0.03125
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_256",
+      "method": "wf500",
+      "variance_policy": "none",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 1,
+      "statuses": {
+        "converged": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 1.5099716130954686e-15,
+        "q25": 1.5099716130954686e-15,
+        "q75": 1.5099716130954686e-15
+      },
+      "solve_cpu_seconds": {
+        "median": 0.265625,
+        "q25": 0.265625,
+        "q75": 0.265625
+      },
+      "solve_wall_seconds": {
+        "median": 0.2553617000230588,
+        "q25": 0.2553617000230588,
+        "q75": 0.2553617000230588
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.046875,
+        "q25": 0.046875,
+        "q75": 0.046875
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "iterations": {
+        "median": 301.0,
+        "q25": 301.0,
+        "q75": 301.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_64",
+      "method": "gs100",
+      "variance_policy": "none",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 5.03035018768839e-22,
+        "q25": 5.03035018768839e-22,
+        "q75": 5.03035018768839e-22
+      },
+      "solve_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "solve_wall_seconds": {
+        "median": 0.004081399994902313,
+        "q25": 0.004081399994902313,
+        "q75": 0.004081399994902313
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.015625,
+        "q25": 0.015625,
+        "q75": 0.015625
+      },
+      "iterations": {
+        "median": 100.0,
+        "q25": 100.0,
+        "q75": 100.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_64",
+      "method": "gs50",
+      "variance_policy": "none",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 3.333239379427376e-10,
+        "q25": 3.333239379427376e-10,
+        "q75": 3.333239379427376e-10
+      },
+      "solve_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "solve_wall_seconds": {
+        "median": 0.0022597999777644873,
+        "q25": 0.0022597999777644873,
+        "q75": 0.0022597999777644873
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.015625,
+        "q25": 0.015625,
+        "q75": 0.015625
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_64",
+      "method": "phaselift",
+      "variance_policy": "none",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 0.06514978067760635,
+        "q25": 0.06514978067760635,
+        "q75": 0.06514978067760635
+      },
+      "solve_cpu_seconds": {
+        "median": 0.09375,
+        "q25": 0.09375,
+        "q75": 0.09375
+      },
+      "solve_wall_seconds": {
+        "median": 0.08771799999522045,
+        "q25": 0.08771799999522045,
+        "q75": 0.08771799999522045
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_64",
+      "method": "phasemax",
+      "variance_policy": "none",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 0.6867223614884678,
+        "q25": 0.6867223614884678,
+        "q75": 0.6867223614884678
+      },
+      "solve_cpu_seconds": {
+        "median": 0.015625,
+        "q25": 0.015625,
+        "q75": 0.015625
+      },
+      "solve_wall_seconds": {
+        "median": 0.011191800003871322,
+        "q25": 0.011191800003871322,
+        "q75": 0.011191800003871322
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "constraint_violation": {
+        "median": 0.11411659081407777,
+        "q25": 0.11411659081407777,
+        "q75": 0.11411659081407777
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_64",
+      "method": "prgamp",
+      "variance_policy": "oracle",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 0.00011256387256686907,
+        "q25": 0.00011256387256686907,
+        "q75": 0.00011256387256686907
+      },
+      "solve_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "solve_wall_seconds": {
+        "median": 0.012062499998137355,
+        "q25": 0.012062499998137355,
+        "q75": 0.012062499998137355
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.015625,
+        "q25": 0.015625,
+        "q75": 0.015625
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_64",
+      "method": "prsamp",
+      "variance_policy": "oracle",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 1.0038171782712445e-12,
+        "q25": 1.0038171782712445e-12,
+        "q75": 1.0038171782712445e-12
+      },
+      "solve_cpu_seconds": {
+        "median": 0.484375,
+        "q25": 0.484375,
+        "q75": 0.484375
+      },
+      "solve_wall_seconds": {
+        "median": 0.474405899993144,
+        "q25": 0.474405899993144,
+        "q75": 0.474405899993144
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.03125,
+        "q25": 0.03125,
+        "q75": 0.03125
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_64",
+      "method": "prvamp",
+      "variance_policy": "oracle",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 1.3802804121790596e-21,
+        "q25": 1.3802804121790596e-21,
+        "q75": 1.3802804121790596e-21
+      },
+      "solve_cpu_seconds": {
+        "median": 0.015625,
+        "q25": 0.015625,
+        "q75": 0.015625
+      },
+      "solve_wall_seconds": {
+        "median": 0.015814299986232072,
+        "q25": 0.015814299986232072,
+        "q75": 0.015814299986232072
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_64",
+      "method": "prvbem",
+      "variance_policy": "oracle",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 1.2249057596939692e-09,
+        "q25": 1.2249057596939692e-09,
+        "q75": 1.2249057596939692e-09
+      },
+      "solve_cpu_seconds": {
+        "median": 0.015625,
+        "q25": 0.015625,
+        "q75": 0.015625
+      },
+      "solve_wall_seconds": {
+        "median": 0.017240299959667027,
+        "q25": 0.017240299959667027,
+        "q75": 0.017240299959667027
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_64",
+      "method": "wf50",
+      "variance_policy": "none",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 0.008927910330907908,
+        "q25": 0.008927910330907908,
+        "q75": 0.008927910330907908
+      },
+      "solve_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "solve_wall_seconds": {
+        "median": 0.0032998999813571572,
+        "q25": 0.0032998999813571572,
+        "q75": 0.0032998999813571572
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    },
+    {
+      "study": "timing_gaussian_64",
+      "method": "wf500",
+      "variance_policy": "none",
+      "attempted": 1,
+      "recorded": 1,
+      "finite": 1,
+      "converged": 1,
+      "statuses": {
+        "converged": 1
+      },
+      "finite_coverage": 1.0,
+      "phase_nmse": {
+        "median": 1.3549837110266852e-15,
+        "q25": 1.3549837110266852e-15,
+        "q75": 1.3549837110266852e-15
+      },
+      "solve_cpu_seconds": {
+        "median": 0.015625,
+        "q25": 0.015625,
+        "q75": 0.015625
+      },
+      "solve_wall_seconds": {
+        "median": 0.012013700034003705,
+        "q25": 0.012013700034003705,
+        "q75": 0.012013700034003705
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "iterations": {
+        "median": 307.0,
+        "q25": 307.0,
+        "q75": 307.0
+      },
+      "max_worker_peak_rss_bytes": 1157541888
+    }
+  ],
+  "rice": [
+    {
+      "arm": "matched",
+      "method": "gs50",
+      "attempted": 32,
+      "recorded": 32,
+      "finite": 32,
+      "converged": 0,
+      "statuses": {
+        "timed_out": 32
+      },
+      "finite_coverage": 1.0,
+      "solve_cpu_seconds": {
+        "median": 8.125,
+        "q25": 8.046875,
+        "q75": 8.19140625
+      },
+      "solve_wall_seconds": {
+        "median": 8.202199199993629,
+        "q25": 8.118939500011038,
+        "q75": 8.296535450033844
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 44.265625,
+        "q25": 42.234375,
+        "q75": 44.8828125
+      },
+      "iterations": {
+        "median": 31.0,
+        "q25": 30.0,
+        "q75": 32.0
+      },
+      "max_worker_peak_rss_bytes": 1327759360,
+      "train": {
+        "evaluated": 32,
+        "observations": 552960,
+        "amplitude_mse": 2.2185639785688704,
+        "relative_residual": 0.3578273761693237
+      },
+      "validation": {
+        "evaluated": 32,
+        "observations": 61440,
+        "amplitude_mse": 5.470289540064574,
+        "relative_residual": 0.5631335819007761
+      },
+      "test": {
+        "evaluated": 32,
+        "observations": 160,
+        "amplitude_mse": 5.314182773354548,
+        "relative_residual": 0.4831129169380746
+      }
+    },
+    {
+      "arm": "matched",
+      "method": "phaselift",
+      "attempted": 32,
+      "recorded": 32,
+      "finite": 32,
+      "converged": 0,
+      "statuses": {
+        "timed_out": 32
+      },
+      "finite_coverage": 1.0,
+      "solve_cpu_seconds": {
+        "median": 27.3515625,
+        "q25": 26.6171875,
+        "q75": 28.5390625
+      },
+      "solve_wall_seconds": {
+        "median": 27.630023750010878,
+        "q25": 26.82017552499019,
+        "q75": 28.921183824990294
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 10.90625,
+        "q25": 10.25,
+        "q75": 11.19921875
+      },
+      "iterations": {
+        "median": 1.0,
+        "q25": 1.0,
+        "q75": 1.0
+      },
+      "max_worker_peak_rss_bytes": 988241920,
+      "train": {
+        "evaluated": 32,
+        "observations": 552960,
+        "amplitude_mse": 5.651942351325443,
+        "relative_residual": 0.5711319382127221
+      },
+      "validation": {
+        "evaluated": 32,
+        "observations": 61440,
+        "amplitude_mse": 5.646183021233935,
+        "relative_residual": 0.5721155417348879
+      },
+      "test": {
+        "evaluated": 32,
+        "observations": 160,
+        "amplitude_mse": 7.134526533418269,
+        "relative_residual": 0.5597743372397043
+      }
+    },
+    {
+      "arm": "matched",
+      "method": "phasemax",
+      "attempted": 32,
+      "recorded": 32,
+      "finite": 32,
+      "converged": 0,
+      "statuses": {
+        "timed_out": 32
+      },
+      "finite_coverage": 1.0,
+      "solve_cpu_seconds": {
+        "median": 12.921875,
+        "q25": 12.60546875,
+        "q75": 13.12890625
+      },
+      "solve_wall_seconds": {
+        "median": 13.018978000007337,
+        "q25": 12.761049324981286,
+        "q75": 13.281173825016594
+      },
+      "initialization_cpu_seconds": {
+        "median": 12.53125,
+        "q25": 12.2421875,
+        "q75": 12.73828125
+      },
+      "prepare_cpu_seconds": {
+        "median": 3.1484375,
+        "q25": 2.85546875,
+        "q75": 3.3203125
+      },
+      "constraint_violation": {
+        "median": 4.333271378202268,
+        "q25": 3.4948352525586017,
+        "q75": 6.512698355261025
+      },
+      "iterations": {
+        "median": 1.0,
+        "q25": 1.0,
+        "q75": 1.0
+      },
+      "max_worker_peak_rss_bytes": 1309995008,
+      "train": {
+        "evaluated": 32,
+        "observations": 552960,
+        "amplitude_mse": 5.121780370998806,
+        "relative_residual": 0.5436858885068904
+      },
+      "validation": {
+        "evaluated": 32,
+        "observations": 61440,
+        "amplitude_mse": 5.800738631139214,
+        "relative_residual": 0.5798930698085224
+      },
+      "test": {
+        "evaluated": 32,
+        "observations": 160,
+        "amplitude_mse": 6.383240680976474,
+        "relative_residual": 0.5294817744551398
+      }
+    },
+    {
+      "arm": "matched",
+      "method": "prgamp",
+      "attempted": 32,
+      "recorded": 32,
+      "finite": 32,
+      "converged": 0,
+      "statuses": {
+        "timed_out": 32
+      },
+      "finite_coverage": 1.0,
+      "solve_cpu_seconds": {
+        "median": 8.3671875,
+        "q25": 8.265625,
+        "q75": 8.484375
+      },
+      "solve_wall_seconds": {
+        "median": 8.499371749989223,
+        "q25": 8.36389589997998,
+        "q75": 8.613465100017493
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 1.3046875,
+        "q25": 1.15234375,
+        "q75": 1.54296875
+      },
+      "iterations": {
+        "median": 15.0,
+        "q25": 15.0,
+        "q75": 15.0
+      },
+      "max_worker_peak_rss_bytes": 1309995008,
+      "train": {
+        "evaluated": 32,
+        "observations": 552960,
+        "amplitude_mse": 17.283850966287876,
+        "relative_residual": 0.9987524131962867
+      },
+      "validation": {
+        "evaluated": 32,
+        "observations": 61440,
+        "amplitude_mse": 17.208710345488942,
+        "relative_residual": 0.9988043662173839
+      },
+      "test": {
+        "evaluated": 32,
+        "observations": 160,
+        "amplitude_mse": 22.718392974688335,
+        "relative_residual": 0.99889355148042
+      }
+    },
+    {
+      "arm": "matched",
+      "method": "prsamp",
+      "attempted": 32,
+      "recorded": 32,
+      "finite": 0,
+      "converged": 0,
+      "statuses": {
+        "timed_out_warm_start": 32
+      },
+      "finite_coverage": 0.0,
+      "solve_cpu_seconds": {
+        "median": 8.8984375,
+        "q25": 8.77734375,
+        "q75": 9.0234375
+      },
+      "solve_wall_seconds": {
+        "median": 8.968758649978554,
+        "q25": 8.85922735001077,
+        "q75": 9.164834424984292
+      },
+      "initialization_cpu_seconds": {
+        "median": 8.390625,
+        "q25": 8.32421875,
+        "q75": 8.546875
+      },
+      "prepare_cpu_seconds": {
+        "median": 4.046875,
+        "q25": 3.84765625,
+        "q75": 4.10546875
+      },
+      "iterations": {
+        "median": 1.0,
+        "q25": 1.0,
+        "q75": 1.0
+      },
+      "max_worker_peak_rss_bytes": 1088561152
+    },
+    {
+      "arm": "matched",
+      "method": "prvamp",
+      "attempted": 32,
+      "recorded": 32,
+      "finite": 32,
+      "converged": 0,
+      "statuses": {
+        "timed_out": 32
+      },
+      "finite_coverage": 1.0,
+      "solve_cpu_seconds": {
+        "median": 8.1171875,
+        "q25": 8.0703125,
+        "q75": 8.22265625
+      },
+      "solve_wall_seconds": {
+        "median": 8.280674699984957,
+        "q25": 8.161137274990324,
+        "q75": 8.307344049986568
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 37.375,
+        "q25": 36.09765625,
+        "q75": 39.63671875
+      },
+      "iterations": {
+        "median": 27.0,
+        "q25": 26.0,
+        "q75": 27.0
+      },
+      "max_worker_peak_rss_bytes": 1327759360,
+      "train": {
+        "evaluated": 32,
+        "observations": 552960,
+        "amplitude_mse": 17.32618587139166,
+        "relative_residual": 0.9999748325818261
+      },
+      "validation": {
+        "evaluated": 32,
+        "observations": 61440,
+        "amplitude_mse": 17.24919520381359,
+        "relative_residual": 0.9999785593408311
+      },
+      "test": {
+        "evaluated": 32,
+        "observations": 160,
+        "amplitude_mse": 22.767908669326207,
+        "relative_residual": 0.9999815242723916
+      }
+    },
+    {
+      "arm": "matched",
+      "method": "prvbem",
+      "attempted": 32,
+      "recorded": 32,
+      "finite": 32,
+      "converged": 0,
+      "statuses": {
+        "timed_out": 32
+      },
+      "finite_coverage": 1.0,
+      "solve_cpu_seconds": {
+        "median": 8.3984375,
+        "q25": 8.2734375,
+        "q75": 8.5546875
+      },
+      "solve_wall_seconds": {
+        "median": 8.481652999995276,
+        "q25": 8.337485049996758,
+        "q75": 8.633958224992966
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 4.0,
+        "q25": 3.9765625,
+        "q75": 4.10546875
+      },
+      "iterations": {
+        "median": 14.0,
+        "q25": 14.0,
+        "q75": 14.0
+      },
+      "max_worker_peak_rss_bytes": 1310048256,
+      "train": {
+        "evaluated": 32,
+        "observations": 552960,
+        "amplitude_mse": 13.260342649018988,
+        "relative_residual": 0.8748124567225101
+      },
+      "validation": {
+        "evaluated": 32,
+        "observations": 61440,
+        "amplitude_mse": 13.679545214381058,
+        "relative_residual": 0.8905167639397018
+      },
+      "test": {
+        "evaluated": 32,
+        "observations": 160,
+        "amplitude_mse": 18.24536337930566,
+        "relative_residual": 0.8951723604712459
+      }
+    },
+    {
+      "arm": "matched",
+      "method": "wf50",
+      "attempted": 32,
+      "recorded": 32,
+      "finite": 32,
+      "converged": 0,
+      "statuses": {
+        "timed_out": 32
+      },
+      "finite_coverage": 1.0,
+      "solve_cpu_seconds": {
+        "median": 12.8046875,
+        "q25": 12.44921875,
+        "q75": 13.13671875
+      },
+      "solve_wall_seconds": {
+        "median": 12.941975149995415,
+        "q25": 12.585816174963838,
+        "q75": 13.336098550003953
+      },
+      "initialization_cpu_seconds": {
+        "median": 12.421875,
+        "q25": 12.1015625,
+        "q75": 12.7421875
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.1796875,
+        "q25": 0.1640625,
+        "q75": 0.19140625
+      },
+      "iterations": {
+        "median": 1.0,
+        "q25": 1.0,
+        "q75": 1.0
+      },
+      "max_worker_peak_rss_bytes": 1310048256,
+      "train": {
+        "evaluated": 32,
+        "observations": 552960,
+        "amplitude_mse": 7.295850353906475,
+        "relative_residual": 0.6488966678420682
+      },
+      "validation": {
+        "evaluated": 32,
+        "observations": 61440,
+        "amplitude_mse": 6.173965955630509,
+        "relative_residual": 0.5982578212680791
+      },
+      "test": {
+        "evaluated": 32,
+        "observations": 160,
+        "amplitude_mse": 7.325231957687353,
+        "relative_residual": 0.5672063659294676
+      }
+    },
+    {
+      "arm": "nominal",
+      "method": "gs100",
+      "attempted": 32,
+      "recorded": 32,
+      "finite": 32,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 32
+      },
+      "finite_coverage": 1.0,
+      "solve_cpu_seconds": {
+        "median": 25.609375,
+        "q25": 24.91796875,
+        "q75": 26.1328125
+      },
+      "solve_wall_seconds": {
+        "median": 25.894973399990704,
+        "q25": 25.025006399999256,
+        "q75": 26.39219987501565
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 44.265625,
+        "q25": 42.234375,
+        "q75": 44.8828125
+      },
+      "iterations": {
+        "median": 100.0,
+        "q25": 100.0,
+        "q75": 100.0
+      },
+      "max_worker_peak_rss_bytes": 1327759360,
+      "train": {
+        "evaluated": 32,
+        "observations": 552960,
+        "amplitude_mse": 1.9281936303081721,
+        "relative_residual": 0.3335899107591719
+      },
+      "validation": {
+        "evaluated": 32,
+        "observations": 61440,
+        "amplitude_mse": 5.295110832045051,
+        "relative_residual": 0.5540434146483534
+      },
+      "test": {
+        "evaluated": 32,
+        "observations": 160,
+        "amplitude_mse": 4.920440009489271,
+        "relative_residual": 0.4648709163298752
+      }
+    },
+    {
+      "arm": "nominal",
+      "method": "gs50",
+      "attempted": 32,
+      "recorded": 32,
+      "finite": 32,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 32
+      },
+      "finite_coverage": 1.0,
+      "solve_cpu_seconds": {
+        "median": 13.03125,
+        "q25": 12.51953125,
+        "q75": 13.36328125
+      },
+      "solve_wall_seconds": {
+        "median": 13.175013750005746,
+        "q25": 12.64552375000494,
+        "q75": 13.774417025008006
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 44.265625,
+        "q25": 42.234375,
+        "q75": 44.8828125
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1327759360,
+      "train": {
+        "evaluated": 32,
+        "observations": 552960,
+        "amplitude_mse": 2.083843829315063,
+        "relative_residual": 0.3467928775844918
+      },
+      "validation": {
+        "evaluated": 32,
+        "observations": 61440,
+        "amplitude_mse": 5.421727093331552,
+        "relative_residual": 0.5606284028979805
+      },
+      "test": {
+        "evaluated": 32,
+        "observations": 160,
+        "amplitude_mse": 5.49030188993618,
+        "relative_residual": 0.49105316925944426
+      }
+    },
+    {
+      "arm": "nominal",
+      "method": "phaselift",
+      "attempted": 32,
+      "recorded": 32,
+      "finite": 32,
+      "converged": 0,
+      "statuses": {
+        "timed_out": 32
+      },
+      "finite_coverage": 1.0,
+      "solve_cpu_seconds": {
+        "median": 42.8984375,
+        "q25": 42.2734375,
+        "q75": 44.2734375
+      },
+      "solve_wall_seconds": {
+        "median": 44.02425164997112,
+        "q25": 42.883548424972105,
+        "q75": 44.963075525010936
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 10.90625,
+        "q25": 10.25,
+        "q75": 11.19921875
+      },
+      "iterations": {
+        "median": 2.0,
+        "q25": 2.0,
+        "q75": 2.0
+      },
+      "max_worker_peak_rss_bytes": 988241920,
+      "train": {
+        "evaluated": 32,
+        "observations": 552960,
+        "amplitude_mse": 5.64510676019798,
+        "relative_residual": 0.5707864635700562
+      },
+      "validation": {
+        "evaluated": 32,
+        "observations": 61440,
+        "amplitude_mse": 5.642250831137773,
+        "relative_residual": 0.5719162868682951
+      },
+      "test": {
+        "evaluated": 32,
+        "observations": 160,
+        "amplitude_mse": 7.129574841422882,
+        "relative_residual": 0.55958004885886
+      }
+    },
+    {
+      "arm": "nominal",
+      "method": "phasemax",
+      "attempted": 32,
+      "recorded": 32,
+      "finite": 32,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 32
+      },
+      "finite_coverage": 1.0,
+      "solve_cpu_seconds": {
+        "median": 32.265625,
+        "q25": 31.43359375,
+        "q75": 32.64453125
+      },
+      "solve_wall_seconds": {
+        "median": 32.75287900000694,
+        "q25": 31.677980349981226,
+        "q75": 33.341714999987744
+      },
+      "initialization_cpu_seconds": {
+        "median": 12.3359375,
+        "q25": 12.109375,
+        "q75": 12.66796875
+      },
+      "prepare_cpu_seconds": {
+        "median": 3.1484375,
+        "q25": 2.85546875,
+        "q75": 3.3203125
+      },
+      "constraint_violation": {
+        "median": 0.18423112842829997,
+        "q25": 0.15051579634646312,
+        "q75": 0.22313293318578312
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1309995008,
+      "train": {
+        "evaluated": 32,
+        "observations": 552960,
+        "amplitude_mse": 4.749575404828009,
+        "relative_residual": 0.5235582154337908
+      },
+      "validation": {
+        "evaluated": 32,
+        "observations": 61440,
+        "amplitude_mse": 5.932504575036377,
+        "relative_residual": 0.5864423302291983
+      },
+      "test": {
+        "evaluated": 32,
+        "observations": 160,
+        "amplitude_mse": 8.131127233814562,
+        "relative_residual": 0.5975933886821639
+      }
+    },
+    {
+      "arm": "nominal",
+      "method": "prgamp",
+      "attempted": 32,
+      "recorded": 32,
+      "finite": 32,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 32
+      },
+      "finite_coverage": 1.0,
+      "solve_cpu_seconds": {
+        "median": 27.0859375,
+        "q25": 26.19140625,
+        "q75": 27.55078125
+      },
+      "solve_wall_seconds": {
+        "median": 27.549720450042514,
+        "q25": 26.567021424983977,
+        "q75": 28.064869149995502
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 1.3046875,
+        "q25": 1.15234375,
+        "q75": 1.54296875
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1309995008,
+      "train": {
+        "evaluated": 32,
+        "observations": 552960,
+        "amplitude_mse": 17.326614095795804,
+        "relative_residual": 0.9999871899172541
+      },
+      "validation": {
+        "evaluated": 32,
+        "observations": 61440,
+        "amplitude_mse": 17.249561457028033,
+        "relative_residual": 0.9999891755873661
+      },
+      "test": {
+        "evaluated": 32,
+        "observations": 160,
+        "amplitude_mse": 22.768345753664303,
+        "relative_residual": 0.9999911227421355
+      }
+    },
+    {
+      "arm": "nominal",
+      "method": "prsamp",
+      "attempted": 32,
+      "recorded": 32,
+      "finite": 32,
+      "converged": 0,
+      "statuses": {
+        "timed_out": 32
+      },
+      "finite_coverage": 1.0,
+      "solve_cpu_seconds": {
+        "median": 35.46875,
+        "q25": 35.32421875,
+        "q75": 35.546875
+      },
+      "solve_wall_seconds": {
+        "median": 35.92935990000842,
+        "q25": 35.79863982497773,
+        "q75": 36.05271207499027
+      },
+      "initialization_cpu_seconds": {
+        "median": 21.8671875,
+        "q25": 19.62890625,
+        "q75": 25.98046875
+      },
+      "prepare_cpu_seconds": {
+        "median": 4.046875,
+        "q25": 3.84765625,
+        "q75": 4.10546875
+      },
+      "iterations": {
+        "median": 1.0,
+        "q25": 1.0,
+        "q75": 1.0
+      },
+      "max_worker_peak_rss_bytes": 1088561152,
+      "train": {
+        "evaluated": 32,
+        "observations": 552960,
+        "amplitude_mse": 17.327058015046298,
+        "relative_residual": 1.0
+      },
+      "validation": {
+        "evaluated": 32,
+        "observations": 61440,
+        "amplitude_mse": 17.249934895833334,
+        "relative_residual": 1.0
+      },
+      "test": {
+        "evaluated": 32,
+        "observations": 160,
+        "amplitude_mse": 22.76875,
+        "relative_residual": 1.0
+      }
+    },
+    {
+      "arm": "nominal",
+      "method": "prvamp",
+      "attempted": 32,
+      "recorded": 32,
+      "finite": 32,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 32
+      },
+      "finite_coverage": 1.0,
+      "solve_cpu_seconds": {
+        "median": 14.9453125,
+        "q25": 14.5,
+        "q75": 15.20703125
+      },
+      "solve_wall_seconds": {
+        "median": 15.247238300013123,
+        "q25": 14.86432542502007,
+        "q75": 15.658120124979177
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 37.375,
+        "q25": 36.09765625,
+        "q75": 39.63671875
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1327759360,
+      "train": {
+        "evaluated": 32,
+        "observations": 552960,
+        "amplitude_mse": 17.327037751270645,
+        "relative_residual": 0.9999994152561399
+      },
+      "validation": {
+        "evaluated": 32,
+        "observations": 61440,
+        "amplitude_mse": 17.249918352667255,
+        "relative_residual": 0.999999520486015
+      },
+      "test": {
+        "evaluated": 32,
+        "observations": 160,
+        "amplitude_mse": 22.768733878138182,
+        "relative_residual": 0.9999996459650909
+      }
+    },
+    {
+      "arm": "nominal",
+      "method": "prvbem",
+      "attempted": 32,
+      "recorded": 32,
+      "finite": 32,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 32
+      },
+      "finite_coverage": 1.0,
+      "solve_cpu_seconds": {
+        "median": 29.9921875,
+        "q25": 29.125,
+        "q75": 30.67578125
+      },
+      "solve_wall_seconds": {
+        "median": 30.47434075002093,
+        "q25": 29.541447875031736,
+        "q75": 31.147284375008894
+      },
+      "initialization_cpu_seconds": {
+        "median": 0.0,
+        "q25": 0.0,
+        "q75": 0.0
+      },
+      "prepare_cpu_seconds": {
+        "median": 4.0,
+        "q25": 3.9765625,
+        "q75": 4.10546875
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1310048256,
+      "train": {
+        "evaluated": 32,
+        "observations": 552960,
+        "amplitude_mse": 17.327058015046298,
+        "relative_residual": 1.0
+      },
+      "validation": {
+        "evaluated": 32,
+        "observations": 61440,
+        "amplitude_mse": 17.249934895833334,
+        "relative_residual": 1.0
+      },
+      "test": {
+        "evaluated": 32,
+        "observations": 160,
+        "amplitude_mse": 22.76875,
+        "relative_residual": 1.0
+      }
+    },
+    {
+      "arm": "nominal",
+      "method": "wf50",
+      "attempted": 32,
+      "recorded": 32,
+      "finite": 32,
+      "converged": 0,
+      "statuses": {
+        "max_iter_reached": 32
+      },
+      "finite_coverage": 1.0,
+      "solve_cpu_seconds": {
+        "median": 25.0,
+        "q25": 24.375,
+        "q75": 25.47265625
+      },
+      "solve_wall_seconds": {
+        "median": 25.42169954997371,
+        "q25": 24.661002049979288,
+        "q75": 25.923708400005125
+      },
+      "initialization_cpu_seconds": {
+        "median": 12.4765625,
+        "q25": 12.125,
+        "q75": 12.6796875
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.1796875,
+        "q25": 0.1640625,
+        "q75": 0.19140625
+      },
+      "iterations": {
+        "median": 50.0,
+        "q25": 50.0,
+        "q75": 50.0
+      },
+      "max_worker_peak_rss_bytes": 1310048256,
+      "train": {
+        "evaluated": 32,
+        "observations": 552960,
+        "amplitude_mse": 2.5526779163210183,
+        "relative_residual": 0.3838270656564692
+      },
+      "validation": {
+        "evaluated": 32,
+        "observations": 61440,
+        "amplitude_mse": 4.381264486911218,
+        "relative_residual": 0.5039715325836096
+      },
+      "test": {
+        "evaluated": 32,
+        "observations": 160,
+        "amplitude_mse": 4.968233151778394,
+        "relative_residual": 0.4671231489789175
+      }
+    },
+    {
+      "arm": "nominal",
+      "method": "wf500",
+      "attempted": 32,
+      "recorded": 32,
+      "finite": 32,
+      "converged": 0,
+      "statuses": {
+        "timed_out": 32
+      },
+      "finite_coverage": 1.0,
+      "solve_cpu_seconds": {
+        "median": 35.1328125,
+        "q25": 35.0625,
+        "q75": 35.203125
+      },
+      "solve_wall_seconds": {
+        "median": 35.435218049999094,
+        "q25": 35.35888217498723,
+        "q75": 35.58918719997746
+      },
+      "initialization_cpu_seconds": {
+        "median": 12.2421875,
+        "q25": 12.0390625,
+        "q75": 12.62890625
+      },
+      "prepare_cpu_seconds": {
+        "median": 0.1796875,
+        "q25": 0.1640625,
+        "q75": 0.19140625
+      },
+      "iterations": {
+        "median": 91.5,
+        "q25": 88.0,
+        "q75": 95.25
+      },
+      "max_worker_peak_rss_bytes": 1310048256,
+      "train": {
+        "evaluated": 32,
+        "observations": 552960,
+        "amplitude_mse": 2.001582458965951,
+        "relative_residual": 0.3398789973743558
+      },
+      "validation": {
+        "evaluated": 32,
+        "observations": 61440,
+        "amplitude_mse": 4.081603594523441,
+        "relative_residual": 0.48643148968341293
+      },
+      "test": {
+        "evaluated": 32,
+        "observations": 160,
+        "amplitude_mse": 4.163359526158085,
+        "relative_residual": 0.4276144412896701
+      }
+    }
+  ],
+  "rice_pilot": {
+    "detector": 8208,
+    "estimate_norm": 1.1894854835024283e-36,
+    "training_relative_residual": 1.0,
+    "initial_noise": 0.059924189814814816,
+    "initial_prior": 0.003707809244791667,
+    "noise_variance": 6.006881763457776,
+    "prior_variance": 9.039238735183855e-06,
+    "status": "max_iter_reached",
+    "iterations": 50,
+    "prepare_cpu_seconds": 0.96875,
+    "pilot_and_preparation_cpu_seconds": 5.171875,
+    "pilot_and_preparation_wall_seconds": 5.1681834000046365,
+    "load_wall_seconds": 1.383786600024905,
+    "cache_sha256": "95830c77522f4721bdf75291889b49cef6430e7f1b7a78273dca1bb365ed25be",
+    "source_manifest": {
+      "dataset_id": "rice_phase_slm_40x40",
+      "status": "verified_public_pairs",
+      "input_modes": 1600,
+      "detector_count": 65536,
+      "pattern_encoding": "signed_binary_field",
+      "pattern_storage_scale": 255,
+      "saturation_value": 255,
+      "observation_domain": "intensity",
+      "intensity_units": "released uint8 camera intensity counts; absolute radiometric calibration unavailable",
+      "release_preprocessing": "Unknown camera/release corrections. Preserve counts; no dark subtraction or rescaling. Amplitude is sqrt(counts). Mask counts >=255 conservatively as possible saturation.",
+      "file_layout": {
+        "XH_train.mat": {
+          "filename": "XH_train.mat",
+          "format": "hdf5_mat",
+          "variable": "XH_train",
+          "stored_shape": [
+            1600,
+            19200
+          ],
+          "stored_dtype": "float32",
+          "sample_axis_in_storage": 1,
+          "size_bytes": 10269858,
+          "sha256": "63580c5ed9cb314c49f80471221a345f1ee88de8757de63edc2bd6d58d9a2725",
+          "sample_axis": 1,
+          "box_file_id": "249286625322",
+          "url": "https://rice.app.box.com/index.php?rm=box_download_shared_file&shared_name=j4cn9avkj8e6zizbpkr5irlbm8g9xus0&file_id=f_249286625322"
+        },
+        "YH_squared_train.mat": {
+          "filename": "YH_squared_train.mat",
+          "format": "hdf5_mat",
+          "variable": "YH_squared_train",
+          "stored_shape": [
+            65536,
+            19200
+          ],
+          "stored_dtype": "uint8",
+          "sample_axis_in_storage": 1,
+          "size_bytes": 854797463,
+          "sha256": "b5a85378654850de41db8310cb10ed707a11d0efa315c6d17062cec2e7dc95e4",
+          "sample_axis": 1,
+          "box_file_id": "249287939815",
+          "url": "https://rice.app.box.com/index.php?rm=box_download_shared_file&shared_name=j4cn9avkj8e6zizbpkr5irlbm8g9xus0&file_id=f_249287939815"
+        },
+        "XH_test.mat": {
+          "filename": "XH_test.mat",
+          "format": "hdf5_mat",
+          "variable": "XH_test",
+          "stored_shape": [
+            1600,
+            5
+          ],
+          "stored_dtype": "float64",
+          "sample_axis_in_storage": 1,
+          "size_bytes": 6224,
+          "sha256": "c31a96a71f2138ade2bfd8f4a3bd8329e6e0debdc1bce87673537aaeebc309e7",
+          "sample_axis": 1,
+          "box_file_id": "249287077219",
+          "url": "https://rice.app.box.com/index.php?rm=box_download_shared_file&shared_name=j4cn9avkj8e6zizbpkr5irlbm8g9xus0&file_id=f_249287077219"
+        },
+        "YH_squared_test.mat": {
+          "filename": "YH_squared_test.mat",
+          "format": "hdf5_mat",
+          "variable": "YH_squared_test",
+          "stored_shape": [
+            65536,
+            5
+          ],
+          "stored_dtype": "uint8",
+          "sample_axis_in_storage": 1,
+          "size_bytes": 241303,
+          "sha256": "c01c133f992b21afe3496625543023796202187f26ccbf11f4a4fa9ac15d12b0",
+          "sample_axis": 1,
+          "box_file_id": "249286699955",
+          "url": "https://rice.app.box.com/index.php?rm=box_download_shared_file&shared_name=j4cn9avkj8e6zizbpkr5irlbm8g9xus0&file_id=f_249286699955"
+        }
+      },
+      "source": {
+        "project_url": "https://dsp.rice.edu/research/transmissionmatrices/",
+        "release_url": "https://rice.app.box.com/v/TransmissionMatrices/folder/42189283459",
+        "release_version": "Box files dated 2017-11-21; inspected 2026-11-24; SHA256 pinned per file",
+        "license": null,
+        "paper_url": "https://rice.box.com/s/4jipt0ebr9lm03ccg53fqgf4tsodcpco"
+      },
+      "calibration_pairs": {
+        "train": {
+          "patterns": "XH_train.mat",
+          "observations": "YH_squared_train.mat"
+        },
+        "test": {
+          "patterns": "XH_test.mat",
+          "observations": "YH_squared_test.mat"
+        }
+      },
+      "fitted_comparators": {
+        "gerchberg_saxton": "A_GS.mat",
+        "prvamp": "A_prVAMP.mat"
+      }
+    },
+    "source_policy": {
+      "dataset_id": "rice_phase_slm_40x40",
+      "seed": 42,
+      "frozen_manifest": "data/manifests/rice_phase_slm_40x40_split.json",
+      "validation_fraction": 0.1,
+      "detector_ids": [
+        8208,
+        8240,
+        8272,
+        8304,
+        8336,
+        8368,
+        8400,
+        8432,
+        24592,
+        24624,
+        24656,
+        24688,
+        24720,
+        24752,
+        24784,
+        24816,
+        40976,
+        41008,
+        41040,
+        41072,
+        41104,
+        41136,
+        41168,
+        41200,
+        57360,
+        57392,
+        57424,
+        57456,
+        57488,
+        57520,
+        57552,
+        57584
+      ]
+    },
+    "split_manifest_sha256": "ca7e3de9b71333c49571f69153db7b9e820ff9ef3855e12ef3e8517dcf7adde4"
+  },
+  "completion": {
+    "simulation": {
+      "attempted": 10530,
+      "recorded": 130,
+      "finite": 110
+    },
+    "rice": {
+      "attempted": 576,
+      "recorded": 576,
+      "finite": 544
+    }
+  }
+}

@@ -66,8 +66,9 @@ verify solver mathematics. Public-data evidence comes from the Rice runner.
 `phaselift_operator.json` solves
 `min_(M >= 0) 0.5 * ||A(M) - I||^2 + lambda * trace(M)`.
 This is the penalized form used by [PhasePack's PhaseLift solver](https://github.com/tomgoldstein/phasepack-matlab/blob/master/solvers/solvePhaseLift.m).
-The Python implementation uses accelerated proximal gradient with a zero
-initial lift. It evaluates `A(M)` by multiplying the probes by `M` and
+The Python implementation uses accelerated proximal gradient. The public
+runner starts with a zero lift. The I12 runner initializes from a seeded
+random coefficient vector. It evaluates `A(M)` by multiplying the probes by `M` and
 taking rowwise inner products. Its adjoint is `X.H @ (weights[:, None] * X)`.
 The maximum row sum of `A A*` bounds the gradient Lipschitz constant and
 sets the step size. Each proximal update shifts the eigenvalues by

@@ -53,8 +53,9 @@ def check_simulations(output, cfg):
     return count
 
 
-def check_rice(output, pilot):
+def check_rice(output, pilot, estimates_destination=None):
     count = 0
+    matrices, keys, statuses = [], [], []
     path = output/'rice_data.npz'
     assert hashlib.sha256(path.read_bytes()).hexdigest() == pilot['cache_sha256']
     with np.load(path, allow_pickle=False) as data:
@@ -64,11 +65,13 @@ def check_rice(output, pilot):
         for arm, methods in [('nominal', METHODS), ('matched', MATCHED)]:
             for method in methods:
                 records, estimates, evaluated_indices = [], [], []
+                saved_statuses = []
                 for index, detector in enumerate(ids):
                     path = output/'rice'/arm/method/f'{int(detector)}.json'
                     record = read_json(path)
                     assert record['detector'] == detector and record['method'] == method and record['arm'] == arm
                     count += 1
+                    saved_statuses.append(record['status'])
                     if not record['finite']:
                         assert not path.with_suffix('.npz').exists()
                         continue
@@ -78,6 +81,13 @@ def check_rice(output, pilot):
                     estimates.append(x)
                     records.append(record)
                     evaluated_indices.append(index)
+                if estimates_destination is not None:
+                    matrix = np.full((len(ids), data['train_X'].shape[1]), np.nan + 1j*np.nan)
+                    if estimates:
+                        matrix[evaluated_indices] = estimates
+                    matrices.append(matrix)
+                    keys.append((arm, method))
+                    statuses.append(saved_statuses)
                 if not estimates:
                     continue
                 rows = np.stack(estimates)
@@ -95,16 +105,22 @@ def check_rice(output, pilot):
                         np.testing.assert_allclose(report['energy'], target @ target, rtol=1e-12)
                         np.testing.assert_allclose(report['squared_error'], residual @ residual,
                                                    rtol=1e-9, atol=1e-10)
+    if estimates_destination is not None:
+        with estimates_destination.open('wb') as handle:
+            np.savez_compressed(handle, A=np.stack(matrices), detector_ids=ids,
+                                arms=np.array([arm for arm, _ in keys]),
+                                methods=np.array([method for _, method in keys]), statuses=np.array(statuses))
     return count
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--rice-estimates', type=Path)
     args = parser.parse_args()
     cfg = read_json(args.output/'provenance.json')['config']
     simulated = check_simulations(args.output, cfg)
-    measured = check_rice(args.output, read_json(args.output/'rice_pilot.json'))
+    measured = check_rice(args.output, read_json(args.output/'rice_pilot.json'), args.rice_estimates)
     print(f'Verified coverage and errors for {simulated} simulated fits and {measured} measured detector fits.')
 
 

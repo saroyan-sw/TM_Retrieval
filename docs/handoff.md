@@ -232,7 +232,7 @@ To reproduce the checks and the public coverage report with a fresh output direc
 .\.venv\Scripts\python.exe -m pip install -e ".[dev,hdf5,convex]"
 $env:OPENBLAS_NUM_THREADS='4'
 .\.venv\Scripts\python.exe -m pytest -q tests/test_phaselift.py
-.\.venv\Scripts\python.exe -m tmbench.runner run --method phaselift --output runs/my_phaselift
+.\.venv\Scripts\python.exe -m tmbench.runner run --method phaselift --config configs/public/phaselift_i09.json --output runs/my_phaselift
 .\.venv\Scripts\python.exe scripts/archive_run.py runs/my_phaselift
 ```
 
@@ -267,7 +267,7 @@ output directory, run the following with the `convex` extra installed.
 ```powershell
 $env:OPENBLAS_NUM_THREADS='4'
 .\.venv\Scripts\python.exe -m pytest -q tests/test_phasemax.py
-.\.venv\Scripts\python.exe -m tmbench.runner run --method phasemax --output runs/my_phasemax
+.\.venv\Scripts\python.exe -m tmbench.runner run --method phasemax --config configs/public/phasemax_i10.json --output runs/my_phasemax
 .\.venv\Scripts\python.exe scripts/archive_run.py runs/my_phasemax
 .\.venv\Scripts\python.exe scripts/summarize_public_coverage.py
 ```
@@ -336,9 +336,36 @@ python -m pytest -q
 python scripts/verify_i11.py --output docs/results/i11_verification.json
 ```
 
-The [ICCP protocol and proposed comparisons](dataset_inventory.md#iccp-2017-benchmark-protocol)
-describe the camera and simulation experiments that inform R05/I12.
+The [frozen R05 protocol](dataset_inventory.md#frozen-r05-protocol-for-i12)
+records the I12 settings and the deviations from the published experiments.
+
+## I12 measured Rice checkpoint
+
+All 576 planned measured fits have outcomes. The 10 nominal entries
+and eight matched-CPU entries each attempted the same 32 detectors.
+The independent verifier recomputed the training and held-out errors
+from saved coefficient arrays and checked the data-cache digest.
+The [I12 summary](results/i12_summary.json) and
+[per-fit records](results/i12_trials.jsonl.gz) preserve coverage and
+failure statuses.
+
+| Arm and result | Validation residual | Test residual | Coverage |
+|---|---:|---:|---:|
+| Nominal WF-500, CPU-limited | 0.486 | 0.428 | 32/32 |
+| Nominal GS-100 | 0.554 | 0.465 | 32/32 |
+| Eight-second GS | 0.563 | 0.483 | 32/32 |
+| Eight-second PhaseMax | 0.580 | 0.529 | 32/32 |
+| Eight-second prSAMP | — | — | 0/32 |
+
+The first training detector's prVBEM pilot again collapsed, with
+coefficient norm about 1.2e-36 and training residual 1.000. The frozen
+paper-style transfer yielded nominal residuals near 1 for prGAMP,
+prVAMP and prSAMP. Standalone prVBEM also approached that residual.
+All matched-budget prSAMP rows exhausted their budget in the warm
+start. Each method retained all attempted detectors in its denominator.
 
 ## Scope
-No synthetic benchmark data, reference-TM tuning or published algorithm rankings.
-Tests use small numerical fixtures only. No remote push has been performed.
+I01–I11 distinguish numerical verification fixtures from measured
+calibration data. I12 adds the separate seeded simulation campaign
+documented in R05. The measured comparison uses the pinned Rice release
+and training-only variance and initialization policies.
