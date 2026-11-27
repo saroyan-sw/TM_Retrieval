@@ -93,36 +93,74 @@ row. A shared data release supports both experiments.
   128 x 128 data that the authors had not processed.
   [ICCP paper, §§5.2–6](https://compphotolab.northwestern.edu/wordpress/wp-content/uploads/2017/08/ICCP_paper_uploaded_5_12_17.pdf#page=12).
 
-### Proposed matched benchmark
+### Frozen R05 protocol for I12
 
-1. **Verify solver parity on fixtures.** Compare complex operators, objective
-   values, constraints, initialization and repeatability against reference
-   solvers. Record the actual algorithm, formulation and stopping criterion.
-   Keep the dense SCS baselines, the operator implementations and any external
-   PhasePack runs identifiable. In particular, the current operator PhaseLift
-   uses a trace penalty and the current PhaseMax uses a spectral anchor.
-2. **Replicate the paper's simulations as a separate experiment.** Share the
-   same target, matrix and noise realization across methods for each trial.
-   Reproduce the Gaussian size and measurement-ratio sweeps, the binary
-   amplitude and phase comparisons, and the noise sweep with an explicitly
-   stated complex-noise convention. Use the paper's trial counts and budgets.
-   Report median phase-aligned NMSE, uncertainty, failures, fit time and
-   preprocessing time. Label the oracle-variance runs and add a train-only
-   run for comparison. Report conjugation-aware NMSE separately for real
-   probes, which have an additional conjugation ambiguity.
-3. **Compare on the frozen measured Rice split.** Use the same 1,600 modes,
-   training patterns, validation patterns, five test patterns and 32 detector
-   IDs for all methods. Fit and initialize using training only, use validation
-   for declared preset selection, and evaluate the test split once settings
-   are frozen. Report RMSE relative to the RMS of measured amplitudes and
-   amplitude MSE, pooling valid observations from evaluable rows. Report
-   coverage, convergence and failure counts over all attempted detectors.
-   Treat the five previously evaluated test patterns as a repeatability
-   check and use a new held-out capture for a confirmatory comparison.
-   Keep BM3D and residual-based row filtering in a separate image
-   reconstruction experiment.
-4. **Control compute budgets.** Record CPU, BLAS threads, peak process
-   memory, shared preparation, pilot and warm-start cost, and fit time.
-   Report the paper-style nominal iterations and a separate matched CPU
-   time budget because an iteration has different cost across methods.
-   Preserve capped, infeasible and failed outcomes in the denominators.
+The [benchmark manifest](../configs/benchmarks/iccp2017_i12.json) fixes
+the seed, dimensions, trial counts and CPU limits. The
+[I11 verification](results/i11_verification.json) defines the numerical
+coverage of the supported implementations.
+
+- **Simulation inputs.** Pair the same target, probes, and noise across
+  all methods. Generate zero-mean complex Gaussian coefficients with
+  unit total variance for vector runs. Use a procedural unit-RMS smiley
+  for image runs. Each Gaussian ratio is a prefix of the same generated
+  matrix, and each noise level scales the same circular complex draw
+  by the plotted sigma, so total field-noise variance is sigma squared.
+  Noiseless observations have a small positive likelihood floor for AMP.
+  These choices fill gaps in the paper's published generator details.
+- **Simulation runs.** Use all eight families, including separate GS-50,
+  GS-100, WF-50 and WF-500 runs. Reproduce 50 trials per oversampling or
+  noise setting and 10 per image regime. Run a separate sequential timing
+  pass at each table size. Report median coefficient NMSE with quartiles,
+  phase-only alignment as in the paper, and phase-plus-conjugation
+  alignment separately when probes are real. Save the median-error image
+  trial and all finite estimates. At Gaussian 12N, repeat the AMP methods
+  with observation-derived variance estimates to expose the effect of
+  the paper's oracle inputs.
+- **Solver settings.** Treat the paper's reported 0.8 and 0.9 damping as
+  old-state weights, giving 0.2 and 0.1 in the local new-state convention.
+  This is an explicit reconstruction assumption. Use the local VBEM
+  initialization, spectral WF, prVBEM warm-started prSAMP, and seeded
+  random starts for VAMP, GAMP, GS and PhaseLift. The simulation PhaseMax
+  anchor is a seeded random vector to reflect the published random-start
+  description, whose precise anchor semantics are unspecified. PhaseLift
+  uses the implicit trace-penalized objective. PhaseMax uses the
+  existing ADMM implementation. Report these variants explicitly.
+- **Measured calibration.** Freeze the 1,600 modes, 32 detector IDs,
+  17,280 training patterns, 1,920 validation patterns, and supplied five
+  test patterns. The first training detector supplies a single 50-step
+  prVBEM pilot, whose absolute noise and prior variances are reused in
+  prGAMP, prSAMP and prVAMP. Preserve a degenerate pilot outcome.
+  Standalone VBEM fits its variances, and PhaseMax uses the training
+  spectral anchor. Both arms use the same frozen settings and split,
+  without selection using validation or test scores. Report amplitude MSE
+  and RMSE relative to measured RMS amplitude, pooled over valid evaluated
+  observations. Compute coverage and failure denominators over all
+  attempted detectors. The five previously evaluated test patterns serve
+  as a repeatability check. Leave BM3D and residual-based detector
+  exclusion to a separate image reconstruction experiment.
+- **Compute.** Use one BLAS thread per process. The simulation and
+  isolated timing passes have a 20-second process CPU limit per solve.
+  Measured runs use published nominal iterations with a 35-second CPU
+  ceiling and a separate eight-second matched arm for every family.
+  Check budgets after updates and within prSAMP sweeps. Report the
+  actual completed updates, CPU and wall time, preparation,
+  initialization and pilot costs. Save process peak resident memory as
+  a worker high-water mark. Record iteration and time limits, violated
+  constraints, unsupported designs, and numerical failures explicitly.
+  Compare these capped results as a protocol-level replication.
+
+Use Python with the HDF5 extra from the project root and an output folder
+on the same disk as its checkpoint files.
+
+```powershell
+$env:OPENBLAS_NUM_THREADS='1'
+$env:MKL_NUM_THREADS='1'
+$env:OMP_NUM_THREADS='1'
+python scripts/run_i12.py all --workers 20 --output runs/i12
+python scripts/run_i12.py report --output runs/i12 --summary docs/results/i12_summary.json --archive docs/results/i12_trials.jsonl.gz
+```
+
+Rerun the same command to resume. Each simulation trial and measured
+row is saved after completion. Output provenance includes the solver
+and data-contract fingerprint.

@@ -1,0 +1,18 @@
+{
+  "seed": 20261127,
+  "timing_modes": [64, 256, 1024],
+  "timing_trials": 1,
+  "oversampling_modes": 256,
+  "oversampling_ratios": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+  "noise_levels": [0.1, 1, 5, 15],
+  "sweep_trials": 50,
+  "image_modes": 1024,
+  "image_trials": 10,
+  "patterns_per_mode": 12,
+  "simulation_cpu_limit_seconds": 20,
+  "rice_nominal_cpu_limit_seconds": 35,
+  "rice_matched_cpu_limit_seconds": 8,
+  "rice_matched_max_iterations": 2000,
+  "rice_detector_chunk_size": 4,
+  "assumed_training_noise_fraction": 0.01
+}
