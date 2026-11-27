@@ -12,6 +12,7 @@ class GSResult:
     x: np.ndarray
     z: np.ndarray
     history: list
+    status: str = 'max_iter_reached'
 
 
 class GerchbergSaxton:
@@ -35,7 +36,7 @@ class GerchbergSaxton:
         if not np.isfinite(self.pseudoinverse).all():
             raise FloatingPointError('Nonfinite pseudoinverse')
 
-    def fit(self, y, *, max_iter, seed):
+    def fit(self, y, *, max_iter, seed, stop=None):
         """Run a fixed number of full projection cycles from seeded complex coefficients."""
         sample_count, mode_count = self.X.shape
         y = np.asarray(y, dtype=np.float64)
@@ -61,4 +62,6 @@ class GerchbergSaxton:
             if not np.isfinite(x).all() or not np.isfinite(residual):
                 raise FloatingPointError(f'Nonfinite GS iterate at iteration {iteration}')
             history.append(dict(iteration=iteration, relative_amplitude_residual=residual))
+            if stop is not None and stop():
+                return GSResult(x, z, history, 'timed_out')
         return GSResult(x, z, history)

@@ -97,7 +97,7 @@ def history_entry(design, a, old, y, iteration, stabilized, **extra):
                 relative_amplitude_residual=residual, stabilized=int(stabilized), **extra)
 
 
-def prgamp(design, y, noise, prior, config, seed):
+def prgamp(design, y, noise, prior, config, seed, *, stop=None):
     """Damped sum-product GAMP, Schniter/Rangan Table I, Gaussian dense prior."""
     y, noise, prior, rng, a, c = initialize(design, y, noise, prior, config, seed)
     s = np.zeros(design.P, complex)
@@ -128,6 +128,9 @@ def prgamp(design, y, noise, prior, config, seed):
         if iteration >= config.get('min_iter', 1) and state_change < config.get('tol', 1e-6):
             status = 'converged'
             break
+        if stop is not None and stop():
+            status = 'timed_out'
+            break
     return Result(a, c, design.forward(a), status, history, noise, prior)
 
 
@@ -148,7 +151,7 @@ def expected_error(design, y, pseudo, field, c, phase_variance=None):
     return float(np.vdot(difference, difference).real + np.sum(phase_variance) + design.colnorm@c)
 
 
-def prvbem(design, y, noise, prior, config, seed):
+def prvbem(design, y, noise, prior, config, seed, *, stop=None):
     """Mean-field coordinate VB-EM, Dremeau/Krzakala equations 8–18."""
     if design.gram is None:
         raise ValueError('VBEM requires Gram preparation')
@@ -193,10 +196,13 @@ def prvbem(design, y, noise, prior, config, seed):
         if iteration >= config.get('min_iter', 1) and change < config.get('tol', 1e-6):
             status = 'converged'
             break
+        if stop is not None and stop():
+            status = 'timed_out'
+            break
     return Result(a, c, design.forward(a), status, history, noise, prior)
 
 
-def prsamp(design, y, noise, prior, config, seed, initial=None):
+def prsamp(design, y, noise, prior, config, seed, initial=None, *, stop=None):
     """Seeded swept GAMP; IPOL Algorithm 1 generalized to dense signed/complex X."""
     y, noise, prior, rng, a, c = initialize(design, y, noise, prior, config, seed, initial)
     g = np.zeros(design.P, complex)
@@ -213,7 +219,11 @@ def prsamp(design, y, noise, prior, config, seed, initial=None):
         g_start = g.copy()
         stabilized = 0
         order = rng.permutation(design.N)
+        completed = 0
         for i in order:
+            if completed % 32 == 0 and stop is not None and stop():
+                status = 'timed_out'
+                break
             column, power = design.X[:, i], design.power[:, i]
             precision = -float(power@dg)
             stabilized += int(precision < floor)
@@ -235,11 +245,14 @@ def prsamp(design, y, noise, prior, config, seed, initial=None):
             a[i], c[i] = next_a, next_c
             z, vz = channel(omega, V, y, noise)
             g, dg = (z-omega)/V, (vz/V-1)/V
+            completed += 1
         entry = history_entry(design, a, old, y, iteration, stabilized)
         entry['variance_relative_change'] = float(np.linalg.norm(c-old_c)/np.linalg.norm(old_c))
         # Store permutations themselves: transparent replay of every swept order.
-        entry['coordinate_order'] = order.tolist()
+        entry['coordinate_order'] = order[:completed].tolist()
         history.append(entry)
+        if status == 'timed_out':
+            break
         if (iteration >= config.get('min_iter', 1)
                 and max(entry['relative_change'], entry['variance_relative_change']) < config.get('tol', 1e-6)):
             status = 'converged'

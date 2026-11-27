@@ -7,6 +7,8 @@ import numpy as np
 from scipy.linalg import eigh
 
 from ._convex import BACKEND, UnsupportedSize, load_scs
+from .prvamp.linear import matvec
+from .prvamp.utils import complex_normal
 
 
 MAX_MODES = 32
@@ -188,7 +190,7 @@ class OperatorPhaseLift:
         gram = self.adjoint_design @ (values[:, None] * self.X)
         return (gram + gram.conj().T) / 2
 
-    def fit(self, intensities):
+    def fit(self, intensities, *, seed=None, stop=None):
         if np.iscomplexobj(intensities):
             raise ValueError('Intensities must be real')
         intensity = np.asarray(intensities, dtype=float)
@@ -208,6 +210,14 @@ class OperatorPhaseLift:
             raise ValueError('Positive intensities must overlap illuminated probes')
         step = 1 / self.lipschitz_bound
         estimate = np.zeros_like(adjoint_target)
+        if seed is not None:
+            direction = complex_normal(np.random.default_rng(seed), self.N)
+            energy = float(np.mean(np.abs(matvec(self.X, direction))**2))
+            if energy <= 0 or not np.isfinite(energy):
+                raise ValueError('Random initialization requires finite positive field energy')
+            estimate = np.outer(direction, direction.conj()) / energy
+            if not np.iscomplexobj(self.X):
+                estimate = estimate.real.copy()
         extrapolated = estimate
         momentum = 1.
         status = 'max_iter_reached'
@@ -227,7 +237,8 @@ class OperatorPhaseLift:
             if change <= cfg.solver_tolerance:
                 status = 'converged'
                 break
-            if time.perf_counter() - start >= cfg.solver_time_limit_seconds:
+            if ((stop is not None and stop())
+                    or time.perf_counter() - start >= cfg.solver_time_limit_seconds):
                 status = 'timed_out'
                 break
 
@@ -248,6 +259,6 @@ class OperatorPhaseLift:
             x = x + 1j * np.sqrt(eigenvalues[-2]) * eigenvectors[:, -2]
         diagnostics.update(
             lifted_intensity_residual_norm=float(np.linalg.norm(self.forward(lifted) - intensity)),
-            rank1_intensity_residual_norm=float(np.linalg.norm(np.abs(self.X @ x)**2 - intensity)),
+            rank1_intensity_residual_norm=float(np.linalg.norm(np.abs(matvec(self.X, x))**2 - intensity)),
         )
         return PhaseLiftResult(status, diagnostics, x, lifted)

@@ -169,7 +169,7 @@ class OperatorPhaseMax:
         if pivots.min() <= pivots.max() * np.sqrt(np.finfo(float).eps * max(self.P, self.N)):
             raise ValueError('Operator PhaseMax requires a numerically full-column-rank probe matrix')
 
-    def fit(self, amplitudes, anchor):
+    def fit(self, amplitudes, anchor, *, stop=None):
         cfg = self.config
         scale, direction, padding, _, bounds = _fit_parameters(
             amplitudes, anchor, self.P, self.N, cfg.amplitude_padding_fraction
@@ -210,7 +210,8 @@ class OperatorPhaseMax:
             if feasible and max(relative_primal, dual_residual) <= cfg.solver_tolerance:
                 status = 'converged'
                 break
-            if time.perf_counter() - start >= cfg.solver_time_limit_seconds:
+            if ((stop is not None and stop())
+                    or time.perf_counter() - start >= cfg.solver_time_limit_seconds):
                 status = 'timed_out'
                 break
 

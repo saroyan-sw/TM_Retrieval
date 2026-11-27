@@ -1,0 +1,1127 @@
+{
+  "platform": "Windows-10-10.0.20348-SP0",
+  "versions": {
+    "python": "3.11.9",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "cvxpy": "1.9.3",
+    "h5py": "3.16.0"
+  },
+  "controls": [
+    {
+      "case": "complex_gaussian",
+      "method": "prgamp",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 8,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "final_noise_variance": 0.01,
+      "final_prior_variance": 0.16666666666666666,
+      "repeatable": true,
+      "train_residual": 0.21489312101793312,
+      "phase_nmse": 0.03593765622376331,
+      "ambiguity_nmse": 0.03593765622376331
+    },
+    {
+      "case": "complex_gaussian",
+      "method": "prsamp",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "warm_iterations": 50,
+      "warm_status": "max_iter_reached",
+      "completed_sweeps": 15,
+      "coordinate_updates": 90,
+      "final_noise_variance": 0.01,
+      "final_prior_variance": 0.16666666666666666,
+      "repeatable": true,
+      "train_residual": 0.17695508456111664,
+      "phase_nmse": 0.017051465386518253,
+      "ambiguity_nmse": 0.017051465386518253
+    },
+    {
+      "case": "complex_gaussian",
+      "method": "prvbem",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "final_noise_variance": 0.01,
+      "final_prior_variance": 0.16666666666666666,
+      "repeatable": true,
+      "train_residual": 0.1778088344340955,
+      "phase_nmse": 0.020685305864176006,
+      "ambiguity_nmse": 0.020685305864176006
+    },
+    {
+      "case": "complex_gaussian",
+      "method": "prvamp",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 1,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "repeatable": true,
+      "train_residual": 0.17695658355932795,
+      "phase_nmse": 0.017234708307733333,
+      "ambiguity_nmse": 0.017234708307733333
+    },
+    {
+      "case": "complex_gaussian",
+      "method": "gs50",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "repeatable": true,
+      "train_residual": 0.177244578775664,
+      "phase_nmse": 0.018951271127922963,
+      "ambiguity_nmse": 0.018951271127922963
+    },
+    {
+      "case": "complex_gaussian",
+      "method": "wf50",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "repeatable": true,
+      "train_residual": 0.26872724007848936,
+      "phase_nmse": 0.14978801319871402,
+      "ambiguity_nmse": 0.14978801319871402
+    },
+    {
+      "case": "complex_gaussian",
+      "method": "phaselift",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": 4,
+      "repeatable": true,
+      "train_residual": 0.18496309556155818,
+      "phase_nmse": 0.024217745142191594,
+      "ambiguity_nmse": 0.024217745142191594
+    },
+    {
+      "case": "complex_gaussian",
+      "method": "phasemax",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": 0.252758146056496,
+      "feasible": false,
+      "lifted_rank": null,
+      "repeatable": true,
+      "train_residual": 0.5804230673056122,
+      "phase_nmse": 0.6702860501147253,
+      "ambiguity_nmse": 0.6702860501147253
+    },
+    {
+      "case": "signed",
+      "method": "prgamp",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "final_noise_variance": 0.01,
+      "final_prior_variance": 0.16666666666666666,
+      "repeatable": true,
+      "train_residual": 0.35949669760250286,
+      "phase_nmse": 0.33579542166070936,
+      "ambiguity_nmse": 0.33579542166070936
+    },
+    {
+      "case": "signed",
+      "method": "prsamp",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "warm_iterations": 50,
+      "warm_status": "max_iter_reached",
+      "completed_sweeps": 15,
+      "coordinate_updates": 90,
+      "final_noise_variance": 0.01,
+      "final_prior_variance": 0.16666666666666666,
+      "repeatable": true,
+      "train_residual": 0.29861843633899454,
+      "phase_nmse": 0.6837755114120746,
+      "ambiguity_nmse": 0.5750742884654737
+    },
+    {
+      "case": "signed",
+      "method": "prvbem",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "final_noise_variance": 0.01,
+      "final_prior_variance": 0.16666666666666666,
+      "repeatable": true,
+      "train_residual": 0.18018664675303647,
+      "phase_nmse": 1.1557507139899206,
+      "ambiguity_nmse": 0.01740596456389286
+    },
+    {
+      "case": "signed",
+      "method": "prvamp",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 1,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "repeatable": true,
+      "train_residual": 0.17653394260871252,
+      "phase_nmse": 1.1747802304200257,
+      "ambiguity_nmse": 0.006610770563572415
+    },
+    {
+      "case": "signed",
+      "method": "gs50",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "repeatable": true,
+      "train_residual": 0.18355458177661607,
+      "phase_nmse": 1.1480055191311787,
+      "ambiguity_nmse": 0.025120787685114793
+    },
+    {
+      "case": "signed",
+      "method": "wf50",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "repeatable": true,
+      "train_residual": 0.3770365164212748,
+      "phase_nmse": 0.3370326736207937,
+      "ambiguity_nmse": 0.33703267235630924
+    },
+    {
+      "case": "signed",
+      "method": "phaselift",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": 3,
+      "repeatable": true,
+      "train_residual": 0.18153742113033366,
+      "phase_nmse": 1.1539278904875703,
+      "ambiguity_nmse": 0.007908446914448372
+    },
+    {
+      "case": "signed",
+      "method": "phasemax",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": 0.19769496071029968,
+      "feasible": false,
+      "lifted_rank": null,
+      "repeatable": true,
+      "train_residual": 0.5602491747167696,
+      "phase_nmse": 0.9321582743008621,
+      "ambiguity_nmse": 0.5265808703112418
+    },
+    {
+      "case": "binary_amplitude",
+      "method": "prgamp",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 4,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "final_noise_variance": 0.01,
+      "final_prior_variance": 0.16666666666666666,
+      "repeatable": true,
+      "train_residual": 0.17713681262746356,
+      "phase_nmse": 0.47972095447517016,
+      "ambiguity_nmse": 0.23071693566548754
+    },
+    {
+      "case": "binary_amplitude",
+      "method": "prsamp",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "warm_iterations": 50,
+      "warm_status": "max_iter_reached",
+      "completed_sweeps": 15,
+      "coordinate_updates": 90,
+      "final_noise_variance": 0.01,
+      "final_prior_variance": 0.16666666666666666,
+      "repeatable": true,
+      "train_residual": 0.09612793757268667,
+      "phase_nmse": 0.013924262834455773,
+      "ambiguity_nmse": 0.013924262834455773
+    },
+    {
+      "case": "binary_amplitude",
+      "method": "prvbem",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "final_noise_variance": 0.01,
+      "final_prior_variance": 0.16666666666666666,
+      "repeatable": true,
+      "train_residual": 0.11867484420240587,
+      "phase_nmse": 1.0464227246679598,
+      "ambiguity_nmse": 0.08902894219729578
+    },
+    {
+      "case": "binary_amplitude",
+      "method": "prvamp",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 1,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "repeatable": true,
+      "train_residual": 0.09678656571972417,
+      "phase_nmse": 1.13747031278279,
+      "ambiguity_nmse": 0.015291539944136564
+    },
+    {
+      "case": "binary_amplitude",
+      "method": "gs50",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "repeatable": true,
+      "train_residual": 0.09642112694723919,
+      "phase_nmse": 1.1765359695672646,
+      "ambiguity_nmse": 0.018874848467306297
+    },
+    {
+      "case": "binary_amplitude",
+      "method": "wf50",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "repeatable": true,
+      "train_residual": 0.3592673249966904,
+      "phase_nmse": 0.5320043350492638,
+      "ambiguity_nmse": 0.5320043350492638
+    },
+    {
+      "case": "binary_amplitude",
+      "method": "phaselift",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": 4,
+      "repeatable": true,
+      "train_residual": 0.19430680841333794,
+      "phase_nmse": 1.0074189576664505,
+      "ambiguity_nmse": 0.4218669692290568
+    },
+    {
+      "case": "binary_amplitude",
+      "method": "phasemax",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": 0.340546991256406,
+      "feasible": false,
+      "lifted_rank": null,
+      "repeatable": true,
+      "train_residual": 0.33338455925083255,
+      "phase_nmse": 1.2721524366536305,
+      "ambiguity_nmse": 0.2697184539310799
+    },
+    {
+      "case": "noisy",
+      "method": "prgamp",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 17,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "final_noise_variance": 2.0,
+      "final_prior_variance": 0.16666666666666666,
+      "repeatable": true,
+      "train_residual": 0.9398198071811199,
+      "phase_nmse": 0.9270038554598319,
+      "ambiguity_nmse": 0.9270038554598319
+    },
+    {
+      "case": "noisy",
+      "method": "prsamp",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 12,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "warm_iterations": 50,
+      "warm_status": "max_iter_reached",
+      "completed_sweeps": 15,
+      "coordinate_updates": 90,
+      "final_noise_variance": 2.0,
+      "final_prior_variance": 0.16666666666666666,
+      "repeatable": true,
+      "train_residual": 0.9093716224953289,
+      "phase_nmse": 0.774469474086583,
+      "ambiguity_nmse": 0.774469474086583
+    },
+    {
+      "case": "noisy",
+      "method": "prvbem",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "final_noise_variance": 2.0,
+      "final_prior_variance": 0.16666666666666666,
+      "repeatable": true,
+      "train_residual": 0.6002131960417206,
+      "phase_nmse": 0.47927264752281284,
+      "ambiguity_nmse": 0.47927264752281284
+    },
+    {
+      "case": "noisy",
+      "method": "prvamp",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 4,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "repeatable": true,
+      "train_residual": 0.9654315115710392,
+      "phase_nmse": 0.9142179451134469,
+      "ambiguity_nmse": 0.9142179451134469
+    },
+    {
+      "case": "noisy",
+      "method": "gs50",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "repeatable": true,
+      "train_residual": 0.4426491304652837,
+      "phase_nmse": 1.4498850168267658,
+      "ambiguity_nmse": 1.4498850168267658
+    },
+    {
+      "case": "noisy",
+      "method": "wf50",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "repeatable": true,
+      "train_residual": 0.5302571284526902,
+      "phase_nmse": 0.8100536981699449,
+      "ambiguity_nmse": 0.8100536981699449
+    },
+    {
+      "case": "noisy",
+      "method": "phaselift",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": 4,
+      "repeatable": true,
+      "train_residual": 0.5050746338695776,
+      "phase_nmse": 1.0249308416580247,
+      "ambiguity_nmse": 1.0249308416580247
+    },
+    {
+      "case": "noisy",
+      "method": "phasemax",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": 0.26577467768456386,
+      "feasible": false,
+      "lifted_rank": null,
+      "repeatable": true,
+      "train_residual": 0.7315261261099755,
+      "phase_nmse": 1.234607256242936,
+      "ambiguity_nmse": 1.234607256242936
+    },
+    {
+      "case": "correlated",
+      "method": "prgamp",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 1,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "final_noise_variance": 0.01,
+      "final_prior_variance": 0.16666666666666666,
+      "repeatable": true,
+      "train_residual": 0.13014074951571772,
+      "phase_nmse": 0.18051210029060918,
+      "ambiguity_nmse": 0.18051210029060918
+    },
+    {
+      "case": "correlated",
+      "method": "prsamp",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "warm_iterations": 50,
+      "warm_status": "max_iter_reached",
+      "completed_sweeps": 15,
+      "coordinate_updates": 90,
+      "final_noise_variance": 0.01,
+      "final_prior_variance": 0.16666666666666666,
+      "repeatable": true,
+      "train_residual": 0.08378832645864209,
+      "phase_nmse": 0.025529364807951423,
+      "ambiguity_nmse": 0.025529364807951423
+    },
+    {
+      "case": "correlated",
+      "method": "prvbem",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "final_noise_variance": 0.01,
+      "final_prior_variance": 0.16666666666666666,
+      "repeatable": true,
+      "train_residual": 0.08414307699078748,
+      "phase_nmse": 1.7825285573640657,
+      "ambiguity_nmse": 1.7825285573640657
+    },
+    {
+      "case": "correlated",
+      "method": "prvamp",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 1,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "repeatable": true,
+      "train_residual": 0.08378752709356671,
+      "phase_nmse": 0.04267174464713035,
+      "ambiguity_nmse": 0.04267174464713035
+    },
+    {
+      "case": "correlated",
+      "method": "gs50",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "repeatable": true,
+      "train_residual": 0.08095610028633039,
+      "phase_nmse": 221803.34041472722,
+      "ambiguity_nmse": 221803.34041472722
+    },
+    {
+      "case": "correlated",
+      "method": "wf50",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "repeatable": true,
+      "train_residual": 0.2360986342518789,
+      "phase_nmse": 0.1405219854005503,
+      "ambiguity_nmse": 0.1405219854005503
+    },
+    {
+      "case": "correlated",
+      "method": "phaselift",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": 2,
+      "repeatable": true,
+      "train_residual": 0.17478523593557216,
+      "phase_nmse": 0.3947454404542147,
+      "ambiguity_nmse": 0.3947454404542147
+    },
+    {
+      "case": "correlated",
+      "method": "phasemax",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": 1.5768105992656107,
+      "feasible": false,
+      "lifted_rank": null,
+      "repeatable": true,
+      "train_residual": 0.6099830380578813,
+      "phase_nmse": 120371741.64249802,
+      "ambiguity_nmse": 120371741.64249802
+    },
+    {
+      "case": "rank_deficient",
+      "method": "prgamp",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 1,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "final_noise_variance": 0.01,
+      "final_prior_variance": 0.16666666666666666,
+      "repeatable": true,
+      "train_residual": 0.12662750950005516,
+      "phase_nmse": 0.1688453114986459,
+      "ambiguity_nmse": 0.1688453114986459
+    },
+    {
+      "case": "rank_deficient",
+      "method": "prsamp",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "warm_iterations": 50,
+      "warm_status": "max_iter_reached",
+      "completed_sweeps": 15,
+      "coordinate_updates": 90,
+      "final_noise_variance": 0.01,
+      "final_prior_variance": 0.16666666666666666,
+      "repeatable": true,
+      "train_residual": 0.08680596051758317,
+      "phase_nmse": 0.02672153213331393,
+      "ambiguity_nmse": 0.02672153213331393
+    },
+    {
+      "case": "rank_deficient",
+      "method": "prvbem",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "final_noise_variance": 0.01,
+      "final_prior_variance": 0.16666666666666666,
+      "repeatable": true,
+      "train_residual": 0.08697237096469186,
+      "phase_nmse": 1.7834715643316421,
+      "ambiguity_nmse": 1.7834715643316421
+    },
+    {
+      "case": "rank_deficient",
+      "method": "prvamp",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 1,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "repeatable": true,
+      "train_residual": 0.08680444839178401,
+      "phase_nmse": 0.03915926557638478,
+      "ambiguity_nmse": 0.03915926557638478
+    },
+    {
+      "case": "rank_deficient",
+      "method": "gs50",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "repeatable": true,
+      "train_residual": 0.08691166970318422,
+      "phase_nmse": 0.039236025738750645,
+      "ambiguity_nmse": 0.039236025738750645
+    },
+    {
+      "case": "rank_deficient",
+      "method": "wf50",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": null,
+      "repeatable": true,
+      "train_residual": 0.23187204724502755,
+      "phase_nmse": 0.13886565041109808,
+      "ambiguity_nmse": 0.13886565041109808
+    },
+    {
+      "case": "rank_deficient",
+      "method": "phaselift",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "max_iter_reached",
+      "converged": false,
+      "iterations": 15,
+      "stabilized_updates": 0,
+      "constraint_violation": null,
+      "feasible": null,
+      "lifted_rank": 3,
+      "repeatable": true,
+      "train_residual": 0.16926505029159886,
+      "phase_nmse": 0.38393431564575614,
+      "ambiguity_nmse": 0.38393431564575614
+    },
+    {
+      "case": "rank_deficient",
+      "method": "phasemax",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "expected_rejection",
+      "reason": "Operator PhaseMax requires a full-column-rank probe matrix"
+    },
+    {
+      "case": "zero_observations",
+      "method": "prgamp",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "expected_rejection",
+      "reason": "Positive-energy finite amplitude vector required"
+    },
+    {
+      "case": "zero_observations",
+      "method": "prsamp",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "expected_rejection",
+      "reason": "Positive-energy finite amplitude vector required"
+    },
+    {
+      "case": "zero_observations",
+      "method": "prvbem",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "expected_rejection",
+      "reason": "Positive-energy finite amplitude vector required"
+    },
+    {
+      "case": "zero_observations",
+      "method": "prvamp",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "expected_rejection",
+      "reason": "All-zero amplitudes are uninformative for this implementation."
+    },
+    {
+      "case": "zero_observations",
+      "method": "gs50",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "expected_rejection",
+      "reason": "Finite positive amplitude energy required"
+    },
+    {
+      "case": "zero_observations",
+      "method": "wf50",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "expected_rejection",
+      "reason": "Finite positive mean intensity required"
+    },
+    {
+      "case": "zero_observations",
+      "method": "phaselift",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "expected_rejection",
+      "reason": "Finite positive intensity energy required"
+    },
+    {
+      "case": "zero_observations",
+      "method": "phasemax",
+      "seed": [
+        811,
+        4
+      ],
+      "status": "expected_rejection",
+      "reason": "Finite positive amplitude energy required"
+    }
+  ],
+  "convex_references": {
+    "phaselift": {
+      "operator_objective": 11.837639762057536,
+      "scs_objective": 11.837639762057647,
+      "operator_status": "converged",
+      "reference_status": "optimal"
+    },
+    "phasemax": {
+      "operator_objective": 1.8472153168839363,
+      "scs_objective": 1.847215283487978,
+      "operator_status": "converged",
+      "reference_status": "optimal",
+      "constraint_violation": 1.5508968864708095e-07
+    }
+  },
+  "rice_training_only": {
+    "detector": 8208,
+    "training_shape": [
+      17280,
+      1600
+    ],
+    "outcomes": [
+      {
+        "config": {
+          "max_iter": 50,
+          "min_iter": 50,
+          "learn_noise": true,
+          "learn_prior": true
+        },
+        "status": "max_iter_reached",
+        "coefficient_norm": 2.4246337668789204e-36,
+        "initial_noise": 0.059924189814814816,
+        "final_noise": 6.006963033174802,
+        "initial_prior": 0.003707809244791667,
+        "final_prior": 9.090032308325648e-06,
+        "training_relative_residual": 1.0,
+        "final_variational_bound": -48261.64553667947
+      },
+      {
+        "config": {
+          "max_iter": 50,
+          "min_iter": 50,
+          "learn_noise": true,
+          "learn_prior": false
+        },
+        "status": "max_iter_reached",
+        "coefficient_norm": 1.7835996672565497,
+        "initial_noise": 0.059924189814814816,
+        "final_noise": 2.7439836140099354,
+        "initial_prior": 0.003707809244791667,
+        "final_prior": 0.003707809244791667,
+        "training_relative_residual": 0.4166894390676355,
+        "final_variational_bound": -50597.52082201911
+      },
+      {
+        "config": {
+          "max_iter": 50,
+          "min_iter": 50,
+          "learn_noise": false,
+          "learn_prior": false
+        },
+        "status": "max_iter_reached",
+        "coefficient_norm": 2.315369483995439,
+        "initial_noise": 0.059924189814814816,
+        "final_noise": 0.059924189814814816,
+        "initial_prior": 0.003707809244791667,
+        "final_prior": 0.003707809244791667,
+        "training_relative_residual": 0.3763012375143187,
+        "final_variational_bound": -266331.8583149661
+      }
+    ]
+  }
+}

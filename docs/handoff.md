@@ -303,10 +303,41 @@ and `runs/operator_smoke_verified`. Both reports regenerated
 byte-for-byte, and the archive verifier independently checked saved
 training residuals.
 
-I11 is the next checkpoint. The
-[ICCP protocol and proposed comparisons](dataset_inventory.md#iccp-2017-benchmark-protocol)
-record the simulation and camera experiments, initialization and budget
-details, and evidence needed for R05/I12.
+## I11 complete — dedicated solver verification
+
+The [verification campaign](results/i11_verification.json) covers 56
+method/problem pairs across complex Gaussian, signed, binary amplitude,
+noisy, correlated, rank-deficient and all-zero data. All 47 accepted
+cases reproduced their coefficient arrays exactly from the same seeds.
+Nine expected rejections were recorded. The short 15-iteration controls
+reached their caps. On the correlated case, GS and PhaseMax produced
+large coefficient errors despite returning finite vectors.
+
+The separate SCS reference problems agreed with the operator PhaseLift
+objective to about 1e-13 and the operator PhaseMax anchor objective to
+about 3.4e-8. The equation-level, recovery, mask, numerical stability and
+artifact tests also pass with the convex extra. These comparisons
+verify the stated formulations. Numerical parity with the exact
+historical ICCP executables remains unavailable.
+
+The Rice training-only diagnostic refit detector 8208 from the same
+start with three variance policies. Learning both variances produced
+coefficient norm 2.4e-36 and training residual 1.000. Learning only
+noise gave residual 0.417. Fixing both variances gave residual 0.376.
+This confirms the collapse on the recorded case and preserves it for
+the paper-style one-pilot comparison. The diagnostic used no held-out
+observations for decisions.
+
+```powershell
+$env:OPENBLAS_NUM_THREADS='1'
+$env:OMP_NUM_THREADS='1'
+$env:MKL_NUM_THREADS='1'
+python -m pytest -q
+python scripts/verify_i11.py --output docs/results/i11_verification.json
+```
+
+The [ICCP protocol and proposed comparisons](dataset_inventory.md#iccp-2017-benchmark-protocol)
+describe the camera and simulation experiments that inform R05/I12.
 
 ## Scope
 No synthetic benchmark data, reference-TM tuning or published algorithm rankings.

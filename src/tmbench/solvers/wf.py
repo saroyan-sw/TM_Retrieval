@@ -96,7 +96,7 @@ class WirtingerFlow:
     def _gradient(self, field, residual):
         return matvec(self.adjoint, residual * field) / self.P
 
-    def fit(self, intensities, initial, config):
+    def fit(self, intensities, initial, config, *, stop=None):
         values, mean_intensity = self._intensities(intensities)
         x = np.asarray(initial, dtype=np.complex128)
         if x.shape != (self.N,) or not np.isfinite(x).all():
@@ -151,4 +151,7 @@ class WirtingerFlow:
             history.append(dict(iteration=iteration, intensity_loss=loss,
                                 step_size=float(step), backtracks=backtracks,
                                 gradient_norm_before_step=float(np.sqrt(grad_norm_squared))))
+            if stop is not None and stop():
+                status = 'timed_out'
+                break
         return WFResult(x, field, status, history, initial_loss, loss)

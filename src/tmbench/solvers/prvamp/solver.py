@@ -87,7 +87,7 @@ class PrVAMP:
         scale = np.dot(predicted, y) / max(np.dot(predicted, predicted), 1e-30)
         return scale * direction
 
-    def fit(self, y, *, seed=0, x0=None, n_restarts=1):
+    def fit(self, y, *, seed=0, x0=None, n_restarts=1, stop=None):
         """Run prVAMP; optional restarts selected by measured amplitude residual.
 
         No correctness is inferred from convergence alone. This nonconvex
@@ -104,14 +104,18 @@ class PrVAMP:
         if x0 is not None and n_restarts != 1:
             raise ValueError("Use one run when providing x0; otherwise all restarts are identical.")
         rng = np.random.default_rng(seed)
-        candidates = [self._fit_once(y, rng, x0) for _ in range(n_restarts)]
+        candidates = []
+        for _ in range(n_restarts):
+            candidates.append(self._fit_once(y, rng, x0, stop))
+            if stop is not None and stop():
+                break
         residuals = [float(np.linalg.norm(np.abs(result.z) - y) / np.linalg.norm(y))
                      for result in candidates]
         best = candidates[int(np.argmin(residuals))]
         best.restart_residuals = residuals
         return best
 
-    def _fit_once(self, y, rng, x0):
+    def _fit_once(self, y, rng, x0, stop=None):
         cfg = self.config
         x_initial = self._initial_x(y, rng) if x0 is None else np.asarray(x0, dtype=np.complex128).copy()
         if x_initial.shape != (self.linear.N,) or not np.all(np.isfinite(x_initial)):
@@ -125,7 +129,7 @@ class PrVAMP:
         tau1 = float(np.clip(1.0 / mean_field_variance, cfg.precision_min, cfg.precision_max))
         history, iterates = [], []
         previous_x = x_initial
-        converged = False
+        status = "max_iter_reached"
         options = dict(stabilize=cfg.stabilize, epsilon=cfg.sensitivity_epsilon,
                        precision_min=cfg.precision_min, precision_max=cfg.precision_max)
 
@@ -175,11 +179,14 @@ class PrVAMP:
             r1, gamma1, p1, tau1 = next_r1, next_gamma1, next_p1, next_tau1
             previous_x = linear.x
             if iteration + 1 >= cfg.min_iter and max(relative_change, gap, message_change) < cfg.tolerance:
-                converged = True
+                status = "fixed_point_tolerance"
+                break
+            if stop is not None and stop():
+                status = "timed_out"
                 break
 
-        status = "fixed_point_tolerance" if converged else "max_iter_reached"
-        return VAMPResult(linear.x.copy(), linear.z.copy(), history, converged, status, iterates)
+        return VAMPResult(linear.x.copy(), linear.z.copy(), history,
+                          status == "fixed_point_tolerance", status, iterates)
 
     def fit_tm(self, amplitudes, *, seed=0, n_restarts=1):
         """Rows of amplitudes: detector pixels; columns: P displayed patterns.
